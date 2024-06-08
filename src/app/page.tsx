@@ -1,95 +1,69 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import { Box, Container, Flex, Heading } from '@chakra-ui/react'
+import Image from 'next/image'
+import Link from 'next/link'
+
+import DefButton from '@/components/ui/buttons/DefButton'
+import Description from '@/components/ui/texts/Description'
+import TitleComponent from '@/components/ui/texts/TitleComponent'
+import UserRoutesFooter from '@/components/ui/texts/UserRoutesFooter'
+
+import {
+	MAIN_PADDING,
+	STANDARD_BOTTOM_PADDING
+} from '@/config/_variables.config'
+import { USER_PAGES } from '@/config/pages-url.config'
 
 export default function Home() {
-  return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
+	return (
+		<Container px={MAIN_PADDING}>
+			<Flex
+				flexDirection='column'
+				w='100%'
+				justifyContent='space-between'
+				minH='100vh'
+				pb={STANDARD_BOTTOM_PADDING}
+			>
+				<Flex
+					mt='160px'
+					flexDirection='column'
+					alignItems='center'
+					mx='auto'
+					textAlign='center'
+				>
+					<Image
+						src='/logo.svg'
+						alt='Logo'
+						width={83}
+						height={83}
+					/>
+					<Heading
+						as='h1'
+						mt='10px'
+						color='#1C1C1C'
+						fontSize='15.68px'
+						lineHeight='18.98px'
+						fontWeight='700'
+					>
+						Tez Kyzmat
+					</Heading>
+					<TitleComponent mt='62px'>Все запчасти здесь</TitleComponent>
+					<Box maxW='70%'>
+						<Description mt='14px'>
+							Найдите нужные запчасти для вашего автомобиля
+						</Description>
+					</Box>
+				</Flex>
+				<Box>
+					<Link href={USER_PAGES.AUTH}>
+						<DefButton>Продолжить</DefButton>
+					</Link>
+					<UserRoutesFooter
+						question='Вы продавец?'
+						path={USER_PAGES.SIGN_UP}
+						action='Создать аккаунт'
+					/>
+				</Box>
+			</Flex>
+		</Container>
+	)
 }

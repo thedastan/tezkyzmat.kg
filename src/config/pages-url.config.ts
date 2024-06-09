@@ -1,4 +1,16 @@
-class DASHBOARD {
+// client
+class CLIENT_DASHBOARD {
+	private root = '/client'
+
+	MAIN = `${this.root}/request`
+	APPLICATION = `${this.root}/application`
+	MARKET = `${this.root}/market`
+	PROFILE = `${this.root}/profile`
+}
+
+export const CLIENT_PAGES = new CLIENT_DASHBOARD()
+// seller
+class SELLER_DASHBOARD {
 	private root = '/i'
 
 	HOME = this.root
@@ -6,22 +18,14 @@ class DASHBOARD {
 	NOTIFICATION = `${this.root}/notification`
 	PROFILE = `${this.root}/profile`
 
-	INSTRUCTION = `${this.root}/instruction`
-	FORBIDDEN = `${this.root}/zapretnyie-tovary`
-	ABOUT_US = `${this.root}/o-nas`
-	TARIFFS = `${this.root}/tariffs`
-	CONTACTS = `${this.root}/contacts`
-	CHECKOUT = `${this.root}/checkout`
-	SEARCH_PACKAGE_DETAIL = (id: number) => {
-		return `${this.root}/search/${id}`
-	}
 	NOTIFICATION_DETAIL = (id: string) => {
 		return `${this.root}/notification/${id}`
 	}
 }
 
-export const DASHBOARD_PAGES = new DASHBOARD()
+export const SELLER_PAGES = new SELLER_DASHBOARD()
 
+// user
 class USER {
 	private root = '/user'
 
@@ -33,6 +37,7 @@ class USER {
 
 export const USER_PAGES = new USER()
 
+// public
 class PUBLIC {
 	private root = '/'
 

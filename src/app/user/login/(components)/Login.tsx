@@ -16,6 +16,7 @@ const Login = () => {
 			question='У вас нет учетной записи? '
 			path={USER_PAGES.SIGN_UP}
 			action='Создать аккаунт'
+			backPath={PUBLIC_PAGES.HOME}
 		>
 			<Box>
 				<TitleComponent mb='34px'>Вход</TitleComponent>

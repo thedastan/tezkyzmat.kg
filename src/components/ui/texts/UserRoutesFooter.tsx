@@ -29,6 +29,8 @@ const UserRoutesFooter = ({
 				{question}
 			</Description>
 			<Box
+				onClick={onClick}
+				cursor='pointer'
 				fontWeight='600'
 				fontSize='14px'
 				lineHeight='17.5px'
@@ -37,13 +39,7 @@ const UserRoutesFooter = ({
 				{!!path ? (
 					<Link href={path}>{action}</Link>
 				) : (
-					<Text
-						onClick={onClick}
-						cursor='pointer'
-						_active={{ opacity: '.7' }}
-					>
-						{action}
-					</Text>
+					<Text _active={{ opacity: '.7' }}>{action}</Text>
 				)}
 			</Box>
 		</Flex>

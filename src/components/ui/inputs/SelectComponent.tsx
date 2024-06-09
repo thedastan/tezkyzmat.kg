@@ -1,4 +1,4 @@
-import { Select, Stack } from '@chakra-ui/react'
+import { Select, Stack, Text } from '@chakra-ui/react'
 
 export interface ISelectComponentProps {
 	name: string
@@ -15,7 +15,22 @@ const SelectComponent = ({
 	required = true
 }: ISelectComponentProps) => {
 	return (
-		<Stack>
+		<Stack
+			mb='22px'
+			position='relative'
+			spacing='6px'
+		>
+			<Text
+				pl='4'
+				mb={!!value ? '0' : '-23px'}
+				transition='.2s'
+				color='#000000'
+				fontWeight='400'
+				fontSize='14px'
+				lineHeight='17px'
+			>
+				{placeholder}
+			</Text>
 			<Select
 				onChange={handleChange}
 				value={value}
@@ -37,8 +52,8 @@ const SelectComponent = ({
 				isRequired={required}
 			>
 				<option>Tayota</option>
-        <option>Honda</option>
-        <option>Mercedes</option>
+				<option>Honda</option>
+				<option>Mercedes</option>
 			</Select>
 		</Stack>
 	)

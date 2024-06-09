@@ -1,6 +1,9 @@
+'use client'
+
 import { Box, Container, Flex, Heading } from '@chakra-ui/react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 import DefButton from '@/components/ui/buttons/DefButton'
 import Description from '@/components/ui/texts/Description'
@@ -12,8 +15,10 @@ import {
 	STANDARD_BOTTOM_PADDING
 } from '@/config/_variables.config'
 import { USER_PAGES } from '@/config/pages-url.config'
+import { saveRole } from '@/config/role'
 
 export default function Home() {
+	const { push } = useRouter()
 	return (
 		<Container px={MAIN_PADDING}>
 			<Flex
@@ -54,13 +59,19 @@ export default function Home() {
 					</Box>
 				</Flex>
 				<Box>
-					<Link href={USER_PAGES.AUTH}>
-						<DefButton>Продолжить</DefButton>
-					</Link>
+					<DefButton
+						onClick={() => {
+							saveRole('0')
+							push(USER_PAGES.AUTH)
+						}}
+					>
+						Продолжить
+					</DefButton>
 					<UserRoutesFooter
 						question='Вы продавец?'
 						path={USER_PAGES.SIGN_UP}
 						action='Создать аккаунт'
+						onClick={() => saveRole('1')}
 					/>
 				</Box>
 			</Flex>

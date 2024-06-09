@@ -9,7 +9,6 @@ import {
 	MAIN_PADDING,
 	STANDARD_BOTTOM_PADDING
 } from '@/config/_variables.config'
-import { PUBLIC_PAGES } from '@/config/pages-url.config'
 
 import { IUserRoutesProps } from '../ui/texts/UserRoutesFooter'
 
@@ -20,7 +19,7 @@ interface UserLayoutProps extends IUserRoutesProps {
 
 const UserLayoutComponent: FC<PropsWithChildren<UserLayoutProps>> = ({
 	action,
-	backPath = PUBLIC_PAGES.HOME,
+	backPath,
 	question,
 	children,
 	onClick,
@@ -41,6 +40,7 @@ const UserLayoutComponent: FC<PropsWithChildren<UserLayoutProps>> = ({
 				<Box
 					w='30px'
 					h='30px'
+					cursor='pointer'
 				>
 					{!!backPath ? (
 						<Link href={backPath}>

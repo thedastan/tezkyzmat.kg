@@ -4,11 +4,7 @@ import { Box, Flex, SimpleGrid, Text } from '@chakra-ui/react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-import {
-	INTERFACE_PADDING,
-	INTERFACE_WIDTH,
-	NAVBAR_HEIGHT
-} from '@/config/_variables.config'
+import { INTERFACE_WIDTH, NAVBAR_HEIGHT } from '@/config/_variables.config'
 
 import { client_navbar } from './data'
 

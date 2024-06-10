@@ -6,13 +6,15 @@ export interface ISelectComponentProps {
 	value?: string
 	handleChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void
 	required?: boolean
+	disabled?: boolean
 }
 const SelectComponent = ({
 	name,
 	placeholder,
 	value,
 	handleChange,
-	required = true
+	required = true,
+	disabled = false
 }: ISelectComponentProps) => {
 	return (
 		<Stack
@@ -46,6 +48,7 @@ const SelectComponent = ({
 				fontWeight='400'
 				lineHeight='20px'
 				color='#000000'
+				disabled={disabled}
 				_placeholder={{
 					color: '#00000080'
 				}}

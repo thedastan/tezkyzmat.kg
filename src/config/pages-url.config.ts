@@ -3,12 +3,14 @@ class CLIENT_DASHBOARD {
 	private root = '/client'
 
 	MAIN = `${this.root}/request`
+	SUCCESS = `${this.root}/request/success`
 	APPLICATION = `${this.root}/application`
 	MARKET = `${this.root}/market`
 	PROFILE = `${this.root}/profile`
 }
 
 export const CLIENT_PAGES = new CLIENT_DASHBOARD()
+
 // seller
 class SELLER_DASHBOARD {
 	private root = '/i'

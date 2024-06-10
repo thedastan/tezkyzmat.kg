@@ -1,0 +1,49 @@
+.spinner {
+	width: 86px;
+	height: 86px;
+	display: grid;
+	border: 3.5px solid #0000;
+	border-radius: 50%;
+	border-right-color: #f9bd15;
+	animation: spinner-a4dj62 1s infinite linear;
+}
+
+.spinner::before,
+.spinner::after {
+	content: '';
+	grid-area: 1/1;
+	margin: 2.2px;
+	border: inherit;
+	border-radius: 50%;
+	animation: spinner-a4dj62 2s infinite;
+}
+
+.spinner::after {
+	margin: 8.9px;
+	animation-duration: 3s;
+}
+
+@keyframes spinner-a4dj62 {
+	100% {
+		transform: rotate(1turn);
+	}
+}
+
+/// 2nd
+
+.spinner2 {
+	width: 97.15px;
+	height: 97.15px;
+	border-radius: 50%;
+	background:
+		radial-gradient(farthest-side, #f9bd15 94%, #0000) top/9px 9px no-repeat,
+		conic-gradient(#0000 30%, #f9bd15);
+	-webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 9px), #000 0);
+	animation: spinner-c7wet2 1s infinite linear;
+}
+
+@keyframes spinner-c7wet2 {
+	100% {
+		transform: rotate(1turn);
+	}
+}

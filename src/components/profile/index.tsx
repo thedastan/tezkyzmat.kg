@@ -29,7 +29,8 @@ const Profile = ({ isOpen, onClose }: ProfileProps) => {
 
 	useEffect(() => {
 		setHeight(document.documentElement.clientHeight - 77)
-	}, [])
+		window.scroll(0, 0)
+	}, [isOpen])
 	return (
 		<Drawer
 			placement='bottom'

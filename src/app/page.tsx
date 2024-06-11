@@ -2,7 +2,6 @@
 
 import { Box, Container, Flex, Heading } from '@chakra-ui/react'
 import Image from 'next/image'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 import DefButton from '@/components/ui/buttons/DefButton'
@@ -25,11 +24,11 @@ export default function Home() {
 				flexDirection='column'
 				w='100%'
 				justifyContent='space-between'
-				minH='100vh'
+				minH='90vh'
 				pb={STANDARD_BOTTOM_PADDING}
 			>
 				<Flex
-					mt='160px'
+					mt='110px'
 					flexDirection='column'
 					alignItems='center'
 					mx='auto'

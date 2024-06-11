@@ -34,7 +34,7 @@ const UserLayoutComponent: FC<PropsWithChildren<UserLayoutProps>> = ({
 			w='100%'
 			pb={STANDARD_BOTTOM_PADDING}
 			px={MAIN_PADDING}
-			minH='100vh'
+			minH='90vh'
 		>
 			<Flex justifyContent='start'>
 				<Box

@@ -1,5 +1,16 @@
-import { Input, Stack, Text, Textarea } from '@chakra-ui/react'
-import React from 'react'
+'use client'
+
+import {
+	Box,
+	Input,
+	InputGroup,
+	InputRightElement,
+	Stack,
+	Text,
+	Textarea
+} from '@chakra-ui/react'
+import React, { useState } from 'react'
+import { PiEyeClosedFill, PiEyeFill } from 'react-icons/pi'
 
 export interface IInputComponentProps {
 	name: string
@@ -24,6 +35,7 @@ const InputComponent = ({
 	as = 'input',
 	title
 }: IInputComponentProps) => {
+	const [show, setShow] = useState(false)
 	return (
 		<Stack
 			spacing='6px'
@@ -39,27 +51,47 @@ const InputComponent = ({
 			</Text>
 
 			{as === 'input' ? (
-				<Input
-					onChange={handleChange}
-					value={value}
-					name={name}
-					type={type}
-					placeholder={placeholder}
-					h='56px'
-					w='100%'
-					rounded='10px'
-					border='1px solid #D8DADC'
-					bg='#FFFFFF'
-					fontSize='16px'
-					letterSpacing='0.5px'
-					fontWeight='400'
-					lineHeight='20px'
-					color='#000000'
-					_placeholder={{
-						color: '#00000080'
-					}}
-					isRequired={required}
-				/>
+				<InputGroup>
+					<Input
+						onChange={handleChange}
+						value={value}
+						name={name}
+						type={show ? 'text' : type}
+						placeholder={placeholder}
+						h='56px'
+						w='100%'
+						rounded='10px'
+						border='1px solid #D8DADC'
+						bg='#FFFFFF'
+						fontSize='16px'
+						letterSpacing='0.5px'
+						fontWeight='400'
+						lineHeight='20px'
+						color='#000000'
+						_placeholder={{
+							color: '#00000080'
+						}}
+						isRequired={required}
+						autoFocus={false}
+					/>
+					{type === 'password' && (
+						<InputRightElement
+							w='3rem'
+							h='100%'
+							display='flex'
+							alignItems='center'
+						>
+							<Box
+								onClick={() => setShow(!show)}
+								fontSize='24px'
+								color='#A8A8A8'
+								cursor='pointer'
+							>
+								{show ? <PiEyeFill /> : <PiEyeClosedFill />}
+							</Box>
+						</InputRightElement>
+					)}
+				</InputGroup>
 			) : (
 				<Textarea
 					onChange={handleChangeTextarea}

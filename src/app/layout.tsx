@@ -1,6 +1,7 @@
 import { ChakraProvider } from '@chakra-ui/react'
 import type { Metadata } from 'next'
 import Head from 'next/head'
+import { Toaster } from 'sonner'
 
 import { inter } from '@/constants/fonts'
 import { SITE_NAME } from '@/constants/seo.contants'
@@ -47,7 +48,16 @@ export default function RootLayout({
 			</Head>
 			<body className={inter.className}>
 				<ChakraProvider>
-					<Providers>{children}</Providers>
+					<Providers>
+						<>
+							{children}
+							<Toaster
+								theme='dark'
+								position='bottom-right'
+								duration={2000}
+							/>
+						</>
+					</Providers>
 				</ChakraProvider>
 			</body>
 		</html>

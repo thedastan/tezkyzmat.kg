@@ -11,18 +11,18 @@ import {
 	Text
 } from '@chakra-ui/react'
 
-const steps = [1, 2, 3]
-
 interface StepperComponentProps {
 	activeStep: number
 	setActiveStep: (index: number) => void
 	withText?: boolean
+	steps?: number[]
 }
 
 const StepperComponent = ({
 	activeStep,
 	setActiveStep,
-	withText
+	withText,
+	steps = [1, 2, 3]
 }: StepperComponentProps) => {
 	return (
 		<>
@@ -45,7 +45,7 @@ const StepperComponent = ({
 				</Flex>
 			)}
 			<Box
-				w='155px'
+				w={steps.length === 3 ? '155px' : '207px'}
 				mx='auto'
 				mb='23px'
 			>
@@ -57,7 +57,9 @@ const StepperComponent = ({
 					{steps.map((step, index) => (
 						<Step
 							key={index}
-							onClick={() => setActiveStep(index)}
+							onClick={() => {
+								if(activeStep > index) setActiveStep(index) 
+							}}
 						>
 							<StepIndicator>
 								<StepStatus

@@ -7,32 +7,92 @@ import {
 	PinInput,
 	PinInputField
 } from '@chakra-ui/react'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 import UserLayoutComponent from '@/components/layouts/user.layout'
+import Spinner from '@/components/loader/spinner'
 import StepperComponent from '@/components/ui/stepper'
 import Description from '@/components/ui/texts/Description'
 import TitleComponent from '@/components/ui/texts/TitleComponent'
 
 import { INTERFACE_WIDTH } from '@/config/_variables.config'
+import { CLIENT_PAGES, SELLER_PAGES } from '@/config/pages-url.config'
+import { EnumRole } from '@/config/role'
+
+import { useOtpSent, useVerify } from '@/hooks/useRegister'
+import { useRoles } from '@/hooks/useRoles'
+
+import { EnumOtpCode } from '@/models/auth.enum'
 
 interface PinInputModalProps {
 	activeStep: number
 	setActiveStep: (index: number) => void
 	phone: string
-	code: string
-	setCode: (code: string) => void
+	isOpen: boolean
 }
+
+const countdown_count = 30
 
 const PinInputModal = ({
 	activeStep,
 	setActiveStep,
 	phone,
-	code,
-	setCode
+	isOpen
 }: PinInputModalProps) => {
+	const [code, setCode] = useState('')
+	const [countdown, setCountdown] = useState(countdown_count)
+	const [isAgain, setAgain] = useState(false)
+	const { replace } = useRouter()
+	const { role } = useRoles()
+	const { isPending: isLoading, mutate: verify } = useVerify(
+		() => {
+			if (role === EnumRole.CLIENT) replace(CLIENT_PAGES.MAIN)
+			else if (role === EnumRole.SELLER) replace(SELLER_PAGES.HOME)
+		},
+		() => setCode('')
+	)
+
+	const countdownStart = () => setAgain(true)
+	const countdownStop = () => {
+		setAgain(false)
+		setCountdown(countdown_count)
+	}
+
+	const { isPending, mutate } = useOtpSent(() => countdownStart())
+
+	const sendOtpCode = () => {
+		mutate({ phone, type: EnumOtpCode.REGISTER })
+	}
+
+	const timer = `00:${
+		String(countdown).length > 1 ? countdown : '0' + countdown
+	}`
+
+	useEffect(() => {
+		setTimeout(() => {
+			if (isAgain) {
+				setCountdown(countdown - 1)
+				if (countdown < 1) countdownStop()
+			}
+		}, 1000)
+
+		// if (!isAgain) clearInterval(interval)
+	}, [countdown, isAgain])
+
+	useEffect(() => {
+		if (isOpen) countdownStart()
+		else countdownStop()
+	}, [isOpen])
+
+	useEffect(() => {
+		if (code.length === 5) {
+			verify(code)
+		}
+	}, [code])
 	return (
 		<Modal
-			isOpen={activeStep === 2}
+			isOpen={isOpen}
 			onClose={() => setActiveStep(1)}
 			size='full'
 		>
@@ -40,6 +100,7 @@ const PinInputModal = ({
 				justifyContent='center'
 				transition='0'
 			>
+				{(isPending || isLoading) && <Spinner />}
 				<ModalBody
 					maxW={INTERFACE_WIDTH}
 					w='100%'
@@ -47,9 +108,9 @@ const PinInputModal = ({
 					padding='0'
 				>
 					<UserLayoutComponent
-						question='Я не получил код'
-						onClick={() => {}}
-						action='Запросить'
+						question={isAgain ? 'Отправить код снова' : 'Я не получил код'}
+						onClick={() => !isAgain && sendOtpCode()}
+						action={isAgain ? timer : 'Запросить'}
 						backFn={() => setActiveStep(1)}
 					>
 						<Box>

@@ -1,16 +1,62 @@
 'use client'
 
 import { Box, Flex } from '@chakra-ui/react'
+import { useMutation } from '@tanstack/react-query'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { ChangeEvent, FormEvent, useState } from 'react'
+import { toast } from 'sonner'
 
 import UserLayoutComponent from '@/components/layouts/user.layout'
+import Spinner from '@/components/loader/spinner'
 import DefButton from '@/components/ui/buttons/DefButton'
 import InputComponent from '@/components/ui/inputs/InputComponent'
+import PhoneInputComponent from '@/components/ui/inputs/PhoneInputComponent'
 import TitleComponent from '@/components/ui/texts/TitleComponent'
 
-import { PUBLIC_PAGES, USER_PAGES } from '@/config/pages-url.config'
+import { ToastError } from '@/config/helpers'
+import {
+	CLIENT_PAGES,
+	PUBLIC_PAGES,
+	SELLER_PAGES,
+	USER_PAGES
+} from '@/config/pages-url.config'
+import { EnumRole } from '@/config/role'
+
+import { useRoles } from '@/hooks/useRoles'
+
+import { IAuthForm } from '@/models/auth.model'
+import { authService } from '@/services/auth.service'
 
 const Login = () => {
+	const { replace } = useRouter()
+	const [value, setValue] = useState<IAuthForm>({
+		phone: '',
+		password: ''
+	})
+
+	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+		setValue({ ...value, [e.target.name]: e.target.value })
+	}
+
+	const { role } = useRoles()
+	const { mutate, isPending } = useMutation({
+		mutationKey: ['auth'],
+		mutationFn: (data: IAuthForm) => authService.login(data),
+		onSuccess() {
+			toast.success('Вы успешно авторизовались. Подождите...')
+			if (role === EnumRole.CLIENT) replace(CLIENT_PAGES.MAIN)
+			else if (role === EnumRole.SELLER) replace(SELLER_PAGES.HOME)
+		},
+		onError(e) {
+			ToastError(e)
+		}
+	})
+
+	const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault()
+		mutate(value)
+	}
 	return (
 		<UserLayoutComponent
 			question='У вас нет учетной записи? '
@@ -18,15 +64,17 @@ const Login = () => {
 			action='Создать аккаунт'
 			backPath={PUBLIC_PAGES.HOME}
 		>
-			<Box>
+			<form onSubmit={onSubmit}>
+				{isPending && <Spinner />}
 				<TitleComponent mb='34px'>Вход</TitleComponent>
-				<InputComponent
+				<PhoneInputComponent
+					handleChange={phone => setValue({ ...value, phone })}
 					placeholder='+996'
 					name='phone'
 					title='Номер'
-					type='tel'
 				/>
 				<InputComponent
+					handleChange={handleChange}
 					placeholder='Введите пароль'
 					name='password'
 					title='Пароль'
@@ -48,7 +96,7 @@ const Login = () => {
 				>
 					Продолжить
 				</DefButton>
-			</Box>
+			</form>
 		</UserLayoutComponent>
 	)
 }

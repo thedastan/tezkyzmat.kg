@@ -6,23 +6,16 @@ class CLIENT_DASHBOARD {
 	SUCCESS = `${this.root}/request/success`
 	APPLICATION = `${this.root}/application`
 	MARKET = `${this.root}/market`
-	PROFILE = `${this.root}/profile`
 }
 
 export const CLIENT_PAGES = new CLIENT_DASHBOARD()
 
 // seller
 class SELLER_DASHBOARD {
-	private root = '/i'
+	private root = '/seller'
 
 	HOME = this.root
-	SEARCH = `${this.root}/search`
-	NOTIFICATION = `${this.root}/notification`
-	PROFILE = `${this.root}/profile`
-
-	NOTIFICATION_DETAIL = (id: string) => {
-		return `${this.root}/notification/${id}`
-	}
+	SEARCH = `${this.root}/application`
 }
 
 export const SELLER_PAGES = new SELLER_DASHBOARD()

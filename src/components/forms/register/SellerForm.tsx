@@ -4,18 +4,20 @@ import { ChangeEvent, FormEvent, useState } from 'react'
 import DefButton from '@/components/ui/buttons/DefButton'
 import InputComponent from '@/components/ui/inputs/InputComponent'
 import PhoneInputComponent from '@/components/ui/inputs/PhoneInputComponent'
+import SelectComponent from '@/components/ui/inputs/SelectComponent'
 import StepperComponent from '@/components/ui/stepper'
+
+import { useRegister } from '@/hooks/useRegister'
 
 import PinInputModal from '../../../app/user/sign-up/(components)/PinInputModal'
 import UploadPhotos from '../upload-photos'
-import AddPhotoButton from '../upload-photos/AddPhotoButton'
 
-import { SellerRegisterForm } from '@/models/auth.model'
+import { SellerRegisterForm } from '@/models/value-interfaces/auth.values'
 
 const SellerForm = () => {
 	const { activeStep, setActiveStep } = useSteps({
 		index: 0,
-		count: 3
+		count: 4
 	})
 	const [images, setImages] = useState<File[]>([])
 
@@ -24,11 +26,14 @@ const SellerForm = () => {
 		phone: '',
 		password: '',
 		address: '',
-		shop_name: '',
-		code: ''
+		shop_name: ''
 	})
 
-	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+	const { mutate, isPending } = useRegister(() => setActiveStep(2))
+
+	const handleChange = (
+		e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+	) => {
 		setValue({ ...value, [e.target.name]: e.target.value })
 	}
 
@@ -36,13 +41,14 @@ const SellerForm = () => {
 		e.preventDefault()
 		if (!activeStep) setActiveStep(1)
 		else if (activeStep === 1) setActiveStep(2)
-		else if (activeStep === 2) setActiveStep(0)
+		else if (activeStep === 2) setActiveStep(3)
 	}
 	return (
 		<>
 			<StepperComponent
 				activeStep={activeStep}
 				setActiveStep={setActiveStep}
+				steps={[1, 2, 3, 4]}
 			/>
 			{activeStep === 0 && (
 				<form onSubmit={onSubmit}>
@@ -77,6 +83,27 @@ const SellerForm = () => {
 			)}
 			{activeStep === 1 && (
 				<form onSubmit={onSubmit}>
+					<SelectComponent
+						handleChange={handleChange}
+						name='brand'
+						placeholder='Марка автомобиля*'
+					/>
+					<SelectComponent
+						handleChange={handleChange}
+						name='model'
+						placeholder='Модель*'
+					/>
+					<DefButton
+						mt='3'
+						type='submit'
+					>
+						Далее
+					</DefButton>
+				</form>
+			)}
+
+			{activeStep === 2 && (
+				<form onSubmit={onSubmit}>
 					<InputComponent
 						handleChange={handleChange}
 						name='address'
@@ -107,10 +134,9 @@ const SellerForm = () => {
 
 			<PinInputModal
 				activeStep={activeStep}
-				code={value.code}
 				phone={value.phone}
 				setActiveStep={setActiveStep}
-				setCode={code => setValue({ ...value, code })}
+				isOpen={activeStep === 3}
 			/>
 		</>
 	)

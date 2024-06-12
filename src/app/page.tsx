@@ -2,7 +2,7 @@
 
 import { Box, Container, Flex, Heading } from '@chakra-ui/react'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 import DefButton from '@/components/ui/buttons/DefButton'
 import Description from '@/components/ui/texts/Description'
@@ -14,10 +14,11 @@ import {
 	STANDARD_BOTTOM_PADDING
 } from '@/config/_variables.config'
 import { USER_PAGES } from '@/config/pages-url.config'
-import { saveRole } from '@/config/role'
+import { EnumRole } from '@/config/role'
+
+import { saveUserRole } from '@/services/role.service'
 
 export default function Home() {
-	const { push } = useRouter()
 	return (
 		<Container px={MAIN_PADDING}>
 			<Flex
@@ -58,19 +59,17 @@ export default function Home() {
 					</Box>
 				</Flex>
 				<Box>
-					<DefButton
-						onClick={() => {
-							saveRole('0')
-							push(USER_PAGES.AUTH)
-						}}
+					<Link
+						href={USER_PAGES.AUTH}
+						onClick={() => saveUserRole(EnumRole.CLIENT)}
 					>
-						Продолжить
-					</DefButton>
+						<DefButton>Продолжить</DefButton>
+					</Link>
 					<UserRoutesFooter
 						question='Вы продавец?'
 						path={USER_PAGES.SIGN_UP}
 						action='Создать аккаунт'
-						onClick={() => saveRole('1')}
+						onClick={() => saveUserRole(EnumRole.SELLER)}
 					/>
 				</Box>
 			</Flex>

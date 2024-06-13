@@ -20,8 +20,8 @@ export const saveTokenStorage = (tokens: IAuthResponse) => {
 		sameSite: 'strict',
 		expires: 1
 	}
-	Cookies.set(EnumTokens.ACCESS_TOKEN, tokens.access + role, settings)
-	Cookies.set(EnumTokens.REFRESH_TOKEN, tokens.refresh + role, settings)
+	Cookies.set(EnumTokens.ACCESS_TOKEN + role, tokens.access, settings)
+	Cookies.set(EnumTokens.REFRESH_TOKEN + role, tokens.refresh, settings)
 }
 
 export const removeFromStorage = () => {

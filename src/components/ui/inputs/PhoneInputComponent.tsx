@@ -40,6 +40,7 @@ const PhoneInputComponent = ({
 				onChange={handleChange}
 				className={'phone-input'}
 				placeholder={placeholder}
+				autoFocus={false}
 			/>
 		</Stack>
 	)

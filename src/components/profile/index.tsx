@@ -10,15 +10,19 @@ import {
 	Stack,
 	Text
 } from '@chakra-ui/react'
-import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { ReactNode, useEffect, useRef, useState } from 'react'
 
 import { INTERFACE_PADDING, INTERFACE_WIDTH } from '@/config/_variables.config'
+import { USER_PAGES } from '@/config/pages-url.config'
 
 import DefButton from '../ui/buttons/DefButton'
 import InputComponent from '../ui/inputs/InputComponent'
 import PhoneInputComponent from '../ui/inputs/PhoneInputComponent'
 
+import AvatarUpload from './AvatarUpload'
 import ChangePassword from './change-password'
+import { removeFromStorage } from '@/services/auth-token.services'
 
 interface ProfileProps {
 	isOpen: boolean
@@ -26,6 +30,11 @@ interface ProfileProps {
 }
 const Profile = ({ isOpen, onClose }: ProfileProps) => {
 	const [innerHeight, setHeight] = useState(0)
+	const { replace } = useRouter()
+	const logout = () => {
+		removeFromStorage()
+		replace(USER_PAGES.AUTH)
+	}
 
 	useEffect(() => {
 		setHeight(document.documentElement.clientHeight - 77)
@@ -53,12 +62,7 @@ const Profile = ({ isOpen, onClose }: ProfileProps) => {
 			>
 				<Stack>
 					<Center>
-						<Avatar
-							w='80px'
-							h='80px'
-							bg='#F4F5F7'
-							mb='36px'
-						/>
+						<AvatarUpload />
 					</Center>
 
 					<InputComponent
@@ -69,6 +73,7 @@ const Profile = ({ isOpen, onClose }: ProfileProps) => {
 					<PhoneInputComponent placeholder='' />
 					<ChangePassword />
 					<Text
+						onClick={logout}
 						cursor='pointer'
 						mt='31px'
 						textDecoration='underline'

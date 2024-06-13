@@ -2,6 +2,7 @@
 
 import { Button, Flex, useSteps } from '@chakra-ui/react'
 import { ChangeEvent, FormEvent, useState } from 'react'
+import { toast } from 'sonner'
 
 import AdditionalRequestForm from '@/components/forms/client/additional-request-form'
 import UploadPhotos from '@/components/forms/upload-photos'
@@ -13,7 +14,10 @@ import SelectComponent from '@/components/ui/inputs/SelectComponent'
 import StepperComponent from '@/components/ui/stepper'
 import Description from '@/components/ui/texts/Description'
 
+import { useVehicle, useVehicleById } from '@/hooks/useVehicle'
+
 import { IRequestForm } from '@/models/value-interfaces/request.values'
+import { IVehicleModel } from '@/models/vehicle.model'
 
 const RequestComponent = () => {
 	const [images, setImages] = useState<File[]>([])
@@ -24,13 +28,23 @@ const RequestComponent = () => {
 	) => {
 		setValue({ ...value, [e.target.name]: e.target.value } as IRequestForm)
 	}
+
 	const { activeStep, setActiveStep } = useSteps({
 		index: 0,
 		count: 3
 	})
 
+	const { data, isLoading } = useVehicle()
+	const { data: vehicle, isLoading2 } = useVehicleById(value?.brand || 0)
+
+	const model: IVehicleModel | undefined = vehicle?.models.find(
+		el => String(el.id) === value?.model
+	)
 	const onSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
+		if (!activeStep) setActiveStep(1)
+		else if (activeStep === 1) toast('Функция все ещё в разработке')
+		else if (activeStep === 2) toast('Функция все ещё в разработке')
 	}
 	return (
 		<BlackInterface>
@@ -40,6 +54,7 @@ const RequestComponent = () => {
 					flexDirection='column'
 					justifyContent='space-between'
 				>
+					{(isLoading || isLoading2) && <Spinner />}
 					<StepperComponent
 						activeStep={activeStep}
 						setActiveStep={setActiveStep}
@@ -49,29 +64,52 @@ const RequestComponent = () => {
 						<form onSubmit={onSubmit}>
 							<SelectComponent
 								handleChange={handleChange}
+								value={value?.brand}
 								name='brand'
 								placeholder='Марка автомобиля*'
-								value={value?.brand}
-							/>
+							>
+								{data?.map(el => (
+									<option
+										value={el.id}
+										key={el.id}
+									>
+										{el.brand}
+									</option>
+								))}
+							</SelectComponent>
+
 							<SelectComponent
 								handleChange={handleChange}
 								value={value?.model}
 								name='model'
 								placeholder='Модель*'
-							/>
+								disabled={!value?.brand}
+							>
+								{vehicle?.models?.map(el => (
+									<option
+										value={el.id}
+										key={el.id}
+									>
+										{el.model}
+									</option>
+								))}
+							</SelectComponent>
 							<SelectComponent
 								handleChange={handleChange}
 								value={value?.year}
 								name='year'
 								placeholder='Год выпуска*'
-							/>
-							<InputComponent
-								handleChange={handleChange}
-								value={value?.volume}
-								name='volume'
-								placeholder='XXX'
-								title='Объем*'
-							/>
+								disabled={!model}
+							>
+								{model?.year?.map(el => (
+									<option
+										value={el.id}
+										key={el.id}
+									>
+										{el.year}
+									</option>
+								))}
+							</SelectComponent>
 							<DefButton type='submit'>Далее</DefButton>
 						</form>
 					)}

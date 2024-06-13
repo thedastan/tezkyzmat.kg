@@ -4,7 +4,7 @@ import Head from 'next/head'
 import { Toaster } from 'sonner'
 
 import { inter } from '@/constants/fonts'
-import { SITE_NAME } from '@/constants/seo.contants'
+import { SITE_NAME } from '@/constants/seo.constants'
 
 import { Providers } from './providers'
 import '@/styles/globals.scss'

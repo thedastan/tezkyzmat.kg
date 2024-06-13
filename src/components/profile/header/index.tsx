@@ -1,23 +1,27 @@
 import Profile from '..'
 import {
 	Avatar,
+	Button,
 	Container,
 	Flex,
 	Heading,
 	Text,
 	useDisclosure
 } from '@chakra-ui/react'
+import { usePathname, useRouter } from 'next/navigation'
 import { IoNotificationsOutline } from 'react-icons/io5'
-
-import HeaderComponent from '@/components/navbar/header-component'
 
 import {
 	INTERFACE_WIDTH,
 	PROFILE_HEADER_HEIGHT
 } from '@/config/_variables.config'
+import { USER_PAGES } from '@/config/pages-url.config'
 
 const ProfileHeader = () => {
 	const { isOpen, onClose, onOpen } = useDisclosure()
+	const { push } = useRouter()
+	const pathname = usePathname()
+	const isUserPage = pathname.includes(USER_PAGES.REQUEST)
 	return (
 		<Flex
 			position='fixed'
@@ -35,12 +39,21 @@ const ProfileHeader = () => {
 					isOpen={isOpen}
 					onClose={onClose}
 				/>
-				{isOpen ? (
-					<HeaderComponent
-						title='Профиль'
-						backFn={onClose}
-						color='#FFFFFF'
-					/>
+
+				{isUserPage ? (
+					<Flex
+						alignItems='center'
+						h={PROFILE_HEADER_HEIGHT}
+					>
+						<Button
+							onClick={() => push(USER_PAGES.AUTH)}
+							bg='#3D3D3D'
+							color='#F4F5F7'
+							variant='none'
+						>
+							Пропустить заявку
+						</Button>
+					</Flex>
 				) : (
 					<Flex
 						justifyContent='space-between'
@@ -83,6 +96,7 @@ const ProfileHeader = () => {
 								</Text>
 							</Flex>
 						</Flex>
+
 						<Flex
 							justifyContent='center'
 							alignItems='center'

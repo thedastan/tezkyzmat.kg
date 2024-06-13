@@ -1,21 +1,24 @@
 'use client'
 
 import {
-	Avatar,
 	Box,
 	Center,
+	Container,
 	Drawer,
+	DrawerBody,
 	DrawerContent,
+	DrawerHeader,
 	DrawerOverlay,
 	Stack,
 	Text
 } from '@chakra-ui/react'
 import { useRouter } from 'next/navigation'
-import { ReactNode, useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { INTERFACE_PADDING, INTERFACE_WIDTH } from '@/config/_variables.config'
 import { USER_PAGES } from '@/config/pages-url.config'
 
+import HeaderComponent from '../navbar/header-component'
 import DefButton from '../ui/buttons/DefButton'
 import InputComponent from '../ui/inputs/InputComponent'
 import PhoneInputComponent from '../ui/inputs/PhoneInputComponent'
@@ -50,46 +53,76 @@ const Profile = ({ isOpen, onClose }: ProfileProps) => {
 			<DrawerContent
 				w={INTERFACE_WIDTH}
 				borderTopRadius='30px'
-				maxH={innerHeight + 'px'}
+				minH='100vh'
 				h='100%'
 				mx='auto'
-				bg='#FFFFFF'
+				bg='transparent'
 				className='unscroll'
 				overflow='auto'
-				pt='51px'
-				pb='40px'
-				px={INTERFACE_PADDING}
+				pt='75px'
 			>
-				<Stack>
-					<Center>
-						<AvatarUpload />
-					</Center>
-
-					<InputComponent
-						name='full_name'
-						placeholder='Ваше полное имя'
-						title='Имя и Фамилия'
-					/>
-					<PhoneInputComponent placeholder='' />
-					<ChangePassword />
-					<Text
-						onClick={logout}
-						cursor='pointer'
-						mt='31px'
-						textDecoration='underline'
-						fontSize='14px'
-						fontWeight='400'
-						color='#1C1C1C'
-						_active={{ opacity: '.7' }}
+				<DrawerHeader
+					position='fixed'
+					zIndex='0'
+					top='0'
+					left='0'
+					right='0'
+					padding='0'
+				>
+					<Container
+						maxW={INTERFACE_WIDTH}
+						bg='#1C1C1C'
 					>
-						Выйти из аккаунта
-					</Text>
-					{/* <Box h='150px' /> */}
-				</Stack>
+						<HeaderComponent
+							title='Профиль'
+							backFn={onClose}
+							color='#FFFFFF'
+						/>
+					</Container>
+				</DrawerHeader>
+				<DrawerBody
+					position='relative'
+					zIndex='1'
+					borderTopRadius='30px'
+					minH={innerHeight + 'px'}
+					px={INTERFACE_PADDING}
+					className='unscroll'
+					h='100%'
+					bg='#FFFFFF'
+					pt='51px'
+					pb='40px'
+				>
+					<Stack>
+						<Center>
+							<AvatarUpload />
+						</Center>
 
-				<Box mt='50px'>
-					<DefButton>Сохранить</DefButton>
-				</Box>
+						<InputComponent
+							name='full_name'
+							placeholder='Ваше полное имя'
+							title='Имя и Фамилия'
+						/>
+						<PhoneInputComponent placeholder='' />
+						<ChangePassword />
+						<Text
+							onClick={logout}
+							cursor='pointer'
+							mt='31px'
+							textDecoration='underline'
+							fontSize='14px'
+							fontWeight='400'
+							color='#1C1C1C'
+							_active={{ opacity: '.7' }}
+						>
+							Выйти из аккаунта
+						</Text>
+						{/* <Box h='150px' /> */}
+					</Stack>
+
+					<Box mt='50px'>
+						<DefButton>Сохранить</DefButton>
+					</Box>
+				</DrawerBody>
 			</DrawerContent>
 		</Drawer>
 	)

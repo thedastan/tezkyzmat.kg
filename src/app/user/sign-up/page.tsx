@@ -1,7 +1,7 @@
 import { Box } from '@chakra-ui/react'
 import { Metadata } from 'next'
 
-import { NO_INDEX_PAGE } from '@/constants/seo.contants'
+import { NO_INDEX_PAGE } from '@/constants/seo.constants'
 
 import SignUp from './(components)/SignUp'
 

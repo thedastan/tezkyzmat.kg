@@ -55,7 +55,7 @@ const BlackInterface = ({
 					right='0'
 				>
 					<Container maxW={INTERFACE_WIDTH}>
-						<DefButton>{buttonText}</DefButton>
+						<DefButton onClick={buttonFn}>{buttonText}</DefButton>
 					</Container>
 				</Flex>
 			)}

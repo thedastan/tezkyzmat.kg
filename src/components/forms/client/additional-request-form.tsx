@@ -1,8 +1,11 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
 
+import Spinner from '@/components/loader/spinner'
 import DefButton from '@/components/ui/buttons/DefButton'
 import InputComponent from '@/components/ui/inputs/InputComponent'
-import SelectComponent from '@/components/ui/inputs/SelectComponent'
+import SelectCheckbox from '@/components/ui/inputs/SelectCheckbox'
+
+import { useBody, useCountry } from '@/hooks/useSpares'
 
 import { IRequestAdditionalForm } from '@/models/value-interfaces/request.values'
 
@@ -26,26 +29,35 @@ const AdditionalRequestForm = () => {
 		} as IRequestAdditionalForm)
 	}
 
+	const { country, isLoading } = useCountry()
+	const { body, isLoading2 } = useBody()
+	const handleCheckbox = (name: string, valueList: string[] | string) => {
+		setValue({ ...value, [name]: valueList } as IRequestAdditionalForm)
+	}
 	const onSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 	}
 	return (
 		<form onSubmit={onSubmit}>
-			<SelectComponent
-				handleChange={handleChange}
-				value={value?.category}
-				name='category'
-				placeholder='Категория запчасти'
-			/>
-			<SelectComponent
-				handleChange={handleChange}
-				value={value?.production}
+			{(isLoading || isLoading2) && <Spinner />}
+			<SelectCheckbox
+				handleChange={handleCheckbox}
+				list={country}
+				value={value?.production || []}
 				name='production'
 				placeholder='Производство'
 			/>
-			<SelectComponent
+			<InputComponent
 				handleChange={handleChange}
-				value={value?.body_type}
+				value={value?.volume}
+				name='volume'
+				placeholder='XXX'
+				title='Объем*'
+			/>
+			<SelectCheckbox
+				handleChange={handleCheckbox}
+				list={body}
+				value={value?.body_type || []}
 				name='body_type'
 				placeholder='Тип кузова'
 			/>

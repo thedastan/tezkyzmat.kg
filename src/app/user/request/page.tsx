@@ -2,12 +2,13 @@ import { Metadata } from 'next'
 
 import { NO_INDEX_PAGE } from '@/constants/seo.constants'
 
-import RequestComponent from './RequestComponent'
+import RequestComponent from '@/app/client/request/RequestComponent'
 
 export const metadata: Metadata = {
-	title: 'Запрос',
+	title: 'Заявка',
 	...NO_INDEX_PAGE
 }
-export default function RequestPage() {
+
+export default function UserRequestPage() {
 	return <RequestComponent />
 }

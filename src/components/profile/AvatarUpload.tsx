@@ -56,7 +56,7 @@ const AvatarUpload = () => {
 						>
 							<IoCamera
 								color='#000000'
-								fontSize='26px'
+								fontSize='28px'
 							/>
 						</Flex>
 					</Text>

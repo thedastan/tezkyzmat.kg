@@ -1,6 +1,7 @@
 import { Select, Stack, Text } from '@chakra-ui/react'
+import { PropsWithChildren } from 'react'
 
-export interface ISelectComponentProps {
+export interface ISelectComponentProps extends PropsWithChildren {
 	name: string
 	placeholder: string
 	value?: string
@@ -9,6 +10,7 @@ export interface ISelectComponentProps {
 	disabled?: boolean
 }
 const SelectComponent = ({
+	children,
 	name,
 	placeholder,
 	value,
@@ -25,6 +27,7 @@ const SelectComponent = ({
 			<Text
 				pl='4'
 				mb={!!value ? '0' : '-23px'}
+				opacity={!!value ? '1' : '0'}
 				transition='.2s'
 				color='#000000'
 				fontWeight='400'
@@ -54,9 +57,7 @@ const SelectComponent = ({
 				}}
 				isRequired={required}
 			>
-				<option>Tayota</option>
-				<option>Honda</option>
-				<option>Mercedes</option>
+				{children}
 			</Select>
 		</Stack>
 	)

@@ -60,7 +60,7 @@ export default function Home() {
 				</Flex>
 				<Box>
 					<Link
-						href={USER_PAGES.AUTH}
+						href={USER_PAGES.REQUEST}
 						onClick={() => saveUserRole(EnumRole.CLIENT)}
 					>
 						<DefButton>Продолжить</DefButton>

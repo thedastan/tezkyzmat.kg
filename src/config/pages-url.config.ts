@@ -28,6 +28,8 @@ class USER {
 	SIGN_UP = this.root + '/sign-up'
 	RESET_PASSWORD = this.root + '/reset-password'
 	LOGIST = this.root + '/logist'
+
+	REQUEST = this.root + '/request'
 }
 
 export const USER_PAGES = new USER()

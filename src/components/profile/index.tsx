@@ -64,6 +64,7 @@ const Profile = ({ isOpen, onClose }: ProfileProps) => {
 				<DrawerHeader
 					padding='0'
      bg='#1C1C1C'
+     h='75px'
 				>
 					<Container
 						maxW={INTERFACE_WIDTH}
@@ -76,8 +77,6 @@ const Profile = ({ isOpen, onClose }: ProfileProps) => {
 					</Container>
 				</DrawerHeader>
 				<DrawerBody
-					position='relative'
-					zIndex='1'
 					borderTopRadius='30px'
 					minH={innerHeight + 'px'}
 					px={INTERFACE_PADDING}

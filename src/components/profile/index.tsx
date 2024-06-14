@@ -53,7 +53,7 @@ const Profile = ({ isOpen, onClose }: ProfileProps) => {
 			<DrawerContent
 				w={INTERFACE_WIDTH}
 				borderTopRadius='30px'
-				minH='100vh'
+				maxH='90vh'
 				h='100%'
 				mx='auto'
 				bg='transparent'

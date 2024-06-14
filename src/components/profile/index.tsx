@@ -59,19 +59,15 @@ const Profile = ({ isOpen, onClose }: ProfileProps) => {
 				bg='transparent'
 				className='unscroll'
 				overflow='auto'
-				pt='75px'
+				
 			>
 				<DrawerHeader
-					position='fixed'
-					zIndex='0'
-					top='0'
-					left='0'
-					right='0'
 					padding='0'
+     bg='#1C1C1C'
+     h='75px'
 				>
 					<Container
 						maxW={INTERFACE_WIDTH}
-						bg='#1C1C1C'
 					>
 						<HeaderComponent
 							title='Профиль'
@@ -81,8 +77,6 @@ const Profile = ({ isOpen, onClose }: ProfileProps) => {
 					</Container>
 				</DrawerHeader>
 				<DrawerBody
-					position='relative'
-					zIndex='1'
 					borderTopRadius='30px'
 					minH={innerHeight + 'px'}
 					px={INTERFACE_PADDING}

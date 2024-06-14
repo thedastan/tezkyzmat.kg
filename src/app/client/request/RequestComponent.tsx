@@ -32,7 +32,7 @@ const RequestComponent = () => {
 	const { activeStep, setActiveStep } = useSteps({
 		index: 0,
 		count: 3
-	})
+	}) 
 
 	const { data, isLoading } = useVehicle()
 	const { data: vehicle, isLoading2 } = useVehicleById(value?.brand || 0)

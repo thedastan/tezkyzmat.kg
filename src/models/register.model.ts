@@ -10,6 +10,8 @@ export interface IRegisterSeller {
 	full_name: string
 	address: string
 	shop: string
+	city: number
+	market: number
 }
 
 interface IUser {

@@ -1,17 +1,25 @@
 import { useSteps } from '@chakra-ui/react'
 import { ChangeEvent, FormEvent, useState } from 'react'
 
+import Spinner from '@/components/loader/spinner'
 import DefButton from '@/components/ui/buttons/DefButton'
+import CheckboxOption from '@/components/ui/card/CheckboxOption'
 import InputComponent from '@/components/ui/inputs/InputComponent'
 import PhoneInputComponent from '@/components/ui/inputs/PhoneInputComponent'
+import SelectCheckbox from '@/components/ui/inputs/SelectCheckbox'
 import SelectComponent from '@/components/ui/inputs/SelectComponent'
 import StepperComponent from '@/components/ui/stepper'
 
+import { EnumRole } from '@/config/role'
+
+import { useCity } from '@/hooks/useCity'
 import { useRegister } from '@/hooks/useRegister'
+import { useVehicle, useVehicleById } from '@/hooks/useVehicle'
 
 import PinInputModal from '../../../app/user/sign-up/(components)/PinInputModal'
 import UploadPhotos from '../upload-photos'
 
+import { ISpareData } from '@/models/spares.model'
 import { SellerRegisterForm } from '@/models/value-interfaces/auth.values'
 
 const SellerForm = () => {
@@ -26,10 +34,18 @@ const SellerForm = () => {
 		phone: '',
 		password: '',
 		address: '',
-		shop_name: ''
+		shop: '',
+		model: '',
+		brand: '',
+		city: '',
+		market: ''
 	})
 
-	const { mutate, isPending } = useRegister(() => setActiveStep(2))
+	const { mutate, isPending } = useRegister(() => setActiveStep(3))
+	const { data, isLoading } = useVehicle()
+
+	const { data: vehicle, isLoading2 } = useVehicleById(value?.brand || 0)
+	const { city, markets, isLoading: isLoading3 } = useCity(value.city)
 
 	const handleChange = (
 		e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -37,14 +53,32 @@ const SellerForm = () => {
 		setValue({ ...value, [e.target.name]: e.target.value })
 	}
 
+	const handleCheckbox = (name: string, valueList: string[] | string) => {
+		setValue({ ...value, [name]: valueList } as SellerRegisterForm)
+	}
+
 	const onSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		if (!activeStep) setActiveStep(1)
 		else if (activeStep === 1) setActiveStep(2)
-		else if (activeStep === 2) setActiveStep(3)
+		else if (activeStep === 2) {
+			mutate({
+				user: {
+					password: value.password,
+					phone: value.phone,
+					role: EnumRole.SELLER
+				},
+				address: value.address,
+				city: Number(value.city),
+				full_name: value.full_name,
+				market: Number(value.market),
+				shop: value.shop
+			})
+		}
 	}
 	return (
 		<>
+			{(isLoading || isLoading2 || isPending || isLoading3) && <Spinner />}
 			<StepperComponent
 				activeStep={activeStep}
 				setActiveStep={setActiveStep}
@@ -85,38 +119,101 @@ const SellerForm = () => {
 				<form onSubmit={onSubmit}>
 					<SelectComponent
 						handleChange={handleChange}
+						value={value?.brand}
 						name='brand'
 						placeholder='Марка автомобиля*'
-					/>
+					>
+						{data?.map(el => (
+							<option
+								value={el.id}
+								key={el.id}
+							>
+								{el.brand}
+							</option>
+						))}
+					</SelectComponent>
+
 					<SelectComponent
 						handleChange={handleChange}
+						value={value?.model}
 						name='model'
 						placeholder='Модель*'
-					/>
-					<DefButton
-						mt='3'
-						type='submit'
+						disabled={!value?.brand}
 					>
-						Далее
-					</DefButton>
+						{vehicle?.models?.map(el => (
+							<option
+								value={el.id}
+								key={el.id}
+							>
+								{el.model}
+							</option>
+						))}
+					</SelectComponent>
+
+					<DefButton type='submit'>Далее</DefButton>
 				</form>
 			)}
 
 			{activeStep === 2 && (
 				<form onSubmit={onSubmit}>
+					<SelectComponent
+						handleChange={handleChange}
+						name='city'
+						placeholder='Город'
+						value={value.city}
+					>
+						{city?.map(el => (
+							<option
+								key={el.id}
+								value={el.id}
+							>
+								{el.name}
+							</option>
+						))}
+					</SelectComponent>
+					{/* <SelectCheckbox
+						list={city}
+						handleChange={handleCheckbox}
+						name='city'
+						placeholder='Город'
+						value={value.city}
+					/> */}
+					<SelectComponent
+						handleChange={handleChange}
+						name='market'
+						placeholder='Название рынка'
+						value={value.market}
+						disabled={!markets?.length}
+					>
+						{markets?.map(el => (
+							<option
+								key={el.id}
+								value={el.id}
+							>
+								{el.name}
+							</option>
+						))}
+					</SelectComponent>
+					{/* <SelectCheckbox
+						list={markets}
+						handleChange={handleCheckbox}
+						name='market'
+						placeholder='Название рынка'
+						value={value.market}
+					/> */}
 					<InputComponent
 						handleChange={handleChange}
 						name='address'
-						placeholder='Адрес магазина'
-						title='Адрес*'
+						placeholder='Адрес по карте'
+						title='Детальный адрес'
 						value={value.address}
 					/>
 					<InputComponent
 						handleChange={handleChange}
-						name='shop_name'
+						name='shop'
 						placeholder='Название магазина'
 						title='Название'
-						value={value.shop_name}
+						value={value.shop}
 					/>
 					<UploadPhotos
 						images={images}

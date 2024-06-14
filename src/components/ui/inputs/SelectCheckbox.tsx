@@ -9,6 +9,7 @@ import {
 	Stack,
 	Text
 } from '@chakra-ui/react'
+import { PropsWithChildren } from 'react'
 
 import { INTERFACE_WIDTH } from '@/config/_variables.config'
 
@@ -91,6 +92,7 @@ const SelectCheckbox = ({
 						title={placeholder}
 						onChange={value => handleChange(name, value)}
 					>
+						{/* {children} */}
 						{list?.map(el => (
 							<MenuItemOption
 								key={el.id}
@@ -101,14 +103,6 @@ const SelectCheckbox = ({
 								_checked={{ bg: '#0000000A', rounded: '10px' }}
 								mb='2px'
 								gap='20px'
-
-								// as={Checkbox}
-								// justifyContent='space-between'
-								// pl='0'
-								// textAlign='start'
-								// w='100%'
-								// colorScheme='blackAlpha'
-								// variant='none'
 							>
 								{el.name}
 							</MenuItemOption>

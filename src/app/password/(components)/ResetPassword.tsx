@@ -22,6 +22,8 @@ import TitleComponent from '@/components/ui/texts/TitleComponent'
 import { INTERFACE_WIDTH } from '@/config/_variables.config'
 import { USER_PAGES } from '@/config/pages-url.config'
 
+import { useRoles } from '@/hooks/useRoles'
+
 const ResetPassword = () => {
 	const { isOpen, onClose, onOpen } = useDisclosure()
 	const { replace } = useRouter()
@@ -29,7 +31,7 @@ const ResetPassword = () => {
 		password1: '',
 		password2: ''
 	})
-
+	const { role } = useRoles()
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setValue({ ...value, [e.target.name]: e.target.value })
 	}
@@ -43,7 +45,7 @@ const ResetPassword = () => {
 				question='У вас нет учетной записи? '
 				path={USER_PAGES.SIGN_UP}
 				action='Создать аккаунт'
-				backPath={USER_PAGES.AUTH}
+				backPath={USER_PAGES.AUTH(role)}
 			>
 				<form onSubmit={onSubmit}>
 					<TitleComponent mb='34px'>Вход</TitleComponent>
@@ -120,7 +122,7 @@ const ResetPassword = () => {
 								</Description>
 								<DefButton
 									mt='52px'
-									onClick={() => replace(USER_PAGES.AUTH)}
+									onClick={() => replace(USER_PAGES.AUTH(role))}
 								>
 									Вернуться
 								</DefButton>

@@ -20,7 +20,7 @@ import { IRequestForm } from '@/models/value-interfaces/request.values'
 import { IVehicleModel } from '@/models/vehicle.model'
 
 const RequestComponent = () => {
-	const [images, setImages] = useState<File[]>([])
+	const [images, setImages] = useState<string[]>([])
 
 	const [value, setValue] = useState<IRequestForm>()
 	const handleChange = (

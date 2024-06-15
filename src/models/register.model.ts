@@ -12,6 +12,7 @@ export interface IRegisterSeller {
 	shop: string
 	city: number
 	market: number
+	images: string[]
 }
 
 interface IUser {

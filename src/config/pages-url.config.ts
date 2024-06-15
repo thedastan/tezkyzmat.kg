@@ -1,3 +1,5 @@
+import { RoleTypes } from './role'
+
 // client
 class CLIENT_DASHBOARD {
 	private root = '/client'
@@ -24,12 +26,14 @@ export const SELLER_PAGES = new SELLER_DASHBOARD()
 class USER {
 	private root = '/user'
 
-	AUTH = this.root + '/login'
 	SIGN_UP = this.root + '/sign-up'
 	RESET_PASSWORD = this.root + '/reset-password'
 	LOGIST = this.root + '/logist'
 
 	REQUEST = this.root + '/request'
+	AUTH = (role: RoleTypes) => {
+		return this.root + `/login/role-${role}`
+	}
 }
 
 export const USER_PAGES = new USER()

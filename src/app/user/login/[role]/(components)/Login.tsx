@@ -1,10 +1,10 @@
 'use client'
 
-import { Box, Flex } from '@chakra-ui/react'
+import { Flex } from '@chakra-ui/react'
 import { useMutation } from '@tanstack/react-query'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
 import UserLayoutComponent from '@/components/layouts/user.layout'
@@ -27,9 +27,11 @@ import { useRoles } from '@/hooks/useRoles'
 
 import { IAuthForm } from '@/models/auth.model'
 import { authService } from '@/services/auth.service'
+import { saveUserRole } from '@/services/role.service'
 
 const Login = () => {
 	const { replace } = useRouter()
+	const pathname = usePathname()
 	const [value, setValue] = useState<IAuthForm>({
 		phone: '',
 		password: ''
@@ -57,6 +59,15 @@ const Login = () => {
 		e.preventDefault()
 		mutate(value)
 	}
+
+	useEffect(() => {
+		if (pathname.includes(USER_PAGES.AUTH(EnumRole.CLIENT))) {
+			saveUserRole(EnumRole.CLIENT)
+		} else if (pathname.includes(USER_PAGES.AUTH(EnumRole.SELLER))) {
+			saveUserRole(EnumRole.SELLER)
+		}
+		console.log(pathname)
+	}, [pathname])
 	return (
 		<UserLayoutComponent
 			question='У вас нет учетной записи? '

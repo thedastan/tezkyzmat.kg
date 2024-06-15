@@ -27,7 +27,7 @@ const SellerForm = () => {
 		index: 0,
 		count: 4
 	})
-	const [images, setImages] = useState<File[]>([])
+	const [images, setImages] = useState<string[]>([])
 
 	const [value, setValue] = useState<SellerRegisterForm>({
 		full_name: '',
@@ -72,7 +72,8 @@ const SellerForm = () => {
 				city: Number(value.city),
 				full_name: value.full_name,
 				market: Number(value.market),
-				shop: value.shop
+				shop: value.shop,
+				images
 			})
 		}
 	}
@@ -122,6 +123,7 @@ const SellerForm = () => {
 						value={value?.brand}
 						name='brand'
 						placeholder='Марка автомобиля*'
+						required={false}
 					>
 						{data?.map(el => (
 							<option
@@ -139,6 +141,7 @@ const SellerForm = () => {
 						name='model'
 						placeholder='Модель*'
 						disabled={!value?.brand}
+						required={false}
 					>
 						{vehicle?.models?.map(el => (
 							<option

@@ -16,6 +16,7 @@ import {
 	PROFILE_HEADER_HEIGHT
 } from '@/config/_variables.config'
 import { USER_PAGES } from '@/config/pages-url.config'
+import { EnumRole } from '@/config/role'
 
 const ProfileHeader = () => {
 	const { isOpen, onClose, onOpen } = useDisclosure()
@@ -46,7 +47,7 @@ const ProfileHeader = () => {
 						h={PROFILE_HEADER_HEIGHT}
 					>
 						<Button
-							onClick={() => push(USER_PAGES.AUTH)}
+							onClick={() => push(USER_PAGES.AUTH(EnumRole.CLIENT))}
 							bg='#3D3D3D'
 							color='#F4F5F7'
 							variant='none'

@@ -5,7 +5,8 @@ import { IAuthResponse } from '@/models/auth.model'
 
 export enum EnumTokens {
 	'ACCESS_TOKEN' = 'access',
-	'REFRESH_TOKEN' = 'refresh'
+	'REFRESH_TOKEN' = 'refresh',
+	'ROLE' = 'role'
 }
 
 export const getAccessToken = () => {
@@ -22,6 +23,7 @@ export const saveTokenStorage = (tokens: IAuthResponse) => {
 	}
 	Cookies.set(EnumTokens.ACCESS_TOKEN + role, tokens.access, settings)
 	Cookies.set(EnumTokens.REFRESH_TOKEN + role, tokens.refresh, settings)
+	Cookies.set(EnumTokens.ROLE, JSON.stringify(tokens.role), settings)
 }
 
 export const removeFromStorage = () => {

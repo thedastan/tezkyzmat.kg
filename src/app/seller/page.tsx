@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 }
 
 export default function SellerPage() {
-	return <div>Seller Page</div>
+	return <div>Страница в разработке...</div>
 }

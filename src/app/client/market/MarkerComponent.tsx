@@ -1,5 +1,5 @@
 const MarkerComponent = () => {
-  return <div>MarkerComponent</div>
+  return <div>Страница в разработке...</div>
 }
 
 export default MarkerComponent

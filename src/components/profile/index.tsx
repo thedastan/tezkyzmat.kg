@@ -5,9 +5,7 @@ import {
 	Center,
 	Container,
 	Drawer,
-	DrawerBody,
 	DrawerContent,
-	DrawerHeader,
 	DrawerOverlay,
 	Stack,
 	Text
@@ -17,6 +15,9 @@ import { useEffect, useState } from 'react'
 
 import { INTERFACE_PADDING, INTERFACE_WIDTH } from '@/config/_variables.config'
 import { USER_PAGES } from '@/config/pages-url.config'
+import { EnumRole } from '@/config/role'
+
+import { useRoles } from '@/hooks/useRoles'
 
 import HeaderComponent from '../navbar/header-component'
 import DefButton from '../ui/buttons/DefButton'
@@ -33,10 +34,20 @@ interface ProfileProps {
 }
 const Profile = ({ isOpen, onClose }: ProfileProps) => {
 	const [innerHeight, setHeight] = useState(0)
+	const { role } = useRoles()
 	const { replace } = useRouter()
 	const logout = () => {
 		removeFromStorage()
-		replace(USER_PAGES.AUTH)
+		switch (role) {
+			case EnumRole.CLIENT:
+				replace(USER_PAGES.AUTH(EnumRole.CLIENT))
+				break
+			case EnumRole.SELLER:
+				replace(USER_PAGES.AUTH(EnumRole.SELLER))
+				break
+			default:
+				break
+		}
 	}
 
 	useEffect(() => {
@@ -48,43 +59,42 @@ const Profile = ({ isOpen, onClose }: ProfileProps) => {
 			placement='bottom'
 			onClose={onClose}
 			isOpen={isOpen}
+			size='full'
 		>
 			<DrawerOverlay bg='transparent' />
 			<DrawerContent
 				w={INTERFACE_WIDTH}
 				borderTopRadius='30px'
-				maxH='90vh'
+				// minH='90vh'
 				h='100%'
 				mx='auto'
 				bg='transparent'
 				className='unscroll'
 				overflow='auto'
-				
 			>
-				<DrawerHeader
+				<Box
 					padding='0'
-     bg='#1C1C1C'
-     h='75px'
+					bg='#1C1C1C'
+					h='75px'
 				>
-					<Container
-						maxW={INTERFACE_WIDTH}
-					>
+					<Container maxW={INTERFACE_WIDTH}>
 						<HeaderComponent
 							title='Профиль'
 							backFn={onClose}
 							color='#FFFFFF'
 						/>
 					</Container>
-				</DrawerHeader>
-				<DrawerBody
+				</Box>
+				<Box
+					w='100%'
 					borderTopRadius='30px'
-					minH={innerHeight + 'px'}
+					// minH={innerHeight + 'px'}
 					px={INTERFACE_PADDING}
-					className='unscroll'
+					// className='unscroll'
 					h='100%'
 					bg='#FFFFFF'
 					pt='51px'
-					pb='40px'
+					pb='50px'
 				>
 					<Stack>
 						<Center>
@@ -116,7 +126,7 @@ const Profile = ({ isOpen, onClose }: ProfileProps) => {
 					<Box mt='50px'>
 						<DefButton>Сохранить</DefButton>
 					</Box>
-				</DrawerBody>
+				</Box>
 			</DrawerContent>
 		</Drawer>
 	)

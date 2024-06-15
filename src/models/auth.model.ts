@@ -8,6 +8,7 @@ export interface IAuthForm {
 export interface IAuthResponse {
 	access: string
 	refresh: string
+	role: number
 }
 
 export interface IOtpSend {

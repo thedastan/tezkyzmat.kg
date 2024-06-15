@@ -1,5 +1,5 @@
 const ApplicationComponent = () => {
-	return <div>ApplicationComponent</div>
+	return <div>Страница в разработке...</div>
 }
 
 export default ApplicationComponent

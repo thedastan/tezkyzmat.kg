@@ -6,5 +6,6 @@ export const INTERFACE_PADDING = '16px'
 export const NAVBAR_HEIGHT = '74px'
 
 export const PROFILE_HEADER_HEIGHT = '100px'
+export const SELLER_PROFILE_HEADER_HEIGHT = '180px'
 
 export const STANDARD_BOTTOM_PADDING = '40px'

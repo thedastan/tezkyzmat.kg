@@ -57,7 +57,7 @@ const Login = () => {
 
 	const onSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-		mutate(value)
+		mutate({ ...value, role })
 	}
 
 	useEffect(() => {
@@ -66,7 +66,6 @@ const Login = () => {
 		} else if (pathname.includes(USER_PAGES.AUTH(EnumRole.SELLER))) {
 			saveUserRole(EnumRole.SELLER)
 		}
-		console.log(pathname)
 	}, [pathname])
 	return (
 		<UserLayoutComponent

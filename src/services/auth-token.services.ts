@@ -16,14 +16,14 @@ export const getAccessToken = () => {
 }
 
 export const saveTokenStorage = (tokens: IAuthResponse) => {
-	const role = getUserRole()
+	// const role = getUserRole()
 	const settings: Cookies.CookieAttributes = {
 		sameSite: 'strict',
 		expires: 1
 	}
-	Cookies.set(EnumTokens.ACCESS_TOKEN + role, tokens.access, settings)
-	Cookies.set(EnumTokens.REFRESH_TOKEN + role, tokens.refresh, settings)
 	Cookies.set(EnumTokens.ROLE, JSON.stringify(tokens.role), settings)
+	Cookies.set(EnumTokens.ACCESS_TOKEN + tokens.role, tokens.access, settings)
+	Cookies.set(EnumTokens.REFRESH_TOKEN + tokens.role, tokens.refresh, settings)
 }
 
 export const removeFromStorage = () => {

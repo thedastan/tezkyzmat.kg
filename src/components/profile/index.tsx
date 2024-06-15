@@ -15,8 +15,8 @@ import { useEffect, useState } from 'react'
 
 import { INTERFACE_PADDING, INTERFACE_WIDTH } from '@/config/_variables.config'
 import { USER_PAGES } from '@/config/pages-url.config'
-import { EnumRole } from '@/config/role'
 
+import { useProfile } from '@/hooks/useProfile'
 import { useRoles } from '@/hooks/useRoles'
 
 import HeaderComponent from '../navbar/header-component'
@@ -33,27 +33,13 @@ interface ProfileProps {
 	onClose: () => void
 }
 const Profile = ({ isOpen, onClose }: ProfileProps) => {
-	const [innerHeight, setHeight] = useState(0)
 	const { role } = useRoles()
 	const { replace } = useRouter()
+	const { data } = useProfile()
 	const logout = () => {
 		removeFromStorage()
-		switch (role) {
-			case EnumRole.CLIENT:
-				replace(USER_PAGES.AUTH(EnumRole.CLIENT))
-				break
-			case EnumRole.SELLER:
-				replace(USER_PAGES.AUTH(EnumRole.SELLER))
-				break
-			default:
-				break
-		}
+		replace(USER_PAGES.AUTH(role))
 	}
-
-	useEffect(() => {
-		setHeight(document.documentElement.clientHeight - 77)
-		window.scroll(0, 0)
-	}, [isOpen])
 	return (
 		<Drawer
 			placement='bottom'
@@ -88,7 +74,6 @@ const Profile = ({ isOpen, onClose }: ProfileProps) => {
 				<Box
 					w='100%'
 					borderTopRadius='30px'
-					// minH={innerHeight + 'px'}
 					px={INTERFACE_PADDING}
 					// className='unscroll'
 					h='100%'
@@ -105,8 +90,12 @@ const Profile = ({ isOpen, onClose }: ProfileProps) => {
 							name='full_name'
 							placeholder='Ваше полное имя'
 							title='Имя и Фамилия'
+							value={data?.profile.full_name}
 						/>
-						<PhoneInputComponent placeholder='' />
+						<PhoneInputComponent
+							placeholder=''
+							value={data?.phone}
+						/>
 						<ChangePassword />
 						<Text
 							onClick={logout}
@@ -120,7 +109,6 @@ const Profile = ({ isOpen, onClose }: ProfileProps) => {
 						>
 							Выйти из аккаунта
 						</Text>
-						{/* <Box h='150px' /> */}
 					</Stack>
 
 					<Box mt='50px'>

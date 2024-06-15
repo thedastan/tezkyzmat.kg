@@ -17,7 +17,11 @@ class SELLER_DASHBOARD {
 	private root = '/seller'
 
 	HOME = this.root
-	SEARCH = `${this.root}/application`
+	REQUESTS = `${this.root}/requests`
+	CONFIRMED = `${this.root}/confirmed`
+	REQUEST_DETAIL = (id: number | string) => {
+		return this.root + `${this.REQUESTS}/${id}`
+	}
 }
 
 export const SELLER_PAGES = new SELLER_DASHBOARD()

@@ -18,11 +18,7 @@ const SignUp = () => {
 	return (
 		<UserLayoutComponent
 			question='У вас уже есть аккаунт? '
-			path={
-				role === EnumRole.CLIENT
-					? USER_PAGES.AUTH(EnumRole.CLIENT)
-					: USER_PAGES.AUTH(EnumRole.SELLER)
-			}
+			path={USER_PAGES.AUTH(role)}
 			action='Войти'
 			backPath={PUBLIC_PAGES.HOME}
 		>

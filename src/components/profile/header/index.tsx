@@ -25,6 +25,8 @@ import { EnumRole } from '@/config/role'
 
 import { useProfile } from '@/hooks/useProfile'
 
+import Settings from '../settings'
+
 const ProfileHeader = () => {
 	const { isOpen, onClose, onOpen } = useDisclosure()
 	const { push } = useRouter()
@@ -116,16 +118,12 @@ const ProfileHeader = () => {
 							</Flex>
 
 							<Flex
-								justifyContent='center'
 								alignItems='center'
-								w='28px'
-								h='28px'
-								cursor='pointer'
+								gap='3'
+								color='#F4F5F7'
 							>
-								<IoNotificationsOutline
-									fontSize='28px'
-									color='#F4F5F7'
-								/>
+								{isSellerPage && <Settings />}
+								<IoNotificationsOutline fontSize='28px' />
 							</Flex>
 						</Flex>
 						{isSellerPage && <ConfirmedRequestButton />}

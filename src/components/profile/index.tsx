@@ -34,11 +34,11 @@ interface ProfileProps {
 }
 const Profile = ({ isOpen, onClose }: ProfileProps) => {
 	const { role } = useRoles()
-	const { replace } = useRouter()
+	const { push } = useRouter()
 	const { data } = useProfile()
 	const logout = () => {
 		removeFromStorage()
-		replace(USER_PAGES.AUTH(role))
+		push(USER_PAGES.AUTH(role))
 	}
 	return (
 		<Drawer

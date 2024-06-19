@@ -20,7 +20,7 @@ class SELLER_DASHBOARD {
 	REQUESTS = `${this.root}/requests`
 	CONFIRMED = `${this.root}/confirmed`
 	REQUEST_DETAIL = (id: number | string) => {
-		return this.root + `${this.REQUESTS}/${id}`
+		return `${this.REQUESTS}/${id}`
 	}
 }
 

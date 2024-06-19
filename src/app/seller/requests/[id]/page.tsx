@@ -2,13 +2,13 @@ import { Metadata } from 'next'
 
 import { NO_INDEX_PAGE } from '@/constants/seo.constants'
 
-import Requests from './Requests'
+import RequestsDetail from './RequestsDetail'
 
 export const metadata: Metadata = {
-	title: 'Заявки',
+	title: 'Заявка',
 	...NO_INDEX_PAGE
 }
 
-export default function SellerRequestsDetailPage() {
-	return <Requests />
+export default function SellerRequestPage() {
+	return <RequestsDetail />
 }

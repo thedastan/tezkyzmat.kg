@@ -3,10 +3,8 @@ import { ChangeEvent, FormEvent, useState } from 'react'
 
 import Spinner from '@/components/loader/spinner'
 import DefButton from '@/components/ui/buttons/DefButton'
-import CheckboxOption from '@/components/ui/card/CheckboxOption'
 import InputComponent from '@/components/ui/inputs/InputComponent'
 import PhoneInputComponent from '@/components/ui/inputs/PhoneInputComponent'
-import SelectCheckbox from '@/components/ui/inputs/SelectCheckbox'
 import SelectComponent from '@/components/ui/inputs/SelectComponent'
 import StepperComponent from '@/components/ui/stepper'
 
@@ -14,18 +12,17 @@ import { EnumRole } from '@/config/role'
 
 import { useCity } from '@/hooks/useCity'
 import { useRegister } from '@/hooks/useRegister'
-import { useVehicle, useVehicleById } from '@/hooks/useVehicle'
 
 import PinInputModal from '../../../app/user/sign-up/(components)/PinInputModal'
 import UploadPhotos from '../upload-photos'
 
-import { ISpareData } from '@/models/spares.model'
 import { SellerRegisterForm } from '@/models/value-interfaces/auth.values'
 
 const SellerForm = () => {
+	const [otp, setOtp] = useState<number>()
 	const { activeStep, setActiveStep } = useSteps({
 		index: 0,
-		count: 4
+		count: 3
 	})
 	const [images, setImages] = useState<string[]>([])
 
@@ -35,16 +32,17 @@ const SellerForm = () => {
 		password: '',
 		address: '',
 		shop: '',
-		model: '',
-		brand: '',
 		city: '',
 		market: ''
 	})
 
-	const { mutate, isPending } = useRegister(() => setActiveStep(3))
-	const { data, isLoading } = useVehicle()
+	const onSuccess = (otp: number) => {
+		setActiveStep(2)
+		setOtp(otp)
+	}
 
-	const { data: vehicle, isLoading2 } = useVehicleById(value?.brand || 0)
+	const { mutate, isPending } = useRegister(onSuccess)
+
 	const { city, markets, isLoading: isLoading3 } = useCity(value.city)
 
 	const handleChange = (
@@ -60,8 +58,7 @@ const SellerForm = () => {
 	const onSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		if (!activeStep) setActiveStep(1)
-		else if (activeStep === 1) setActiveStep(2)
-		else if (activeStep === 2) {
+		else if (activeStep === 1) {
 			mutate({
 				user: {
 					password: value.password,
@@ -79,11 +76,11 @@ const SellerForm = () => {
 	}
 	return (
 		<>
-			{(isLoading || isLoading2 || isPending || isLoading3) && <Spinner />}
+			{(isPending || isLoading3) && <Spinner />}
 			<StepperComponent
 				activeStep={activeStep}
 				setActiveStep={setActiveStep}
-				steps={[1, 2, 3, 4]}
+				steps={[1, 2, 3]}
 			/>
 			{activeStep === 0 && (
 				<form onSubmit={onSubmit}>
@@ -116,48 +113,8 @@ const SellerForm = () => {
 					</DefButton>
 				</form>
 			)}
+
 			{activeStep === 1 && (
-				<form onSubmit={onSubmit}>
-					<SelectComponent
-						handleChange={handleChange}
-						value={value?.brand}
-						name='brand'
-						placeholder='Марка автомобиля*'
-						required={false}
-					>
-						{data?.map(el => (
-							<option
-								value={el.id}
-								key={el.id}
-							>
-								{el.brand}
-							</option>
-						))}
-					</SelectComponent>
-
-					<SelectComponent
-						handleChange={handleChange}
-						value={value?.model}
-						name='model'
-						placeholder='Модель*'
-						disabled={!value?.brand}
-						required={false}
-					>
-						{vehicle?.models?.map(el => (
-							<option
-								value={el.id}
-								key={el.id}
-							>
-								{el.model}
-							</option>
-						))}
-					</SelectComponent>
-
-					<DefButton type='submit'>Далее</DefButton>
-				</form>
-			)}
-
-			{activeStep === 2 && (
 				<form onSubmit={onSubmit}>
 					<SelectComponent
 						handleChange={handleChange}
@@ -236,7 +193,8 @@ const SellerForm = () => {
 				activeStep={activeStep}
 				phone={value.phone}
 				setActiveStep={setActiveStep}
-				isOpen={activeStep === 3}
+				isOpen={activeStep === 2}
+				otp={otp}
 			/>
 		</>
 	)

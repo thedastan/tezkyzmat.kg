@@ -5,17 +5,22 @@ import {
 	getAccessToken,
 	saveTokenStorage
 } from './auth-token.services'
-import { IAuthForm, IAuthResponse, IOtpSend } from '@/models/auth.model'
+import {
+	IAuthForm,
+	IAuthResponse,
+	IOtpSend,
+	IRegisterResponse
+} from '@/models/auth.model'
 import { IRegisterClient, IRegisterSeller } from '@/models/register.model'
 
 export const authService = {
 	// client
 	async register(data: IRegisterClient | IRegisterSeller) {
-		const response = await PUBLIC_API.post<IAuthResponse>(
-			`account/register/`,
+		const response = await PUBLIC_API.post<IRegisterResponse>(
+			`account/register/`,	
 			data
 		)
-		if (response.data.access) saveTokenStorage(response.data)
+		return response.data.otp
 	},
 
 	async login(data: IAuthForm) {

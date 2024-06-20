@@ -1,6 +1,7 @@
 'use client'
 
 import { Box, Divider, useDisclosure } from '@chakra-ui/react'
+import { useQueryClient } from '@tanstack/react-query'
 import { ChangeEvent, FormEvent, useState } from 'react'
 
 import Spinner from '@/components/loader/spinner'
@@ -8,10 +9,10 @@ import DefButton from '@/components/ui/buttons/DefButton'
 import SelectCheckbox from '@/components/ui/inputs/SelectCheckbox'
 import SelectComponent from '@/components/ui/inputs/SelectComponent'
 
+import { useSellerSpareAdd } from '@/hooks/useSettings'
 import { useVehicle, useVehicleById } from '@/hooks/useVehicle'
 
 import { ISpareData } from '@/models/spares.model'
-import { IVehicleModel } from '@/models/vehicle.model'
 
 const AddBrandButton = () => {
 	const { isOpen, onClose, onOpen } = useDisclosure()
@@ -36,9 +37,19 @@ const AddBrandButton = () => {
 	const handleCheckbox = (name: string, valueList: string[] | string) => {
 		setValue({ ...value, [name]: valueList } as any)
 	}
+	const queryClient = useQueryClient()
+	const { isPending, mutate } = useSellerSpareAdd(() => {
+		queryClient.invalidateQueries({ queryKey: ['seller-spares'] })
+		setValue({ brand: '', model: '', year: [] })
+	})
 
 	const onSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
+		mutate({
+			brand: +value.brand,
+			model: +value.model,
+			year: value.year.map(el => +el)
+		})
 	}
 	return (
 		<Box mt='32px'>
@@ -49,7 +60,7 @@ const AddBrandButton = () => {
 			>
 				{isOpen ? 'Закрыть' : 'Добавить ещё одну марку'}
 			</DefButton>
-			{(isLoading || isLoading2) && <Spinner />}
+			{(isLoading || isLoading2 || isPending) && <Spinner />}
 			{isOpen && (
 				<Box mt='30px'>
 					<Divider

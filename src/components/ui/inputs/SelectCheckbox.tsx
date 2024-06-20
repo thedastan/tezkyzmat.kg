@@ -97,7 +97,7 @@ const SelectCheckbox = ({
 							<MenuItemOption
 								key={el.id}
 								isChecked={value.includes(el.name)}
-								value={el.name}
+								value={`${el.id}`}
 								display='flex'
 								flexDirection='row-reverse'
 								_checked={{ bg: '#0000000A', rounded: '10px' }}

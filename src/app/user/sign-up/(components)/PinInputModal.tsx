@@ -30,6 +30,7 @@ interface PinInputModalProps {
 	setActiveStep: (index: number) => void
 	phone: string
 	isOpen: boolean
+	otp: any
 }
 
 const countdown_count = 30
@@ -38,7 +39,8 @@ const PinInputModal = ({
 	activeStep,
 	setActiveStep,
 	phone,
-	isOpen
+	isOpen,
+	otp
 }: PinInputModalProps) => {
 	const [code, setCode] = useState('')
 	const [countdown, setCountdown] = useState(countdown_count)
@@ -161,6 +163,14 @@ const PinInputModal = ({
 									textAlign='center'
 								>
 									Неправильный код, попробуйте еще раз
+								</Description>
+							)}
+							{!!otp && (
+								<Description
+									mt='26px'
+									textAlign='center'
+								>
+									{`Код: ${otp}`}
 								</Description>
 							)}
 						</Box>

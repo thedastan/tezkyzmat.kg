@@ -18,3 +18,19 @@ export interface IOtpSend {
 	type: OtpcodeTypes
 	phone: string
 }
+
+export interface IRegisterResponse {
+	otp: number
+	data: {
+		user: {
+			phone: string
+			role: 2
+		}
+		full_name: string
+		address: string
+		shop: string
+		city: number
+		market: number
+		images: string[]
+	}
+}

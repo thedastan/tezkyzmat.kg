@@ -16,6 +16,7 @@ import { ClientRegisterForm } from '@/models/value-interfaces/auth.values'
 
 const ClientForm = () => {
 	const [validation, setValid] = useState(false)
+	const [otp, setOtp] = useState<number>()
 	const { activeStep, setActiveStep } = useSteps({
 		index: 0,
 		count: 3
@@ -31,8 +32,11 @@ const ClientForm = () => {
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setValue({ ...value, [e.target.name]: e.target.value })
 	}
-
-	const { mutate, isPending } = useRegister(() => setActiveStep(2))
+	const onSuccess = (otp: number) => {
+		setActiveStep(2)
+		setOtp(otp)
+	}
+	const { mutate, isPending } = useRegister(onSuccess)
 
 	// 'вы успешно зарегистрировались! подождите...'
 	const onSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -123,6 +127,7 @@ const ClientForm = () => {
 				phone={value.phone}
 				setActiveStep={setActiveStep}
 				isOpen={activeStep === 2}
+				otp={otp}
 			/>
 		</>
 	)

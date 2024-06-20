@@ -7,13 +7,13 @@ import { IOtpSend } from '@/models/auth.model'
 import { IRegisterClient, IRegisterSeller } from '@/models/register.model'
 import { authService } from '@/services/auth.service'
 
-export function useRegister(success: () => void) {
+export function useRegister(success: (otp: number) => void) {
 	const { mutate, isPending } = useMutation({
 		mutationKey: ['register'],
 		mutationFn: (data: IRegisterClient | IRegisterSeller) =>
 			authService.register(data),
-		onSuccess() {
-			success()
+		onSuccess(otp) {
+			success(otp)
 			toast.success('На вашу почту отпарили код. Проверьте')
 		},
 		onError(e) {

@@ -11,8 +11,6 @@ export interface SellerRegisterForm {
 	password: string
 	address: string
 	shop: string
-	model: string
-	brand: string
 	city: string
 	market: string
 }

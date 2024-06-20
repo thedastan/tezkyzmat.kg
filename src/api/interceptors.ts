@@ -1,6 +1,6 @@
 import axios, { CreateAxiosDefaults } from 'axios'
 
-import { errorCatch } from './error'
+import { errorCatch, errorUserNotFound } from './error'
 import {
 	getAccessToken,
 	removeFromStorage
@@ -35,6 +35,7 @@ PRIVATE_API.interceptors.response.use(
 	config => config,
 	async error => {
 		const originalRequest = error.config
+		errorUserNotFound(error)
 
 		if (
 			(error?.response?.status === 401 ||

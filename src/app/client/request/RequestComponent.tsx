@@ -32,7 +32,7 @@ const RequestComponent = () => {
 	const { activeStep, setActiveStep } = useSteps({
 		index: 0,
 		count: 3
-	}) 
+	})
 
 	const { data, isLoading } = useVehicle()
 	const { data: vehicle, isLoading2 } = useVehicleById(value?.brand || 0)
@@ -83,7 +83,7 @@ const RequestComponent = () => {
 								value={value?.model}
 								name='model'
 								placeholder='Модель*'
-								disabled={!value?.brand}
+								disabled={!vehicle?.models.length}
 							>
 								{vehicle?.models?.map(el => (
 									<option
@@ -107,6 +107,22 @@ const RequestComponent = () => {
 										key={el.id}
 									>
 										{el.year}
+									</option>
+								))}
+							</SelectComponent>
+							<SelectComponent
+								handleChange={handleChange}
+								value={value?.volume}
+								name='volume'
+								placeholder='Объем'
+								disabled={!model?.volume.length}
+							>
+								{model?.volume?.map(el => (
+									<option
+										value={el.id}
+										key={el.id}
+									>
+										{el.name}
 									</option>
 								))}
 							</SelectComponent>

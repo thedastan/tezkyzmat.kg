@@ -2,15 +2,22 @@
 
 import { Box, Heading, Stack } from '@chakra-ui/react'
 import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 import BlackInterface from '@/components/layouts/black-interface'
 import RequestCardSeller from '@/components/ui/card/RequestCardSeller'
-import TitleComponent from '@/components/ui/texts/TitleComponent'
 
 import { SELLER_PAGES } from '@/config/pages-url.config'
+import { EnumRole } from '@/config/role'
+
+import { saveUserRole } from '@/services/role.service'
 
 const Seller = () => {
 	const { push } = useRouter()
+
+	useEffect(() => {
+		saveUserRole(EnumRole.SELLER)
+	}, [])
 	return (
 		<BlackInterface
 			buttonFn={() => push(SELLER_PAGES.REQUESTS)}

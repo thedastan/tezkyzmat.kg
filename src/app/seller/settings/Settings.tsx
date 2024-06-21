@@ -19,13 +19,14 @@ import HeaderComponent from '@/components/navbar/header-component'
 
 import { INTERFACE_WIDTH, NAVBAR_HEIGHT } from '@/config/_variables.config'
 
-import { useSellerSpares } from '@/hooks/useSettings'
+import { useSellerSpareRemove, useSellerSpares } from '@/hooks/useSettings'
 
 import AddBrandButton from './AddBrandButton'
 
 export default function Settings() {
 	const { back } = useRouter()
 	const { data, isLoading } = useSellerSpares()
+	const { remove, isDeleting } = useSellerSpareRemove()
 	return (
 		<Box
 			mx='auto'
@@ -33,7 +34,7 @@ export default function Settings() {
 			minH='100vh'
 			pb={NAVBAR_HEIGHT}
 		>
-			{isLoading && <Spinner />}
+			{(isLoading || isDeleting) && <Spinner />}
 			<Container maxW={INTERFACE_WIDTH}>
 				<HeaderComponent
 					backFn={back}
@@ -60,10 +61,11 @@ export default function Settings() {
 						<Tbody>
 							{data?.map(spare => (
 								<Tr key={spare.id}>
-									<Td>{spare.brand}</Td>
-									<Td>{spare.model}</Td>
-									<Td isNumeric>{spare.year.join(', ')}</Td>
+									<Td>{spare.brand.brand}</Td>
+									<Td>{spare.model.model}</Td>
+									<Td isNumeric>{spare.year.map(el => el.year).join(', ')}</Td>
 									<Td
+										onClick={() => remove(spare.id)}
 										cursor='pointer'
 										_active={{ opacity: '.7' }}
 									>

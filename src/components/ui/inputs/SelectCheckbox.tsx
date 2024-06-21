@@ -20,7 +20,7 @@ interface SelectCheckboxProps {
 	value: string[]
 	name: string
 	placeholder: string
-	handleChange: (name: string, list: string[] | string) => void
+	handleChange: (name: string, list: string[]) => void
 	required?: boolean
 	disabled?: boolean
 }
@@ -90,14 +90,14 @@ const SelectCheckbox = ({
 					<MenuOptionGroup
 						type='checkbox'
 						title={placeholder}
-						onChange={value => handleChange(name, value)}
+						onChange={value => handleChange(name, value as string[])}
 					>
 						{/* {children} */}
 						{list?.map(el => (
 							<MenuItemOption
 								key={el.id}
 								isChecked={value.includes(el.name)}
-								value={`${el.id}`}
+								value={JSON.stringify(el)}
 								display='flex'
 								flexDirection='row-reverse'
 								_checked={{ bg: '#0000000A', rounded: '10px' }}

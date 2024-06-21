@@ -13,7 +13,7 @@ class SettingsService {
 
 	async addSpare(data: ISettingSpareValue) {
 		const response = await PRIVATE_API.post<ISettingSpareValue>(
-			this.BASE_URL,
+			this.BASE_URL + 'create/',
 			data
 		)
 

@@ -31,8 +31,11 @@ const AdditionalRequestForm = () => {
 
 	const { country, isLoading } = useCountry()
 	const { body, isLoading2 } = useBody()
-	const handleCheckbox = (name: string, valueList: string[] | string) => {
-		setValue({ ...value, [name]: valueList } as IRequestAdditionalForm)
+	const handleCheckbox = (name: string, valueList: string[]) => {
+		setValue({
+			...value,
+			[name]: valueList.map(el => JSON.parse(el))
+		} as IRequestAdditionalForm)
 	}
 	const onSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
@@ -43,21 +46,14 @@ const AdditionalRequestForm = () => {
 			<SelectCheckbox
 				handleChange={handleCheckbox}
 				list={country}
-				value={value?.production || []}
+				value={value?.production?.map(el => el.name) || []}
 				name='production'
 				placeholder='Производство'
-			/>
-			<InputComponent
-				handleChange={handleChange}
-				value={value?.volume}
-				name='volume'
-				placeholder='XXX'
-				title='Объем*'
 			/>
 			<SelectCheckbox
 				handleChange={handleCheckbox}
 				list={body}
-				value={value?.body_type || []}
+				value={value?.body_type?.map(el => el.name) || []}
 				name='body_type'
 				placeholder='Тип кузова'
 			/>

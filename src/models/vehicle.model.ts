@@ -13,9 +13,15 @@ export interface IVehicleModel {
 	id: number
 	model: string
 	year: IVehicleYear[]
+	volume: IVehicleVolume[]
 }
 
 export interface IVehicleYear {
 	id: number
 	year: string
+}
+
+export interface IVehicleVolume {
+	id: number
+	name: string
 }

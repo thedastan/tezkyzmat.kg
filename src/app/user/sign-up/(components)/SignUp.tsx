@@ -1,6 +1,6 @@
 'use client'
 
-import { Box } from '@chakra-ui/react'
+import { Box, Text } from '@chakra-ui/react'
 
 import ClientForm from '@/components/forms/register/ClientForm'
 import SellerForm from '@/components/forms/register/SellerForm'
@@ -23,7 +23,14 @@ const SignUp = () => {
 			backPath={PUBLIC_PAGES.HOME}
 		>
 			<Box>
-				<TitleComponent mb='26px'>Регистрация</TitleComponent>
+				<TitleComponent>Регистрация</TitleComponent>
+				<Text
+					mb='26px'
+					textAlign='center'
+					fontWeight='500'
+				>
+					( {role === EnumRole.CLIENT ? 'Покупатель' : 'Продавец'} )
+				</Text>
 				{role === EnumRole.CLIENT && <ClientForm />}
 				{role === EnumRole.SELLER && <SellerForm />}
 			</Box>

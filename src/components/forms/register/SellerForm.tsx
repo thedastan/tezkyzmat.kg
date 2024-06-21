@@ -1,4 +1,4 @@
-import { useSteps } from '@chakra-ui/react'
+import { Text, useSteps } from '@chakra-ui/react'
 import { ChangeEvent, FormEvent, useState } from 'react'
 
 import Spinner from '@/components/loader/spinner'
@@ -164,7 +164,7 @@ const SellerForm = () => {
 					<InputComponent
 						handleChange={handleChange}
 						name='address'
-						placeholder='Адрес по карте'
+						placeholder='8-ряд 18-контейнер'
 						title='Детальный адрес'
 						value={value.address}
 					/>
@@ -174,6 +174,7 @@ const SellerForm = () => {
 						placeholder='Название магазина'
 						title='Название'
 						value={value.shop}
+						required={false}
 					/>
 					<UploadPhotos
 						images={images}

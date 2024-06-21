@@ -19,27 +19,27 @@ const AddBrandButton = () => {
 	const [value, setValue] = useState({
 		model: '',
 		brand: '',
-		year: []
+		year: [] as ISpareData[]
 	})
 	const { data, isLoading } = useVehicle()
-	const { data: vehicle, isLoading2 } = useVehicleById(value.brand || 0)
+	const { data: vehicle, isLoading2 } = useVehicleById(value.brand)
 	const model: ISpareData[] | undefined = vehicle?.models
 		.find(el => String(el.id) === value?.model)
 		?.year.map(el => {
 			return { id: el.id, name: el.year }
 		})
+
 	const handleChange = (
 		e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
 	) => {
 		setValue({ ...value, [e.target.name]: e.target.value })
 	}
 
-	const handleCheckbox = (name: string, valueList: string[] | string) => {
-		setValue({ ...value, [name]: valueList } as any)
+	const handleCheckbox = (name: string, valueList: string[]) => {
+		setValue({ ...value, [name]: valueList.map(el => JSON.parse(el)) } as any)
 	}
-	const queryClient = useQueryClient()
+
 	const { isPending, mutate } = useSellerSpareAdd(() => {
-		queryClient.invalidateQueries({ queryKey: ['seller-spares'] })
 		setValue({ brand: '', model: '', year: [] })
 	})
 
@@ -48,7 +48,7 @@ const AddBrandButton = () => {
 		mutate({
 			brand: +value.brand,
 			model: +value.model,
-			year: value.year.map(el => +el)
+			year: value.year.map(el => el.id)
 		})
 	}
 	return (
@@ -111,7 +111,7 @@ const AddBrandButton = () => {
 							name='year'
 							placeholder='Год выпуска*'
 							disabled={!model?.length}
-							value={value.year}
+							value={value.year.map(el => el.name)}
 						/>
 						<DefButton type='submit'>Добавить</DefButton>
 					</form>

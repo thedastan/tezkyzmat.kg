@@ -8,6 +8,9 @@ class CLIENT_DASHBOARD {
 	SUCCESS = `${this.root}/request/success`
 	APPLICATION = `${this.root}/application`
 	MARKET = `${this.root}/market`
+	APPLICATION_DETAIL = (slug: number | string) => {
+		return `${this.APPLICATION}/${slug}`
+	}
 }
 
 export const CLIENT_PAGES = new CLIENT_DASHBOARD()

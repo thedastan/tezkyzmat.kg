@@ -1,11 +1,14 @@
+'use client'
+
 import { Box, Flex } from '@chakra-ui/react'
+import { useRouter } from 'next/navigation'
 import { BsChevronLeft } from 'react-icons/bs'
 
 import TitleComponent from '@/components/ui/texts/TitleComponent'
 
 interface HeaderComponentProps {
 	title: string
-	backFn: () => void
+	backFn?: () => void
 	color?: string
 }
 const HeaderComponent = ({
@@ -13,6 +16,7 @@ const HeaderComponent = ({
 	title,
 	color = '#1C1C1C'
 }: HeaderComponentProps) => {
+	const { back } = useRouter()
 	return (
 		<Flex
 			justifyContent='center'
@@ -29,7 +33,7 @@ const HeaderComponent = ({
 				top='0'
 			>
 				<Box
-					onClick={backFn}
+					onClick={() => (backFn ? backFn() : back())}
 					w='30px'
 					h='30px'
 					cursor='pointer'

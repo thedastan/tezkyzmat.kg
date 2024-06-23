@@ -125,7 +125,7 @@ const PinInputModal = ({
 								textAlign='center'
 								mb='5'
 							>
-								<Description>Мы отправили код на ваш телефон</Description>
+								<Description>Мы отправили код на ваш номер</Description>
 								<Description fontWeight='500'>{phone}</Description>
 							</Box>
 							<HStack

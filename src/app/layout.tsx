@@ -1,6 +1,5 @@
 import { ChakraProvider } from '@chakra-ui/react'
 import type { Metadata } from 'next'
-import Head from 'next/head'
 import { Toaster } from 'sonner'
 
 import { inter } from '@/constants/fonts'
@@ -24,28 +23,6 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang='en'>
-			<Head>
-				<meta
-					name='theme-color'
-					content='#000000'
-				/>
-
-				{/* <!-- Windows Phone --> */}
-				<meta
-					name='msapplication-navbutton-color'
-					content='#000000'
-				/>
-
-				{/* <!-- iOS Safari --> */}
-				<meta
-					name='apple-mobile-web-app-capable'
-					content='yes'
-				/>
-				<meta
-					name='apple-mobile-web-app-status-bar-style'
-					content='black-transcluent'
-				/>
-			</Head>
 			<body className={inter.className}>
 				<ChakraProvider>
 					<Providers>

@@ -1,5 +1,10 @@
 import Document, { Head, Html, Main, NextScript } from 'next/document'
 
+import { inter } from '@/constants/fonts'
+
+import GoogleTagManager2 from './(seo)/GoogleTagManager2'
+import YandexMetrika from './(seo)/YandexMetrika'
+
 class MyDocument extends Document {
 	render() {
 		return (
@@ -36,25 +41,16 @@ class MyDocument extends Document {
 						name='theme-color'
 						content='#ffffff'
 					/>
+					{/* yandex metrika  */}
+					<YandexMetrika />
 
 					<script
-						type='text/javascript'
-						dangerouslySetInnerHTML={{
-							__html: `
-                (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-                m[i].l=1*new Date();
-                for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-                k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-                (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-                ym(97651883, "init", {
-                  clickmap:true,
-                  trackLinks:true,
-                  accurateTrackBounce:true,
-                  webvisor:true
-                });
-              `
-						}}
-					/>
+						async
+						src='https://www.googletagmanager.com/gtag/js?id=G-H79YZMDZJR'
+					></script>
+
+					<GoogleTagManager2 />
+					
 					<meta
 						name='theme-color'
 						content='#000000'
@@ -76,7 +72,7 @@ class MyDocument extends Document {
 						content='black-transcluent'
 					/>
 				</Head>
-				<body>
+				<body className={inter.className}>
 					<Main />
 					<NextScript />
 					{/* Yandex Metrika noscript */}

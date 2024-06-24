@@ -27,7 +27,7 @@ export default function RootLayout({
 				<ChakraProvider>
 					<Providers>
 						<>
-							{children}
+							{children}	
 							<Toaster
 								theme='dark'
 								position='top-right'

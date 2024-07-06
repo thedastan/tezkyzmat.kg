@@ -88,7 +88,7 @@ const RequestCardClient = ({
 				}
 			>
 				<Title>{`${request.brand.brand}, ${request.model.model} 
-				${request.year.year}, ${request.volume.name}`}</Title>
+				${request?.year?.year}, ${request?.volume?.name}`}</Title>
 				<Description mt='12px'>{`“${request.description}”`}</Description>
 			</Box>
 			<Flex

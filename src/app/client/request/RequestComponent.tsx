@@ -74,7 +74,7 @@ const RequestComponent = () => {
 			localStorage.setItem(LOCALE_REQUEST_KEY, JSON.stringify(value))
 			push(USER_PAGES.AUTH(EnumRole.CLIENT))
 			toast('Необходимо авторизоваться..')
-		} else mutate({ ...value })
+		} else mutate({ ...value, image: JSON.stringify(images) })
 	}
 
 	const onSubmit = (e: FormEvent<HTMLFormElement>) => {

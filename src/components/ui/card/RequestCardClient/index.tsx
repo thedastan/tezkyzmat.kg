@@ -11,17 +11,27 @@ import DefImage from '@/assets/img/file-shadow.svg'
 
 import { CLIENT_PAGES } from '@/config/pages-url.config'
 
+import { useRequestRemove } from '@/hooks/useRequest'
+
 import DeleteModal from '../../modal/DeleteModal'
 import Description from '../../texts/Description'
 import Moment from '../../texts/Moment'
 import Title from '../../texts/Title'
 
+import { IRequest } from '@/models/request.model'
+
 interface RequestCardClientProps {
+	request: IRequest
 	is_found?: boolean
 	is_detail?: boolean
 }
-const RequestCardClient = ({ is_found, is_detail }: RequestCardClientProps) => {
+const RequestCardClient = ({
+	is_found,
+	is_detail,
+	request
+}: RequestCardClientProps) => {
 	const { isOpen, onClose, onOpen } = useDisclosure()
+	const { remove, isPending } = useRequestRemove(onClose)
 	const { push } = useRouter()
 	return (
 		<Flex
@@ -53,7 +63,8 @@ const RequestCardClient = ({ is_found, is_detail }: RequestCardClientProps) => {
 						<DeleteModal
 							isOpen={isOpen}
 							onClose={onClose}
-							onDelete={onClose}
+							onDelete={() => remove(request.id)}
+							isLoading={isPending}
 						>
 							Вы уверены, что хотите удалить заявку?
 						</DeleteModal>
@@ -76,8 +87,9 @@ const RequestCardClient = ({ is_found, is_detail }: RequestCardClientProps) => {
 					!is_detail && push(CLIENT_PAGES.APPLICATION_DETAIL('tayota-corolla'))
 				}
 			>
-				<Title>Tayota, Corolla 2015, 1.8L</Title>
-				<Description mt='12px'>“Нужна передняя левая фара”</Description>
+				<Title>{`${request.brand.brand}, ${request.model.model} 
+				${request.year.year}, ${request.volume.name}`}</Title>
+				<Description mt='12px'>{`“${request.description}”`}</Description>
 			</Box>
 			<Flex
 				gap='10px'
@@ -102,7 +114,7 @@ const RequestCardClient = ({ is_found, is_detail }: RequestCardClientProps) => {
 						alignItems='center'
 						gap='1'
 					>
-						<Moment>Производство:</Moment>
+						<Moment>Производство: </Moment>
 						<Title fontWeight='600'>Япония</Title>
 					</Flex>
 					<Flex

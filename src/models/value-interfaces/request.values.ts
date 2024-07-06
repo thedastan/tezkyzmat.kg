@@ -6,11 +6,15 @@ export interface IRequestForm {
 	year: string
 	description: string
 	volume: string
+	country?: string
+	body?: string
+	VIN?: string
+	condition?: string
 }
 
 export interface IRequestAdditionalForm {
-	production: ISpareCountry[]
-	body_type: ISpareBody[]
-	vin_code: string
-	condition: string
+	country?: string
+	body?: string
+	VIN?: string
+	condition?: string
 }

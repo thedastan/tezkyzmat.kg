@@ -16,17 +16,22 @@ import { FiSearch } from 'react-icons/fi'
 import { IconType } from 'react-icons/lib'
 
 import AddRequestButton from '@/components/add-request-button'
+import Spinner from '@/components/loader/spinner'
 import HeaderComponent from '@/components/navbar/header-component'
 import RequestCardClient from '@/components/ui/card/RequestCardClient'
 import Description from '@/components/ui/texts/Description'
 
+import { useRequest } from '@/hooks/useRequest'
+
 const ApplicationComponent = () => {
 	const [tabIndex, setTabIndex] = useState(0)
+	const { data, isLoading } = useRequest()
 	return (
 		<Box
 			bg='#F4F5F7'
 			minH='90vh'
 		>
+			{isLoading && <Spinner />}
 			<Container>
 				<HeaderComponent title='Заявки' />
 				<Tabs
@@ -64,7 +69,12 @@ const ApplicationComponent = () => {
 					</TabList>
 					<TabPanels pt='8px'>
 						<TabPanel px='0'>
-							<RequestCardClient />
+							{data?.map(el => (
+								<RequestCardClient
+									key={el.id}
+									request={el}
+								/>
+							))}
 
 							<Description
 								mt='30px'
@@ -77,10 +87,21 @@ const ApplicationComponent = () => {
 							</Description>
 						</TabPanel>
 						<TabPanel px='0'>
-							<RequestCardClient is_found={true} />
+							{data?.map(el => (
+								<RequestCardClient
+									key={el.id}
+									request={el}
+									is_found={true}
+								/>
+							))}
 						</TabPanel>
 						<TabPanel px='0'>
-							<RequestCardClient />
+							{data?.map(el => (
+								<RequestCardClient
+									key={el.id}
+									request={el}
+								/>
+							))}
 						</TabPanel>
 					</TabPanels>
 				</Tabs>

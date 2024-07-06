@@ -1,7 +1,8 @@
 'use client'
 
 import { Button, Flex, useSteps } from '@chakra-ui/react'
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
 import AdditionalRequestForm from '@/components/forms/client/additional-request-form'
@@ -14,12 +15,26 @@ import SelectComponent from '@/components/ui/inputs/SelectComponent'
 import StepperComponent from '@/components/ui/stepper'
 import Description from '@/components/ui/texts/Description'
 
+import {
+	addLocaleStorage,
+	getLocaleStorage,
+	removeLocaleStorage
+} from '@/config/helpers'
+import { CLIENT_PAGES, USER_PAGES } from '@/config/pages-url.config'
+import { EnumRole } from '@/config/role'
+
+import { useRequestAdd } from '@/hooks/useRequest'
 import { useVehicle, useVehicleById } from '@/hooks/useVehicle'
 
 import { IRequestForm } from '@/models/value-interfaces/request.values'
 import { IVehicleModel } from '@/models/vehicle.model'
 
+const LOCALE_REQUEST_KEY = 'request'
+const LOCALE_REQUEST_LIST_KEY = 'requests-history'
+
 const RequestComponent = () => {
+	const pathname = usePathname()
+	const { push } = useRouter()
 	const [images, setImages] = useState<string[]>([])
 
 	const [value, setValue] = useState<IRequestForm>()
@@ -40,12 +55,44 @@ const RequestComponent = () => {
 	const model: IVehicleModel | undefined = vehicle?.models.find(
 		el => String(el.id) === value?.model
 	)
+
+	const onSuccess = () => {
+		// const localRequest: IRequestForm = getLocaleStorage(LOCALE_REQUEST_KEY)
+		const localRequestHistory: IRequestForm[] =
+			getLocaleStorage(LOCALE_REQUEST_LIST_KEY) || []
+		const history = [...localRequestHistory, value]
+		addLocaleStorage(LOCALE_REQUEST_LIST_KEY, history)
+		removeLocaleStorage(LOCALE_REQUEST_KEY)
+
+		push(CLIENT_PAGES.SUCCESS)
+	}
+	const { mutate, isPending } = useRequestAdd(onSuccess)
+
+	function addRequest() {
+		const userWithoutToken = pathname === USER_PAGES.REQUEST
+		if (userWithoutToken) {
+			localStorage.setItem(LOCALE_REQUEST_KEY, JSON.stringify(value))
+			push(USER_PAGES.AUTH(EnumRole.CLIENT))
+			toast('Необходимо авторизоваться..')
+		} else mutate({ ...value })
+	}
+
 	const onSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		if (!activeStep) setActiveStep(1)
-		else if (activeStep === 1) toast('Функция все ещё в разработке')
-		else if (activeStep === 2) toast('Функция все ещё в разработке')
+		else if (activeStep === 1) addRequest()
+		else if (activeStep === 2) addRequest()
 	}
+
+	useEffect(() => {
+		const localRequest: IRequestForm = getLocaleStorage(LOCALE_REQUEST_KEY)
+
+		if (!!localRequest) {
+			setValue({ ...localRequest })
+			setActiveStep(1)
+			// mutate(localRequest)
+		}
+	}, [])
 	return (
 		<BlackInterface>
 			{!false ? (
@@ -54,7 +101,7 @@ const RequestComponent = () => {
 					flexDirection='column'
 					justifyContent='space-between'
 				>
-					{(isLoading || isLoading2) && <Spinner />}
+					{(isLoading || isLoading2 || isPending) && <Spinner />}
 					<StepperComponent
 						activeStep={activeStep}
 						setActiveStep={setActiveStep}
@@ -161,7 +208,13 @@ const RequestComponent = () => {
 							<DefButton type='submit'>Оформить заявку</DefButton>
 						</form>
 					)}
-					{activeStep === 2 && <AdditionalRequestForm />}
+					{activeStep === 2 && (
+						<AdditionalRequestForm
+							handleChange={handleChange}
+							value={value}
+							onSubmit={onSubmit}
+						/>
+					)}
 				</Flex>
 			) : (
 				<Flex

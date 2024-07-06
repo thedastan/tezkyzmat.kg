@@ -1,68 +1,83 @@
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { ChangeEvent, FormEvent } from 'react'
 
 import Spinner from '@/components/loader/spinner'
 import DefButton from '@/components/ui/buttons/DefButton'
 import InputComponent from '@/components/ui/inputs/InputComponent'
-import SelectCheckbox from '@/components/ui/inputs/SelectCheckbox'
+import SelectComponent from '@/components/ui/inputs/SelectComponent'
 
 import { useBody, useCountry } from '@/hooks/useSpares'
 
-import { IRequestAdditionalForm } from '@/models/value-interfaces/request.values'
+import { IRequestForm } from '@/models/value-interfaces/request.values'
 
-// {
-// 		category: '',
-// 		body_type: '',
-// 		condition: '',
-// 		production: '',
-// 		vin_code: ''
-// 	}
-
-interface AdditionalRequestFormProps {}
-const AdditionalRequestForm = () => {
-	const [value, setValue] = useState<IRequestAdditionalForm>()
-	const handleChange = (
-		e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
-	) => {
-		setValue({
-			...value,
-			[e.target.name]: e.target.value
-		} as IRequestAdditionalForm)
-	}
-
+interface AdditionalRequestFormProps {
+	value?: IRequestForm
+	onSubmit: (e: FormEvent<HTMLFormElement>) => void
+	handleChange: (
+		e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+	) => void
+}
+const AdditionalRequestForm = ({
+	value,
+	handleChange,
+	onSubmit
+}: AdditionalRequestFormProps) => {
 	const { country, isLoading } = useCountry()
 	const { body, isLoading2 } = useBody()
-	const handleCheckbox = (name: string, valueList: string[]) => {
-		setValue({
-			...value,
-			[name]: valueList.map(el => JSON.parse(el))
-		} as IRequestAdditionalForm)
-	}
-	const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault()
-	}
+
 	return (
 		<form onSubmit={onSubmit}>
 			{(isLoading || isLoading2) && <Spinner />}
-			<SelectCheckbox
-				handleChange={handleCheckbox}
-				list={country}
-				value={value?.production?.map(el => el.name) || []}
-				name='production'
+			<SelectComponent
+				handleChange={handleChange}
+				value={value?.country}
+				name='country'
 				placeholder='Производство'
-			/>
-			<SelectCheckbox
-				handleChange={handleCheckbox}
-				list={body}
-				value={value?.body_type?.map(el => el.name) || []}
-				name='body_type'
+				required={false}
+			>
+				{country?.map(el => (
+					<option
+						value={el.id}
+						key={el.id}
+					>
+						{el.name}
+					</option>
+				))}
+			</SelectComponent>
+			<SelectComponent
+				handleChange={handleChange}
+				value={value?.body}
+				name='body'
 				placeholder='Тип кузова'
-			/>
-			<InputComponent
+				required={false}
+			>
+				{body?.map(el => (
+					<option
+						value={el.id}
+						key={el.id}
+					>
+						{el.name}
+					</option>
+				))}
+			</SelectComponent>
+
+			<SelectComponent
 				handleChange={handleChange}
 				value={value?.condition}
 				name='condition'
-				placeholder='Б/У или новый'
-				title='Состояние'
+				placeholder='Состояние'
+				required={false}
+			>
+				<option value={'0'}>Б/У</option>
+				<option value={'1'}>Новый</option>
+			</SelectComponent>
+
+			<InputComponent
+				name='VIN'
+				placeholder='XXX'
+				title='Vin-код'
+				handleChange={handleChange}
+				value={value?.VIN}
+				required={false}
 			/>
 			<DefButton type='submit'>Оформить заявку</DefButton>
 		</form>
@@ -70,3 +85,28 @@ const AdditionalRequestForm = () => {
 }
 
 export default AdditionalRequestForm
+
+// <SelectCheckbox
+// 			handleChange={handleCheckbox}
+// 			list={country}
+// 			value={value?.country?.map(el => el.name) || []}
+// 			name='country'
+// 			placeholder='Производство'
+// 		/>
+
+{
+	/* <SelectCheckbox
+	handleChange={handleCheckbox}
+	list={body}
+	value={value?.body?.map(el => el.name) || []}
+	name='body'
+	placeholder='Тип кузова'
+/> */
+}
+
+// const handleCheckbox = (name: string, valueList: string[]) => {
+// 	setValue({
+// 		...value,
+// 		[name]: valueList.map(el => JSON.parse(el))
+// 	} as IRequestAdditionalForm)
+// }

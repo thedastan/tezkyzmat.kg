@@ -20,7 +20,7 @@ export default function ApplicationDetailPage() {
 		>
 			<Container>
 				<HeaderComponent title='Заявки' />
-				<RequestCardClient is_detail={true} />
+				{/* <RequestCardClient is_detail={true} /> */}
 			</Container>
 			<AddRequestButton />
 		</Box>

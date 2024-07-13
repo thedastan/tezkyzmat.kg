@@ -8,7 +8,7 @@ import {
 import { authService } from '@/services/auth.service'
 
 // export const API_ADDRESS = process.env.BASE_API_URL
-export const API_ADDRESS = 'https://api.tezkyzmat.com.kg/'
+export const API_ADDRESS = 'https://back.tezkyzmat.com.kg/'
 
 const options: CreateAxiosDefaults = {
 	baseURL: API_ADDRESS,

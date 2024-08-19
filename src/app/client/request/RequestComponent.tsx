@@ -35,7 +35,7 @@ const LOCALE_REQUEST_LIST_KEY = 'requests-history'
 const RequestComponent = () => {
 	const pathname = usePathname()
 	const { push } = useRouter()
-	const [images, setImages] = useState<string[]>([])
+	const [image, setImages] = useState<string[]>([])
 
 	const [value, setValue] = useState<IRequestForm>()
 	const handleChange = (
@@ -74,7 +74,7 @@ const RequestComponent = () => {
 			localStorage.setItem(LOCALE_REQUEST_KEY, JSON.stringify(value))
 			push(USER_PAGES.AUTH(EnumRole.CLIENT))
 			toast('Необходимо авторизоваться..')
-		} else mutate({ ...value, image: JSON.stringify(images) })
+		} else mutate({ ...value, image })
 	}
 
 	const onSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -187,7 +187,7 @@ const RequestComponent = () => {
 								title='Описание*'
 							/>
 							<UploadPhotos
-								images={images}
+								images={image}
 								setImages={setImages}
 								text='Фото образца'
 							/>

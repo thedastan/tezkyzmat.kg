@@ -1,7 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	images: {
-		domains: ['api.tezkyzmat.com.kg']
+		domains: ['back.tezkyzmat.com.kg']
+	},
+	env: {
+		BASE_API_URL: 'https://back.tezkyzmat.com.kg/'
 	}
 }
 

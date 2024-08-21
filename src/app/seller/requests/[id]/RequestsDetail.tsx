@@ -7,8 +7,12 @@ import HeaderComponent from '@/components/navbar/header-component'
 import RequestCardSellerButtons from '@/components/ui/card/RequestCardSeller/buttons'
 import Title from '@/components/ui/texts/Title'
 
-const RequestsDetail = () => {
+import { useOrderDetail } from '@/hooks/useOrders'
+
+const RequestsDetail = ({ slug }: { slug: string }) => {
 	const { back } = useRouter()
+
+	const { data, isLoading } = useOrderDetail(slug)
 	return (
 		<Box
 			bg='#F4F5F7'
@@ -32,7 +36,7 @@ const RequestsDetail = () => {
 					>
 						У вас есть эта запчасть?
 					</Title>
-					<RequestCardSellerButtons />
+					<RequestCardSellerButtons id={1} />
 				</Box>
 			</Container>
 		</Box>

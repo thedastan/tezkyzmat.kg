@@ -2,13 +2,22 @@ import { Button, Flex } from '@chakra-ui/react'
 import { FaCheck } from 'react-icons/fa'
 import { LiaTimesSolid } from 'react-icons/lia'
 
-const RequestCardSellerButtons = () => {
+import Spinner from '@/components/loader/spinner'
+
+import { useOrderChangeStatus } from '@/hooks/useOrders'
+
+import { EnumOrderStatus } from '@/models/request.model'
+
+const RequestCardSellerButtons = ({ id }: { id: number }) => {
+	const { isPending, mutate } = useOrderChangeStatus()
 	return (
 		<Flex
 			mt='14px'
 			gap='14px'
 		>
+			{isPending && <Spinner />}
 			<Button
+				onClick={() => mutate({ id, status: EnumOrderStatus.NO })}
 				variant='none'
 				rounded='10px'
 				h='48px'
@@ -24,6 +33,7 @@ const RequestCardSellerButtons = () => {
 				Нет
 			</Button>
 			<Button
+				onClick={() => mutate({ id, status: EnumOrderStatus.YES })}
 				variant='none'
 				rounded='10px'
 				h='48px'

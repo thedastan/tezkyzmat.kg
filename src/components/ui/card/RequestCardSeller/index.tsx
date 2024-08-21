@@ -1,28 +1,28 @@
-import {
-	Box,
-	Button,
-	Divider,
-	Flex,
-	Heading,
-	Text,
-	Wrap
-} from '@chakra-ui/react'
+import { Box, Divider, Flex } from '@chakra-ui/react'
+import moment from 'moment'
+import 'moment/locale/ru'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FaChevronRight } from 'react-icons/fa6'
-import { FaCheck } from 'react-icons/fa6'
-import { LiaTimesSolid } from 'react-icons/lia'
+
+import Moment from '@/components/ui/texts/Moment'
+import Title from '@/components/ui/texts/Title'
 
 import Imageeee from '@/assets/img/file-shadow.svg'
 
 import { SELLER_PAGES } from '@/config/pages-url.config'
 
-import Moment from '../../texts/Moment'
-import Title from '../../texts/Title'
-
 import RequestCardSellerButtons from './buttons'
+import { IRequest } from '@/models/request.model'
 
-const RequestCardSeller = () => {
+interface RequestCardSellerProps {
+	order: IRequest
+}
+
+const RequestCardSeller = ({
+	order: { order, id, status, status_label }
+}: RequestCardSellerProps) => {
+	const lastSeen = moment(order.created_at).fromNow()
 	return (
 		<Box
 			bg='#FFFFFF'
@@ -31,12 +31,12 @@ const RequestCardSeller = () => {
 			px='5'
 			py='6'
 		>
-			<Link href={SELLER_PAGES.REQUEST_DETAIL(1)}>
+			<Link href={SELLER_PAGES.REQUEST_DETAIL(order.id)}>
 				<Flex
 					justifyContent='space-between'
 					alignItems='center'
 				>
-					<Moment>Сегодня</Moment>
+					<Moment>{lastSeen}</Moment>
 					<FaChevronRight
 						color='#000000'
 						fontSize='14px'
@@ -46,7 +46,7 @@ const RequestCardSeller = () => {
 					mt='4'
 					noOfLines={1}
 				>
-					BMW, Golden Awards 2015, 1.8L “Нужна передняя левая фара”
+					{`${order.brand.brand}, ${order.model?.model} ${order.year?.year}, ${!!order.volume ? order.volume + 'L' : ''} ${!!order.description && `“${order.description}”`}`}
 				</Title>
 			</Link>
 			<Flex
@@ -72,7 +72,7 @@ const RequestCardSeller = () => {
 				bg='#000000'
 				opacity='.1'
 			/>
-			<RequestCardSellerButtons />
+			<RequestCardSellerButtons id={id} />
 		</Box>
 	)
 }

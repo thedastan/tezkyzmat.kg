@@ -6,25 +6,27 @@ import { useRouter } from 'next/navigation'
 import HeaderComponent from '@/components/navbar/header-component'
 import RequestCardSeller from '@/components/ui/card/RequestCardSeller'
 
-import { SELLER_PAGES } from '@/config/pages-url.config'
+import { useOrders } from '@/hooks/useOrders'
 
 const Requests = () => {
-	const { push } = useRouter()
+	const { pending_orders: data, isLoading } = useOrders()
 	return (
 		<Box
 			bg='#F4F5F7'
 			minH='100vh'
 		>
 			<Container>
-				<HeaderComponent
-					title='Все заявки'
-					backFn={() => push(SELLER_PAGES.HOME)}
-				/>
+				<HeaderComponent title='Все заявки' />
 				<Stack
 					spacing='10px'
 					mt='1'
 				>
-					<RequestCardSeller />
+					{data?.map(el => (
+						<RequestCardSeller
+							order={el}
+							key={el.id}
+						/>
+					))}
 				</Stack>
 			</Container>
 		</Box>

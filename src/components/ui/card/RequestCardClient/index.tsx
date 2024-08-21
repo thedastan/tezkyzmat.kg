@@ -1,6 +1,8 @@
 'use client'
 
 import { Box, Flex, Stack, useDisclosure } from '@chakra-ui/react'
+import moment from 'moment'
+import 'moment/locale/ru'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { FaTrash } from 'react-icons/fa6'
@@ -18,21 +20,24 @@ import Description from '../../texts/Description'
 import Moment from '../../texts/Moment'
 import Title from '../../texts/Title'
 
-import { IRequest } from '@/models/request.model'
+import { EnumOrderStatus, IRequest } from '@/models/request.model'
 
 interface RequestCardClientProps {
 	request: IRequest
-	is_found?: boolean
 	is_detail?: boolean
+	is_seller?: boolean
 }
 const RequestCardClient = ({
-	is_found,
 	is_detail,
-	request
+	is_seller,
+	request: { id, order, status, status_label }
 }: RequestCardClientProps) => {
 	const { isOpen, onClose, onOpen } = useDisclosure()
 	const { remove, isPending } = useRequestRemove(onClose)
 	const { push } = useRouter()
+	const is_found = status === EnumOrderStatus.YES
+
+	const lastSeen = moment(order.created_at).fromNow()
 	return (
 		<Flex
 			flexDirection='column'
@@ -48,48 +53,63 @@ const RequestCardClient = ({
 				alignItems='center'
 				justifyContent='space-between'
 			>
-				<Moment>Сегодня</Moment>
-				<Flex gap='26px'>
-					<Box
-						_active={{ opacity: '.7' }}
-						cursor='pointer'
+				<Moment>{lastSeen}</Moment>
+				{is_seller ? (
+					<Flex
+						py='1'
+						px='6px'
+						color={status === EnumOrderStatus.IN_SEARCH ? '#1C1C1C' : '#06B217'}
+						bg={status === EnumOrderStatus.IN_SEARCH ? '#F4F5F7' : '#EDFCEE'}
+						fontSize='10px'
+						lineHeight='16px'
+						letterSpacing='.5px'
+						rounded='6px'
 					>
-						<FaTrash
-							onClick={onOpen}
-							color='#1C1C1C'
-							opacity='.3'
-							fontSize='18px'
-						/>
-						<DeleteModal
-							isOpen={isOpen}
-							onClose={onClose}
-							onDelete={() => remove(request.id)}
-							isLoading={isPending}
-						>
-							Вы уверены, что хотите удалить заявку?
-						</DeleteModal>
-					</Box>
-					{!is_found && (
+						{status_label}
+					</Flex>
+				) : (
+					<Flex gap='26px'>
 						<Box
 							_active={{ opacity: '.7' }}
 							cursor='pointer'
 						>
-							<RiEditBoxLine
-								color='#000000'
-								fontSize='20px'
+							<FaTrash
+								onClick={onOpen}
+								color='#1C1C1C'
+								opacity='.3'
+								fontSize='18px'
 							/>
+							<DeleteModal
+								isOpen={isOpen}
+								onClose={onClose}
+								onDelete={() => remove(id)}
+								isLoading={isPending}
+							>
+								Вы уверены, что хотите удалить заявку?
+							</DeleteModal>
 						</Box>
-					)}
-				</Flex>
+						{!is_found && (
+							<Box
+								_active={{ opacity: '.7' }}
+								cursor='pointer'
+							>
+								<RiEditBoxLine
+									color='#000000'
+									fontSize='20px'
+								/>
+							</Box>
+						)}
+					</Flex>
+				)}
 			</Flex>
 			<Box
-				onClick={() =>
-					!is_detail && push(CLIENT_PAGES.APPLICATION_DETAIL('tayota-corolla'))
-				}
+				onClick={() => !is_detail && push(CLIENT_PAGES.APPLICATION_DETAIL(id))}
+				cursor='pointer'
 			>
-				<Title>{`${request.brand.brand}, ${request.model.model} 
-				${request?.year?.year}, ${request?.volume?.name}`}</Title>
-				<Description mt='12px'>{`“${request.description}”`}</Description>
+				<Title>{`${order.brand.brand}, ${order.model?.model} ${order.year?.year}, ${!!order.volume ? order.volume + 'L' : ''}`}</Title>
+				{!!order.description && (
+					<Description mt='12px'>{`“${order.description}”`}</Description>
+				)}
 			</Box>
 			<Flex
 				gap='10px'

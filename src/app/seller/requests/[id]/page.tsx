@@ -9,6 +9,10 @@ export const metadata: Metadata = {
 	...NO_INDEX_PAGE
 }
 
-export default function SellerRequestPage() {
-	return <RequestsDetail />
+export default function SellerRequestPage({
+	params
+}: {
+	params: { slug: string }
+}) {
+	return <RequestsDetail slug={params.slug} />
 }

@@ -3,25 +3,26 @@
 import {
 	Box,
 	Container,
-	Tab,
 	TabList,
 	TabPanel,
 	TabPanels,
 	Tabs
 } from '@chakra-ui/react'
-import { PropsWithChildren, useState } from 'react'
+import { useState } from 'react'
 import { CgClose } from 'react-icons/cg'
 import { FaCheck } from 'react-icons/fa'
 import { FiSearch } from 'react-icons/fi'
-import { IconType } from 'react-icons/lib'
 
 import AddRequestButton from '@/components/add-request-button'
 import Spinner from '@/components/loader/spinner'
 import HeaderComponent from '@/components/navbar/header-component'
+import TabButton from '@/components/ui/buttons/TabButton'
 import RequestCardClient from '@/components/ui/card/RequestCardClient'
 import Description from '@/components/ui/texts/Description'
 
 import { useRequest } from '@/hooks/useRequest'
+
+import { EnumOrderStatus } from '@/models/request.model'
 
 const ApplicationComponent = () => {
 	const [tabIndex, setTabIndex] = useState(0)
@@ -69,12 +70,14 @@ const ApplicationComponent = () => {
 					</TabList>
 					<TabPanels pt='8px'>
 						<TabPanel px='0'>
-							{data?.map(el => (
-								<RequestCardClient
-									key={el.id}
-									request={el}
-								/>
-							))}
+							{data
+								?.filter(el => el.status === EnumOrderStatus.IN_SEARCH)
+								.map(el => (
+									<RequestCardClient
+										key={el.id}
+										request={el}
+									/>
+								))}
 
 							<Description
 								mt='30px'
@@ -87,64 +90,30 @@ const ApplicationComponent = () => {
 							</Description>
 						</TabPanel>
 						<TabPanel px='0'>
-							{data?.map(el => (
-								<RequestCardClient
-									key={el.id}
-									request={el}
-									is_found={true}
-								/>
-							))}
+							{data
+								?.filter(el => el.status === EnumOrderStatus.YES)
+								.map(el => (
+									<RequestCardClient
+										key={el.id}
+										request={el}
+									/>
+								))}
 						</TabPanel>
 						<TabPanel px='0'>
-							{data?.map(el => (
-								<RequestCardClient
-									key={el.id}
-									request={el}
-								/>
-							))}
+							{data
+								?.filter(el => el.status === EnumOrderStatus.NO)
+								.map(el => (
+									<RequestCardClient
+										key={el.id}
+										request={el}
+									/>
+								))}
 						</TabPanel>
 					</TabPanels>
 				</Tabs>
 			</Container>
 			<AddRequestButton />
 		</Box>
-	)
-}
-
-interface TabButtonProps extends PropsWithChildren {
-	selectedBg: string
-	isActive: boolean
-	Icon: IconType
-}
-function TabButton({ Icon, isActive, children, selectedBg }: TabButtonProps) {
-	return (
-		<Tab
-			bg='#FFFFFF'
-			rounded='10px'
-			color='#1C1C1C'
-			fontSize='14px'
-			fontWeight='400'
-			lineHeight='16px'
-			px='4'
-			py='11px'
-			w='30%'
-			gap='10px'
-			alignItems='center'
-			_selected={{
-				bg: selectedBg,
-				fontWeight: '700',
-				color: '#FFFFFF',
-				width: '40%'
-			}}
-		>
-			{isActive && (
-				<Icon
-					color='#FFFFFF'
-					fontSize='16px'
-				/>
-			)}
-			{children}
-		</Tab>
 	)
 }
 

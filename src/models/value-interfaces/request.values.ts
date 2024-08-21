@@ -1,5 +1,3 @@
-import { ISpareBody, ISpareCountry } from '../spares.model'
-
 export interface IRequestForm {
 	brand: string
 	model: string
@@ -17,4 +15,9 @@ export interface IRequestAdditionalForm {
 	body?: string
 	VIN?: string
 	condition?: string
+}
+
+export interface ILocaleRequest {
+	request: IRequestForm
+	images: string[]
 }

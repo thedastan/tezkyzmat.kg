@@ -1,11 +1,13 @@
 import { toast } from 'sonner'
 
 export function ToastError(e: any) {
+	const key = Object.keys(e.response?.data)[0]
 	toast.error(
 		e.response?.data?.email ||
 			e.response?.data?.detail ||
 			e.response?.data?.non_field_errors ||
 			e.response?.data?.message ||
+			e.response?.data[key] ||
 			'Произошла ошибка!'
 	)
 }

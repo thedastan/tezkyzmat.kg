@@ -10,6 +10,12 @@ class RequestService {
 
 		return response.data
 	}
+
+	async getRequestDetail(id: number | string) {
+		const response = await PRIVATE_API.get<IRequest>(this.BASE_URL + `${id}/`)
+
+		return response.data
+	}
 	async addRequest(data: any) {
 		const response = await PRIVATE_API.post(this.BASE_URL + 'create/', data)
 

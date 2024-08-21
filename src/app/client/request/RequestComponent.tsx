@@ -26,7 +26,10 @@ import { EnumRole } from '@/config/role'
 import { useRequestAdd } from '@/hooks/useRequest'
 import { useVehicle, useVehicleById } from '@/hooks/useVehicle'
 
-import { IRequestForm } from '@/models/value-interfaces/request.values'
+import {
+	ILocaleRequest,
+	IRequestForm
+} from '@/models/value-interfaces/request.values'
 import { IVehicleModel } from '@/models/vehicle.model'
 
 const LOCALE_REQUEST_KEY = 'request'
@@ -58,7 +61,7 @@ const RequestComponent = () => {
 
 	const onSuccess = () => {
 		// const localRequest: IRequestForm = getLocaleStorage(LOCALE_REQUEST_KEY)
-		const localRequestHistory: IRequestForm[] =
+		const localRequestHistory: ILocaleRequest[] =
 			getLocaleStorage(LOCALE_REQUEST_LIST_KEY) || []
 		const history = [...localRequestHistory, value]
 		addLocaleStorage(LOCALE_REQUEST_LIST_KEY, history)
@@ -70,8 +73,15 @@ const RequestComponent = () => {
 
 	function addRequest() {
 		const userWithoutToken = pathname === USER_PAGES.REQUEST
+		const local_value: ILocaleRequest = {
+			request: value as IRequestForm,
+			images: image
+		}
 		if (userWithoutToken) {
-			localStorage.setItem(LOCALE_REQUEST_KEY, JSON.stringify(value))
+			localStorage.setItem(
+				LOCALE_REQUEST_KEY,
+				JSON.stringify(local_value as ILocaleRequest)
+			)
 			push(USER_PAGES.AUTH(EnumRole.CLIENT))
 			toast('Необходимо авторизоваться..')
 		} else mutate({ ...value, image })
@@ -85,12 +95,15 @@ const RequestComponent = () => {
 	}
 
 	useEffect(() => {
-		const localRequest: IRequestForm = getLocaleStorage(LOCALE_REQUEST_KEY)
+		const localRequest: ILocaleRequest = getLocaleStorage(LOCALE_REQUEST_KEY)
 
 		if (!!localRequest) {
-			setValue({ ...localRequest })
+			setValue({ ...localRequest.request })
+			if (localRequest.images) {
+				setImages(localRequest.images)
+			}
+
 			setActiveStep(1)
-			// mutate(localRequest)
 		}
 	}, [])
 	return (

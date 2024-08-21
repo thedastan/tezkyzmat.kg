@@ -14,6 +14,15 @@ export function useRequest() {
 	return { data, isLoading }
 }
 
+export function useRequestDetail(id: number | string) {
+	const { data, isLoading } = useQuery({
+		queryKey: ['request-detail'],
+		queryFn: () => requestService.getRequestDetail(id)
+	})
+
+	return { data, isLoading }
+}
+
 export function useRequestAdd(success?: () => void) {
 	const queryClient = useQueryClient()
 	const { mutate, isPending } = useMutation({

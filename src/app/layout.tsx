@@ -5,6 +5,7 @@ import { Toaster } from 'sonner'
 import { inter } from '@/constants/fonts'
 import { SITE_NAME } from '@/constants/seo.constants'
 
+import Head from './Head'
 import { Providers } from './providers'
 import '@/styles/globals.scss'
 
@@ -24,10 +25,11 @@ export default function RootLayout({
 	return (
 		<html lang='en'>
 			<body className={inter.className}>
+				<Head />
 				<ChakraProvider>
 					<Providers>
 						<>
-							{children}	
+							{children}
 							<Toaster
 								theme='dark'
 								position='top-right'
@@ -36,6 +38,15 @@ export default function RootLayout({
 						</>
 					</Providers>
 				</ChakraProvider>
+				<noscript>
+					<div>
+						<img
+							src='https://mc.yandex.ru/watch/97651883'
+							style={{ position: 'absolute', left: '-9999px' }}
+							alt=''
+						/>
+					</div>
+				</noscript>
 			</body>
 		</html>
 	)

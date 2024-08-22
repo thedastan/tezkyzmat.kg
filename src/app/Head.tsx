@@ -1,6 +1,3 @@
-import GoogleTagManager2 from "./(seo)/GoogleTagManager2"
-import YandexMetrika from "./(seo)/YandexMetrika"
-
 const Head = () => {
 	return (
 		<head>
@@ -36,14 +33,6 @@ const Head = () => {
 				content='#ffffff'
 			/>
 			{/* yandex metrika  */}
-			<YandexMetrika />
-
-			<script
-				async
-				src='https://www.googletagmanager.com/gtag/js?id=G-H79YZMDZJR'
-			></script>
-
-			<GoogleTagManager2 />
 
 			<meta
 				name='theme-color'

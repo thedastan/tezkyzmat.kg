@@ -1,9 +1,13 @@
-import { ChakraProvider } from '@chakra-ui/react'
+import { Box, ChakraProvider } from '@chakra-ui/react'
 import type { Metadata } from 'next'
 import { Toaster } from 'sonner'
 
+import PullToRefresh from '@/components/loader/PullToRefresh'
+
 import { inter } from '@/constants/fonts'
 import { SITE_NAME } from '@/constants/seo.constants'
+
+import { INTERFACE_WIDTH } from '@/config/_variables.config'
 
 import Head from './Head'
 import { Providers } from './providers'
@@ -26,10 +30,17 @@ export default function RootLayout({
 		<html lang='en'>
 			<body className={inter.className}>
 				<Head />
+
 				<ChakraProvider>
 					<Providers>
 						<>
-							{children}
+							<PullToRefresh />
+							<Box
+								maxW={INTERFACE_WIDTH}
+								mx='auto'
+							>
+								{children}
+							</Box>
 							<Toaster
 								theme='dark'
 								position='top-right'
@@ -38,15 +49,6 @@ export default function RootLayout({
 						</>
 					</Providers>
 				</ChakraProvider>
-				<noscript>
-					<div>
-						<img
-							src='https://mc.yandex.ru/watch/97651883'
-							style={{ position: 'absolute', left: '-9999px' }}
-							alt=''
-						/>
-					</div>
-				</noscript>
 			</body>
 		</html>
 	)

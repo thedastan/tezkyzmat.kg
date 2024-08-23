@@ -2,7 +2,10 @@ const Head = () => {
 	return (
 		<head>
 			{/* Скрипт Yandex Metrika */}
-
+			<meta
+				name='google-site-verification'
+				content='sNZSN0GT0Pfo1uVLO8khk1WSLQJzOcbQWPCNLh3udVk'
+			/>
 			<link
 				rel='icon'
 				href='/favicon.ico'

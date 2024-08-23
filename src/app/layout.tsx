@@ -34,7 +34,7 @@ export default function RootLayout({
 				<ChakraProvider>
 					<Providers>
 						<>
-							<PullToRefresh />
+							{/* <PullToRefresh /> */}
 							<Box
 								maxW={INTERFACE_WIDTH}
 								mx='auto'

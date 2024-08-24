@@ -1,5 +1,9 @@
 import { Box, Flex, Text } from '@chakra-ui/react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+
+import { USER_PAGES } from '@/config/pages-url.config'
+import { EnumRole } from '@/config/role'
 
 import Description from './Description'
 
@@ -16,8 +20,11 @@ const UserRoutesFooter = ({
 	question,
 	onClick
 }: IUserRoutesProps) => {
-	return (
+	const pathname = usePathname()
+	const isRejectedPage = USER_PAGES.AUTH(EnumRole.LOGISTICIAN) === pathname
+	return isRejectedPage ? null : (
 		<Flex
+			// display={isRejectedPage ? 'none' : 'flex'}
 			justifyContent='center'
 			gap='1'
 			mt='6'

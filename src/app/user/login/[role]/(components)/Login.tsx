@@ -17,6 +17,7 @@ import TitleComponent from '@/components/ui/texts/TitleComponent'
 import { ToastError } from '@/config/helpers'
 import {
 	CLIENT_PAGES,
+	LOGISTICIAN_PAGES,
 	PUBLIC_PAGES,
 	SELLER_PAGES,
 	USER_PAGES
@@ -49,6 +50,7 @@ const Login = () => {
 			toast.success('Вы успешно авторизовались. Подождите...')
 			if (role === EnumRole.CLIENT) replace(CLIENT_PAGES.MAIN)
 			else if (role === EnumRole.SELLER) replace(SELLER_PAGES.HOME)
+			else if (role === EnumRole.LOGISTICIAN) replace(LOGISTICIAN_PAGES.MAIN)
 		},
 		onError(e) {
 			ToastError(e)
@@ -65,6 +67,8 @@ const Login = () => {
 			saveUserRole(EnumRole.CLIENT)
 		} else if (pathname.includes(USER_PAGES.AUTH(EnumRole.SELLER))) {
 			saveUserRole(EnumRole.SELLER)
+		} else if (pathname.includes(USER_PAGES.AUTH(EnumRole.LOGISTICIAN))) {
+			saveUserRole(EnumRole.LOGISTICIAN)
 		}
 	}, [pathname])
 	return (

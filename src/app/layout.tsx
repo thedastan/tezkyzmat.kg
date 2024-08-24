@@ -28,9 +28,8 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang='en'>
+			<Head />
 			<body className={inter.className}>
-				<Head />
-
 				<ChakraProvider>
 					<Providers>
 						<>

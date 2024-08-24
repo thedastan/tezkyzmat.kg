@@ -36,7 +36,6 @@ class USER {
 
 	SIGN_UP = this.root + '/sign-up'
 	RESET_PASSWORD = this.root + '/reset-password'
-	LOGIST = this.root + '/logist'
 
 	REQUEST = this.root + '/request'
 	AUTH = (role: RoleTypes) => {
@@ -55,3 +54,11 @@ class PUBLIC {
 }
 
 export const PUBLIC_PAGES = new PUBLIC()
+
+class LOGISTICIAN {
+	private root = '/logistician'
+
+	MAIN = this.root
+}
+
+export const LOGISTICIAN_PAGES = new LOGISTICIAN()

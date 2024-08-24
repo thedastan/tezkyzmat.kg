@@ -103,7 +103,7 @@ const ProfileHeader = () => {
 										lineHeight='23.4px'
 										color='#FFFFFF'
 									>
-										{data?.profile.full_name || 'Имя Фамилия'}
+										{data?.profile?.full_name || 'Имя Фамилия'}
 									</Heading>
 									<Text
 										fontWeight='400'

@@ -90,7 +90,7 @@ const Profile = ({ isOpen, onClose }: ProfileProps) => {
 							name='full_name'
 							placeholder='Ваше полное имя'
 							title='Имя и Фамилия'
-							value={data?.profile.full_name}
+							value={data?.profile?.full_name}
 						/>
 						<PhoneInputComponent
 							placeholder=''

@@ -10,7 +10,7 @@ import {
 	PROFILE_HEADER_HEIGHT,
 	SELLER_PROFILE_HEADER_HEIGHT
 } from '@/config/_variables.config'
-import { SELLER_PAGES } from '@/config/pages-url.config'
+import { LOGISTICIAN_PAGES, SELLER_PAGES } from '@/config/pages-url.config'
 
 import ProfileHeader from '../profile/header'
 import DefButton from '../ui/buttons/DefButton'
@@ -29,6 +29,7 @@ const BlackInterface = ({
 	const pathname = usePathname()
 
 	const isSellerPage = pathname === SELLER_PAGES.HOME
+	const isLogisticianPage = pathname === LOGISTICIAN_PAGES.MAIN
 	useEffect(() => {
 		setHeight(document.documentElement.clientHeight - 150)
 	}, [])
@@ -41,7 +42,7 @@ const BlackInterface = ({
 				w='100%'
 				pt='30px'
 				pb='20px'
-				bg={isSellerPage ? '#F4F5F7' : '#FFFFFF'}
+				bg={isSellerPage || isLogisticianPage ? '#F4F5F7' : '#FFFFFF'}
 				borderTopRadius='30px'
 				position='relative'
 				zIndex='1'
@@ -54,7 +55,11 @@ const BlackInterface = ({
 				<Flex
 					position='fixed'
 					zIndex='20'
-					bottom={(isSellerPage ? 0 : parseInt(NAVBAR_HEIGHT)) + 20 + 'px'}
+					bottom={
+						(isSellerPage || isLogisticianPage ? 0 : parseInt(NAVBAR_HEIGHT)) +
+						20 +
+						'px'
+					}
 					left='0'
 					right='0'
 				>

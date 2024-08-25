@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { FiCopy } from 'react-icons/fi'
 import { RiWhatsappFill } from 'react-icons/ri'
 
+import CopyText from '../../texts/CopyText'
 import Description from '../../texts/Description'
 import Title from '../../texts/Title'
 
@@ -65,31 +66,7 @@ const MarketCard = () => {
 				</Flex>
 			</Flex>
 
-			<Flex
-				alignItems='center'
-				justifyContent='space-between'
-				mt='23px'
-				gap='10px'
-			>
-				<Text
-					noOfLines={1}
-					fontWeight='500'
-					fontSize='14px'
-					lineHeight='16px'
-					color='#1C1C1C'
-				>
-					ул. Черкесский переулок, д. 123, кв. 45
-				</Text>
-
-				<Box
-					opacity='.5'
-					fontSize='20px'
-					cursor='pointer'
-					_active={{ opacity: '.3' }}
-				>
-					<FiCopy color='#000000' />
-				</Box>
-			</Flex>
+			<CopyText mt='23px'>ул. Черкесский переулок, д. 123, кв. 45</CopyText>
 		</Box>
 	)
 }

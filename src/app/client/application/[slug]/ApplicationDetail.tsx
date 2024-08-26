@@ -19,7 +19,7 @@ const ApplicationDetail = ({ param }: { param: string }) => {
 			<Container>
 				<HeaderComponent title='Заявка' />
 				<RequestCardClient
-					request={data}
+					order={data}
 					is_detail={true}
 				/>
 			</Container>

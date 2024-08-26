@@ -38,7 +38,7 @@ const LOCALE_REQUEST_LIST_KEY = 'requests-history'
 const RequestComponent = () => {
 	const pathname = usePathname()
 	const { push } = useRouter()
-	const [image, setImages] = useState<string[]>([])
+	const [order_images, setImages] = useState<string[]>([])
 
 	const [value, setValue] = useState<IRequestForm>()
 	const handleChange = (
@@ -63,7 +63,7 @@ const RequestComponent = () => {
 		// const localRequest: IRequestForm = getLocaleStorage(LOCALE_REQUEST_KEY)
 		const localRequestHistory: ILocaleRequest[] =
 			getLocaleStorage(LOCALE_REQUEST_LIST_KEY) || []
-		const history = [...localRequestHistory, value]
+		const history = [value, ...localRequestHistory].slice(0, 3)
 		addLocaleStorage(LOCALE_REQUEST_LIST_KEY, history)
 		removeLocaleStorage(LOCALE_REQUEST_KEY)
 
@@ -75,7 +75,7 @@ const RequestComponent = () => {
 		const userWithoutToken = pathname === USER_PAGES.REQUEST
 		const local_value: ILocaleRequest = {
 			request: value as IRequestForm,
-			images: image
+			order_images
 		}
 		if (userWithoutToken) {
 			localStorage.setItem(
@@ -84,7 +84,7 @@ const RequestComponent = () => {
 			)
 			push(USER_PAGES.AUTH(EnumRole.CLIENT))
 			toast('Необходимо авторизоваться..')
-		} else mutate({ ...value, image })
+		} else mutate({ ...value, order_images })
 	}
 
 	const onSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -99,15 +99,15 @@ const RequestComponent = () => {
 
 		if (!!localRequest) {
 			setValue({ ...localRequest.request })
-			if (localRequest.images) {
-				setImages(localRequest.images)
+			if (localRequest.order_images) {
+				setImages(localRequest.order_images)
 			}
 
 			setActiveStep(1)
 		}
 	}, [])
 	return (
-		<BlackInterface>
+		<BlackInterface role={EnumRole.CLIENT}>
 			{!false ? (
 				<Flex
 					h='100%'
@@ -200,7 +200,7 @@ const RequestComponent = () => {
 								title='Описание*'
 							/>
 							<UploadPhotos
-								images={image}
+								images={order_images}
 								setImages={setImages}
 								text='Фото образца'
 							/>

@@ -5,11 +5,16 @@ import { Stack } from '@chakra-ui/react'
 import BlackInterface from '@/components/layouts/black-interface'
 import Title from '@/components/ui/texts/Title'
 
+import { EnumRole } from '@/config/role'
+
 import LogistCard from './LogistCard'
 
 const Logistician = () => {
 	return (
-		<BlackInterface buttonText='Завершенные заявки'>
+		<BlackInterface
+			buttonText='Завершенные заявки'
+			role={EnumRole.LOGISTICIAN}
+		>
 			<Title fontSize='20px'>Актуальные заявки</Title>
 
 			<Stack

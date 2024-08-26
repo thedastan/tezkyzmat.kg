@@ -3,7 +3,7 @@ import { toast } from 'sonner'
 
 import { ToastError } from '@/config/helpers'
 
-import { requestService } from '@/services/request.service'
+import { requestService } from '@/services/client-request.service'
 
 export function useRequest() {
 	const { data, isLoading } = useQuery({

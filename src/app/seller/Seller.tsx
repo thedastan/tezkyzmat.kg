@@ -26,6 +26,7 @@ const Seller = () => {
 		<BlackInterface
 			buttonFn={() => push(SELLER_PAGES.REQUESTS)}
 			buttonText='Посмотреть все заявки'
+			role={EnumRole.SELLER}
 		>
 			<Box pb={NAVBAR_HEIGHT}>
 				<Heading
@@ -36,19 +37,20 @@ const Seller = () => {
 				>
 					Недавние
 				</Heading>
-				<Stack
-					spacing='10px'
-					mt='4'
-				>
-					{!data?.length && <EmptyText />}
-					{data &&
-						data.slice(0, 2).map(el => (
+				{!isLoading && !data?.length && <EmptyText />}
+				{data && (
+					<Stack
+						spacing='10px'
+						mt='4'
+					>
+						{data.slice(0, 2).map(el => (
 							<RequestCardSeller
 								order={el}
 								key={el.id}
 							/>
 						))}
-				</Stack>
+					</Stack>
+				)}
 			</Box>
 		</BlackInterface>
 	)

@@ -1,18 +1,18 @@
 import { PRIVATE_API } from '@/api/interceptors'
 
-import { IRequest } from '@/models/request.model'
+import { IOrder, IRequest } from '@/models/request.model'
 
 class RequestService {
 	private BASE_URL = 'account/buyer/order/'
 
 	async getRequests() {
-		const response = await PRIVATE_API.get<IRequest[]>(this.BASE_URL)
+		const response = await PRIVATE_API.get<IOrder[]>(this.BASE_URL)
 
 		return response.data
 	}
 
 	async getRequestDetail(id: number | string) {
-		const response = await PRIVATE_API.get<IRequest>(this.BASE_URL + `${id}/`)
+		const response = await PRIVATE_API.get<IOrder>(this.BASE_URL + `${id}/`)
 
 		return response.data
 	}

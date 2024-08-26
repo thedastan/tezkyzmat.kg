@@ -7,7 +7,10 @@ import SelectComponent from '@/components/ui/inputs/SelectComponent'
 
 import { useBody, useCountry } from '@/hooks/useSpares'
 
-import { IRequestForm } from '@/models/value-interfaces/request.values'
+import {
+	IRequestForm,
+	condition_order_array
+} from '@/models/value-interfaces/request.values'
 
 interface AdditionalRequestFormProps {
 	value?: IRequestForm
@@ -67,8 +70,14 @@ const AdditionalRequestForm = ({
 				placeholder='Состояние'
 				required={false}
 			>
-				<option value={'0'}>Б/У</option>
-				<option value={'1'}>Новый</option>
+				{condition_order_array.map((el, idx) => (
+					<option
+						value={el.value}
+						key={idx}
+					>
+						{el.name}
+					</option>
+				))}
 			</SelectComponent>
 
 			<InputComponent

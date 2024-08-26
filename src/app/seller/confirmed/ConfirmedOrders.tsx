@@ -15,8 +15,7 @@ import { LuClock4 } from 'react-icons/lu'
 import Spinner from '@/components/loader/spinner'
 import HeaderComponent from '@/components/navbar/header-component'
 import TabButton from '@/components/ui/buttons/TabButton'
-import RequestCardClient from '@/components/ui/card/RequestCardClient'
-import RequestCardSeller from '@/components/ui/card/RequestCardSeller'
+import ConfirmedCardSeller from '@/components/ui/card/confirmed-card-seller'
 import EmptyText from '@/components/ui/texts/EmptyText'
 
 import { useOrders } from '@/hooks/useOrders'
@@ -64,20 +63,18 @@ const ConfirmedOrders = () => {
 						<TabPanel px='0'>
 							{!pending_orders?.length && <EmptyText />}
 							{pending_orders?.map(el => (
-								<RequestCardClient
+								<ConfirmedCardSeller
 									key={el.id}
 									request={el}
-									is_seller={true}
 								/>
 							))}
 						</TabPanel>
 						<TabPanel px='0'>
 							{!found_orders?.length && <EmptyText />}
 							{found_orders?.map(el => (
-								<RequestCardClient
+								<ConfirmedCardSeller
 									key={el.id}
 									request={el}
-									is_seller={true}
 								/>
 							))}
 						</TabPanel>

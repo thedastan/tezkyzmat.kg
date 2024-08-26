@@ -4,7 +4,7 @@ import Spinner from './spinner'
 
 const PageLoader = () => {
 	return (
-		<Box bg='white'>
+		<Box>
 			<Spinner />
 		</Box>
 	)

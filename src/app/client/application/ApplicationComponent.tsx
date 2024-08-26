@@ -75,7 +75,7 @@ const ApplicationComponent = () => {
 								.map(el => (
 									<RequestCardClient
 										key={el.id}
-										request={el}
+										order={el}
 									/>
 								))}
 
@@ -95,7 +95,7 @@ const ApplicationComponent = () => {
 								.map(el => (
 									<RequestCardClient
 										key={el.id}
-										request={el}
+										order={el}
 									/>
 								))}
 						</TabPanel>
@@ -105,7 +105,7 @@ const ApplicationComponent = () => {
 								.map(el => (
 									<RequestCardClient
 										key={el.id}
-										request={el}
+										order={el}
 									/>
 								))}
 						</TabPanel>

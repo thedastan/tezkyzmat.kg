@@ -12,7 +12,15 @@ export interface IOrder {
 	year?: IYear
 	volume?: IVolume
 	description?: string
+	order_images: IImage[]
+	country?: ICountry
+	body?: IBody
+	VIN?: string
+	condition?: 0 | 1
 	created_at: string
+	order_sellers: OrderSeller[]
+	status: number
+	status_label: string
 }
 
 export interface IBrand {
@@ -35,8 +43,34 @@ export interface IVolume {
 	name: string
 }
 
+export interface ICountry {
+	id: number
+	name: string
+}
+
+export interface IImage {
+	id: number
+	image: string
+}
+
+export interface IBody {
+	id: number
+	name: string
+}
+
+export interface OrderSeller {
+	id: number
+	seller: string
+	seller_phone: string
+	status: number
+	status_label: string
+	created_at: string
+}
+
 export enum EnumOrderStatus {
 	IN_SEARCH = 0,
 	YES = 1,
 	NO = 2
 }
+
+///

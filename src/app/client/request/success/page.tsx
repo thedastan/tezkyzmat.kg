@@ -10,6 +10,7 @@ import Description from '@/components/ui/texts/Description'
 import RequestSuccessSvg from '@/assets/img/request-success.svg'
 
 import { CLIENT_PAGES } from '@/config/pages-url.config'
+import { EnumRole } from '@/config/role'
 
 export default function RequestSuccessPage() {
 	const { push } = useRouter()
@@ -17,6 +18,7 @@ export default function RequestSuccessPage() {
 		<BlackInterface
 			buttonText='Посмотреть'
 			buttonFn={() => push(CLIENT_PAGES.APPLICATION)}
+			role={EnumRole.CLIENT}
 		>
 			<Flex
 				flexDirection='column'

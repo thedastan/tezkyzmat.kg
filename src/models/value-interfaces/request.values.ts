@@ -19,5 +19,17 @@ export interface IRequestAdditionalForm {
 
 export interface ILocaleRequest {
 	request: IRequestForm
-	images: string[]
+	order_images: string[]
 }
+
+export const condition_order = {
+	0: 'Б/У',
+	1: 'Новый'
+}
+
+export const condition_order_array = Object.entries(condition_order).map(el => {
+	return {
+		value: el[0],
+		name: el[1]
+	}
+})

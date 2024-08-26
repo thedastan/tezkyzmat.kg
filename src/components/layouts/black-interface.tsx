@@ -1,7 +1,6 @@
 'use client'
 
 import { Box, Container, Flex } from '@chakra-ui/react'
-import { usePathname } from 'next/navigation'
 import { PropsWithChildren, useEffect, useState } from 'react'
 
 import {
@@ -10,7 +9,7 @@ import {
 	PROFILE_HEADER_HEIGHT,
 	SELLER_PROFILE_HEADER_HEIGHT
 } from '@/config/_variables.config'
-import { LOGISTICIAN_PAGES, SELLER_PAGES } from '@/config/pages-url.config'
+import { EnumRole, RoleTypes } from '@/config/role'
 
 import ProfileHeader from '../profile/header'
 import DefButton from '../ui/buttons/DefButton'
@@ -18,18 +17,18 @@ import DefButton from '../ui/buttons/DefButton'
 interface BlackInterfaceProps extends PropsWithChildren {
 	buttonText?: string
 	buttonFn?: () => void
+	role: RoleTypes
 }
 
 const BlackInterface = ({
 	children,
 	buttonFn,
-	buttonText
+	buttonText,
+	role
 }: BlackInterfaceProps) => {
 	const [innerHeight, setHeight] = useState(0)
-	const pathname = usePathname()
-
-	const isSellerPage = pathname === SELLER_PAGES.HOME
-	const isLogisticianPage = pathname === LOGISTICIAN_PAGES.MAIN
+	const isSellerPage = role === EnumRole.SELLER
+	const isClientPage = role === EnumRole.CLIENT
 	useEffect(() => {
 		setHeight(document.documentElement.clientHeight - 150)
 	}, [])
@@ -42,7 +41,7 @@ const BlackInterface = ({
 				w='100%'
 				pt='30px'
 				pb='20px'
-				bg={isSellerPage || isLogisticianPage ? '#F4F5F7' : '#FFFFFF'}
+				bg={isClientPage ? '#FFFFFF' : '#F4F5F7'}
 				borderTopRadius='30px'
 				position='relative'
 				zIndex='1'
@@ -55,11 +54,7 @@ const BlackInterface = ({
 				<Flex
 					position='fixed'
 					zIndex='20'
-					bottom={
-						(isSellerPage || isLogisticianPage ? 0 : parseInt(NAVBAR_HEIGHT)) +
-						20 +
-						'px'
-					}
+					bottom={(!isClientPage ? 0 : parseInt(NAVBAR_HEIGHT)) + 20 + 'px'}
 					left='0'
 					right='0'
 				>

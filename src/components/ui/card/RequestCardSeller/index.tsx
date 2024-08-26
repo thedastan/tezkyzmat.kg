@@ -8,8 +8,6 @@ import { FaChevronRight } from 'react-icons/fa6'
 import Moment from '@/components/ui/texts/Moment'
 import Title from '@/components/ui/texts/Title'
 
-import Imageeee from '@/assets/img/file-shadow.svg'
-
 import { SELLER_PAGES } from '@/config/pages-url.config'
 
 import RequestCardSellerButtons from './buttons'
@@ -49,23 +47,25 @@ const RequestCardSeller = ({
 					{`${order.brand.brand}, ${order.model?.model} ${order.year?.year}, ${!!order.volume ? order.volume + 'L' : ''} ${!!order.description && `“${order.description}”`}`}
 				</Title>
 			</Link>
-			<Flex
-				overflowX='auto'
-				mt='5'
-				gap='10px'
-				className='unscroll'
-			>
-				{[1, 2, 3, 4].map(el => (
-					<Image
-						key={el}
-						src={Imageeee}
-						alt='Image'
-						width={50}
-						height={50}
-						style={{ borderRadius: '6px' }}
-					/>
-				))}
-			</Flex>
+			{!!order.order_images?.length && (
+				<Flex
+					overflowX='auto'
+					mt='5'
+					gap='10px'
+					className='unscroll'
+				>
+					{order.order_images.map(el => (
+						<Image
+							key={el.id}
+							src={el.image}
+							alt='Image'
+							width={50}
+							height={50}
+							style={{ borderRadius: '6px' }}
+						/>
+					))}
+				</Flex>
+			)}
 			<Divider
 				mt='14px'
 				h='1px'

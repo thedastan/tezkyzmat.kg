@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
+import { ANSWER_LOCAL_KEY } from '@/config/_variables.config'
 import { ToastError } from '@/config/helpers'
 
 import { EnumOrderStatus } from '@/models/request.model'
@@ -25,20 +26,23 @@ export function useOrders() {
 
 export function useOrderDetail(id: number | string) {
 	const { data, isLoading } = useQuery({
-		queryKey: ['order-detail'],
+		queryKey: ['order-detail', id],
 		queryFn: () => orderSellerService.getOrderDetail(id)
 	})
 
 	return { data, isLoading }
 }
 
-export function useOrderChangeStatus() {
+export function useOrderChangeStatus(onSuccess: () => void) {
 	const queryClient = useQueryClient()
 	const { mutate, isPending } = useMutation({
 		mutationKey: ['order-status'],
 		mutationFn: (data: OrderStatusPayload) =>
 			orderSellerService.changeOrderStatus(data),
-		onSuccess() {
+		onSuccess(res) {
+			onSuccess()
+			sessionStorage.setItem(ANSWER_LOCAL_KEY, JSON.stringify(res.status))
+
 			queryClient.invalidateQueries({ queryKey: ['orders'] })
 			toast.success('Спасибо за ответ')
 		},

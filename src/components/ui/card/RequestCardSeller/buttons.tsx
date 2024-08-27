@@ -1,15 +1,21 @@
 import { Button, Flex } from '@chakra-ui/react'
+import { useRouter } from 'next/navigation'
 import { FaCheck } from 'react-icons/fa'
 import { LiaTimesSolid } from 'react-icons/lia'
 
 import Spinner from '@/components/loader/spinner'
+
+import { SELLER_PAGES } from '@/config/pages-url.config'
 
 import { useOrderChangeStatus } from '@/hooks/useOrders'
 
 import { EnumOrderStatus } from '@/models/request.model'
 
 const RequestCardSellerButtons = ({ id }: { id: number }) => {
-	const { isPending, mutate } = useOrderChangeStatus()
+	const { push } = useRouter()
+	const { isPending, mutate } = useOrderChangeStatus(() => {
+		push(SELLER_PAGES.SUCCESS)
+	})
 	return (
 		<Flex
 			mt='14px'

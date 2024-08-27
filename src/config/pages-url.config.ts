@@ -21,6 +21,7 @@ class SELLER_DASHBOARD {
 
 	HOME = this.root
 	REQUESTS = `${this.root}/requests`
+	SUCCESS = `${this.root}/requests/success`
 	CONFIRMED = `${this.root}/confirmed`
 	SETTINGS = `${this.root}/settings`
 	REQUEST_DETAIL = (id: number | string) => {

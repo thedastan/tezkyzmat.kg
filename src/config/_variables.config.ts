@@ -9,3 +9,6 @@ export const PROFILE_HEADER_HEIGHT = '100px'
 export const SELLER_PROFILE_HEADER_HEIGHT = '180px'
 
 export const STANDARD_BOTTOM_PADDING = '40px'
+
+// session-storage
+export const ANSWER_LOCAL_KEY = 'answer-seller'

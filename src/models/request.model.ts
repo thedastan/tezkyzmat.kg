@@ -73,4 +73,9 @@ export enum EnumOrderStatus {
 	NO = 2
 }
 
+export type OrderStatusType =
+	| EnumOrderStatus.IN_SEARCH
+	| EnumOrderStatus.NO
+	| EnumOrderStatus.YES
+
 ///

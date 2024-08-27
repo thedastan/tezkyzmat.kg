@@ -1,7 +1,8 @@
-import { Box, Flex, Text } from '@chakra-ui/react'
+import { Box, Flex } from '@chakra-ui/react'
 import Image from 'next/image'
-import { FiCopy } from 'react-icons/fi'
 import { RiWhatsappFill } from 'react-icons/ri'
+
+import Card from '@/components/layouts/card'
 
 import CopyText from '../../texts/CopyText'
 import Description from '../../texts/Description'
@@ -9,12 +10,7 @@ import Title from '../../texts/Title'
 
 const MarketCard = () => {
 	return (
-		<Box
-			flexDirection='column'
-			boxShadow='0px 1px 2px 0px #0000001F'
-			rounded='14px'
-			bg='#FFFFFF'
-			px='5'
+		<Card
 			py='21px'
 			mb='10px'
 			gap='5'
@@ -67,7 +63,7 @@ const MarketCard = () => {
 			</Flex>
 
 			<CopyText mt='23px'>ул. Черкесский переулок, д. 123, кв. 45</CopyText>
-		</Box>
+		</Card>
 	)
 }
 

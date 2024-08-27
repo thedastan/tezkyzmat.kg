@@ -1,4 +1,5 @@
 import { Box, ChakraProvider } from '@chakra-ui/react'
+import 'moment/locale/ru'
 import type { Metadata } from 'next'
 import { Toaster } from 'sonner'
 

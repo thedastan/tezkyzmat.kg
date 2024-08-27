@@ -1,10 +1,14 @@
 import { PRIVATE_API } from '@/api/interceptors'
 
-import { IRequest } from '@/models/request.model'
+import {
+	EnumOrderStatus,
+	IRequest,
+	OrderStatusType
+} from '@/models/request.model'
 
 export interface OrderStatusPayload {
 	id: number
-	status: 0 | 1 | 2
+	status: OrderStatusType
 }
 
 class OrderSellerService {
@@ -17,7 +21,7 @@ class OrderSellerService {
 	}
 
 	async getOrderDetail(id: number | string) {
-		const response = await PRIVATE_API.get<IRequest>(this.BASE_URL)
+		const response = await PRIVATE_API.get<IRequest>(this.BASE_URL + `${id}/`)
 
 		return response.data
 	}
@@ -29,7 +33,7 @@ class OrderSellerService {
 			}
 		)
 
-		return response.data
+		return data
 	}
 }
 

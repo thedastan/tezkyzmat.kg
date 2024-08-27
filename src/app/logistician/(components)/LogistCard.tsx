@@ -1,12 +1,16 @@
 import { Box, Button, Divider, Flex } from '@chakra-ui/react'
+import moment from 'moment'
 
-import DefButton from '@/components/ui/buttons/DefButton'
+import OrderTitles from '@/components/order/OrderTitles'
 import CopyText from '@/components/ui/texts/CopyText'
 import Description from '@/components/ui/texts/Description'
 import Moment from '@/components/ui/texts/Moment'
 import Title from '@/components/ui/texts/Title'
 
-const LogistCard = () => {
+import { ILogistItem } from '@/models/logist.model'
+
+const LogistCard = ({ el }: { el: ILogistItem }) => {
+	const lastSeen = moment(el.created_at).fromNow()
 	return (
 		<Box
 			bg='#FFFFFF'
@@ -15,7 +19,7 @@ const LogistCard = () => {
 			px='5'
 			py='6'
 		>
-			<Moment>Сегодня</Moment>
+			<Moment>{lastSeen}</Moment>
 			<Flex
 				mt='5'
 				justifyContent='space-between'
@@ -23,13 +27,13 @@ const LogistCard = () => {
 				gap='3'
 			>
 				<Box>
-					<Title fontWeight='500'>Андрей Продавцов</Title>
+					<Title fontWeight='500'>{el.seller.full_name}</Title>
 					<Title
 						mt='3'
 						fontWeight='500'
 						opacity='.5'
 					>
-						Андрей Продавцов
+						{el.seller.phone}
 					</Title>
 				</Box>
 				<Box
@@ -50,7 +54,7 @@ const LogistCard = () => {
 				color='#477CF0'
 				fontSize='16px'
 			>
-				ул. Примерная, д. 123, кв. 45
+				{el.seller.address}
 			</CopyText>
 
 			<Divider
@@ -67,13 +71,13 @@ const LogistCard = () => {
 				gap='3'
 			>
 				<Box>
-					<Title fontWeight='500'>Асан Усонов</Title>
+					<Title fontWeight='500'>{el.order.buyer.full_name}</Title>
 					<Title
 						mt='3'
 						fontWeight='500'
 						opacity='.5'
 					>
-						Андрей Продавцов
+						{el.order.buyer.phone}
 					</Title>
 				</Box>
 				<Box
@@ -103,14 +107,7 @@ const LogistCard = () => {
 				opacity='.1'
 				my='5'
 			/>
-
-			<Title>Tayota, Corolla 2015, 1.8L</Title>
-			<Description
-				lineHeight='16px'
-				mt='3'
-			>
-				“Левая фара”
-			</Description>
+			<OrderTitles order={el.order} />
 
 			<Flex
 				gap='14px'

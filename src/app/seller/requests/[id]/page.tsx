@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function SellerRequestPage({
 	params
 }: {
-	params: { slug: string }
+	params: { id: string }
 }) {
-	return <RequestsDetail slug={params.slug} />
+	return <RequestsDetail id={params.id} />
 }

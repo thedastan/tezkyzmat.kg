@@ -35,7 +35,6 @@ const Head = () => {
 				name='theme-color'
 				content='#ffffff'
 			/>
-			{/* yandex metrika  */}
 
 			<meta
 				name='theme-color'

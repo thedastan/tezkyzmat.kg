@@ -1,10 +1,13 @@
 import { Box, ChakraProps, Flex, Text } from '@chakra-ui/react'
-import { PropsWithChildren } from 'react'
 import { FiCopy } from 'react-icons/fi'
 
-interface CopyTextProps extends ChakraProps, PropsWithChildren {}
+import { onCopyAddress } from '@/config/helpers'
+
+interface CopyTextProps extends ChakraProps {
+	value: string
+}
 const CopyText = ({
-	children,
+	value,
 	color = '#1C1C1C',
 	fontSize = '14px',
 	...props
@@ -23,10 +26,11 @@ const CopyText = ({
 				color={color}
 				fontSize={fontSize}
 			>
-				{children}
+				{value}
 			</Text>
 
 			<Box
+				onClick={() => onCopyAddress(value)}
 				opacity='.5'
 				fontSize='20px'
 				cursor='pointer'

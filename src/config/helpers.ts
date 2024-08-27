@@ -1,3 +1,4 @@
+import copy from 'copy-to-clipboard'
 import { toast } from 'sonner'
 
 export function ToastError(e: any) {
@@ -27,4 +28,9 @@ export function addLocaleStorage(key: string, data: any) {
 
 export function removeLocaleStorage(key: string) {
 	localStorage.removeItem(key)
+}
+
+export function onCopyAddress(value: string) {
+	copy(value)
+	toast('Скопирован')
 }

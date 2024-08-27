@@ -53,9 +53,8 @@ const LogistCard = ({ el }: { el: ILogistItem }) => {
 				mt='4'
 				color='#477CF0'
 				fontSize='16px'
-			>
-				{el.seller.address}
-			</CopyText>
+				value={el.seller.address}
+			/>
 
 			<Divider
 				h='1px'
@@ -97,9 +96,8 @@ const LogistCard = ({ el }: { el: ILogistItem }) => {
 				mt='4'
 				color='#477CF0'
 				fontSize='16px'
-			>
-				ул. Черкесский переулок, д. 123, кв. 45
-			</CopyText>
+				value={'ул. Черкесский переулок, д. 123, кв. 45'}
+			/>
 
 			<Divider
 				h='1px'

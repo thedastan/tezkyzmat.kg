@@ -61,22 +61,26 @@ const ConfirmedOrders = () => {
 					</TabList>
 					<TabPanels pt='8px'>
 						<TabPanel px='0'>
-							{!pending_orders?.length && <EmptyText />}
-							{pending_orders?.map(el => (
-								<ConfirmedCardSeller
-									key={el.id}
-									request={el}
-								/>
-							))}
-						</TabPanel>
-						<TabPanel px='0'>
 							{!found_orders?.length && <EmptyText />}
 							{found_orders?.map(el => (
 								<ConfirmedCardSeller
 									key={el.id}
 									request={el}
+									status_label='В ожидании'
 								/>
 							))}
+						</TabPanel>
+						<TabPanel px='0'>
+							{/* {!found_orders?.length && <EmptyText />}
+							{found_orders?.map(el => (
+								<ConfirmedCardSeller
+									key={el.id}
+									status_label='Завершен'
+									request={el}
+								/>
+							))} */}
+
+							<EmptyText />
 						</TabPanel>
 					</TabPanels>
 				</Tabs>

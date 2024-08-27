@@ -16,9 +16,11 @@ import { EnumOrderStatus, IRequest } from '@/models/request.model'
 
 interface ConfirmedCardSellerProps {
 	request: IRequest
+	status_label: string
 }
 const ConfirmedCardSeller = ({
-	request: { order, id, status, status_label }
+	request: { order, id },
+	status_label
 }: ConfirmedCardSellerProps) => {
 	const { push } = useRouter()
 

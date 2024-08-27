@@ -10,6 +10,9 @@ import { SITE_NAME } from '@/constants/seo.constants'
 
 import { INTERFACE_WIDTH } from '@/config/_variables.config'
 
+import GoogleTagManager1 from './(seo)/GoogleTagManager1'
+import GoogleTagManager2 from './(seo)/GoogleTagManager2'
+import YandexMetrika from './(seo)/YandexMetrika'
 import Head from './Head'
 import { Providers } from './providers'
 import '@/styles/globals.scss'
@@ -31,6 +34,8 @@ export default function RootLayout({
 		<html lang='en'>
 			<Head />
 			<body className={inter.className}>
+				<GoogleTagManager2 />
+				<GoogleTagManager1 />
 				<ChakraProvider>
 					<Providers>
 						<>
@@ -49,6 +54,8 @@ export default function RootLayout({
 						</>
 					</Providers>
 				</ChakraProvider>
+
+				<YandexMetrika />
 			</body>
 		</html>
 	)

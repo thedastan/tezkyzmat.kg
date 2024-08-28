@@ -1,12 +1,15 @@
 'use client'
 
-import { Box, Heading, Stack } from '@chakra-ui/react'
+import { Box, Flex, Heading, Stack } from '@chakra-ui/react'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
 import BlackInterface from '@/components/layouts/black-interface'
 import RequestCardSeller from '@/components/ui/card/RequestCardSeller'
-import EmptyText from '@/components/ui/texts/EmptyText'
+import Description from '@/components/ui/texts/Description'
+
+import EmptySvg from '@/assets/img/empty-seller-order.svg'
 
 import { NAVBAR_HEIGHT } from '@/config/_variables.config'
 import { SELLER_PAGES } from '@/config/pages-url.config'
@@ -28,17 +31,18 @@ const Seller = () => {
 			buttonText='Посмотреть все заявки'
 			role={EnumRole.SELLER}
 		>
-			<Box pb={NAVBAR_HEIGHT}>
-				<Heading
-					fontWeight='700'
-					fontSize='20px'
-					lineHeight='16px'
-					color='#1C1C1C'
-				>
-					Недавние
-				</Heading>
-				{!isLoading && !data?.length && <EmptyText />}
-				{data && (
+			{!isLoading && !data?.length && <EmptyOrder />}
+			{!!data?.length && (
+				<Box pb={NAVBAR_HEIGHT}>
+					<Heading
+						fontWeight='700'
+						fontSize='20px'
+						lineHeight='16px'
+						color='#1C1C1C'
+					>
+						Недавние
+					</Heading>
+
 					<Stack
 						spacing='10px'
 						mt='4'
@@ -50,9 +54,31 @@ const Seller = () => {
 							/>
 						))}
 					</Stack>
-				)}
-			</Box>
+				</Box>
+			)}
 		</BlackInterface>
+	)
+}
+
+function EmptyOrder() {
+	return (
+		<Flex
+			flexDirection='column'
+			alignItems='center'
+			textAlign='center'
+			gap='33px'
+			h='100%'
+			justifyContent='center'
+			mt='60px'
+		>
+			<Image
+				src={EmptySvg}
+				alt='empty'
+			/>
+			<Description maxW='294px'>
+				Заявок пока нет, но это временно. Мы уведомим вас о новых запросах.
+			</Description>
+		</Flex>
 	)
 }
 

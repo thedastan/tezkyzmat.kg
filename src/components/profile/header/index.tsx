@@ -119,11 +119,11 @@ const ProfileHeader = () => {
 
 							<Flex
 								alignItems='center'
-								gap='3'
+								gap='15px'
 								color='#F4F5F7'
 							>
-								{isSellerPage && <Settings />}
 								<IoNotificationsOutline fontSize='28px' />
+								{isSellerPage && <Settings />}
 							</Flex>
 						</Flex>
 						{isSellerPage && <ConfirmedRequestButton />}

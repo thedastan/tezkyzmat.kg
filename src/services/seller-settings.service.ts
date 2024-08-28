@@ -11,6 +11,14 @@ class SettingsService {
 		return response.data
 	}
 
+	async getSpareDetail(id: number | string) {
+		const response = await PRIVATE_API.get<ISettingSpare>(
+			this.BASE_URL + `${id}/`
+		)
+
+		return response.data
+	}
+
 	async addSpare(data: ISettingSpareValue) {
 		const response = await PRIVATE_API.post<ISettingSpareValue>(
 			this.BASE_URL + 'create/',

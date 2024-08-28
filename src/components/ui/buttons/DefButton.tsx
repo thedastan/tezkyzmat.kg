@@ -1,7 +1,7 @@
 import { Button, ChakraProps } from '@chakra-ui/react'
+import { PropsWithChildren } from 'react'
 
-interface DefButtonProps extends ChakraProps {
-	children: string
+interface DefButtonProps extends ChakraProps, PropsWithChildren {
 	onClick?: () => void
 	type?: 'button' | 'submit'
 	disabled?: boolean

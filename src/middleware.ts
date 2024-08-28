@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-import {
-	CLIENT_PAGES,
-	SELLER_PAGES,
-	USER_PAGES
-} from './config/pages-url.config'
+import { USER_PAGES } from './config/pages-url.config'
 import { EnumRole, RoleTypes } from './config/role'
 import { EnumTokens } from './services/auth-token.services'
 
@@ -23,12 +19,12 @@ export async function middleware(request: NextRequest) {
 	const isSellerPage = url.includes('/seller')
 	const isLogisticianPage = url.includes('/logistician')
 
-	if (isAuthPage && refreshTokenClient) {
-		return NextResponse.redirect(new URL(CLIENT_PAGES.MAIN, url))
-	}
-	if (isAuthPage && refreshTokenSeller) {
-		return NextResponse.redirect(new URL(SELLER_PAGES.HOME, url))
-	}
+	// if (isAuthPage && refreshTokenClient) {
+	// 	return NextResponse.redirect(new URL(CLIENT_PAGES.MAIN, url))
+	// }
+	// if (isAuthPage && refreshTokenSeller) {
+	// 	return NextResponse.redirect(new URL(SELLER_PAGES.HOME, url))
+	// }
 
 	if (isAuthPage) {
 		return NextResponse.next()

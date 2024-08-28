@@ -1,32 +1,25 @@
 'use client'
 
-import {
-	Box,
-	Container,
-	Table,
-	TableContainer,
-	Tbody,
-	Td,
-	Th,
-	Thead,
-	Tr
-} from '@chakra-ui/react'
+import { Box, Container, Flex, Stack } from '@chakra-ui/react'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { FaTrash } from 'react-icons/fa6'
 
 import Spinner from '@/components/loader/spinner'
 import HeaderComponent from '@/components/navbar/header-component'
+import CarModelCard from '@/components/ui/card/car-model-card'
+import Description from '@/components/ui/texts/Description'
+
+import EmptySvg from '@/assets/img/empty-model-cars.svg'
 
 import { INTERFACE_WIDTH, NAVBAR_HEIGHT } from '@/config/_variables.config'
 
-import { useSellerSpareRemove, useSellerSpares } from '@/hooks/useSettings'
+import { useSellerSpares } from '@/hooks/useSettings'
 
 import AddBrandButton from './AddBrandButton'
 
 export default function Settings() {
 	const { back } = useRouter()
 	const { data, isLoading } = useSellerSpares()
-	const { remove, isDeleting } = useSellerSpareRemove()
 	return (
 		<Box
 			mx='auto'
@@ -34,54 +27,51 @@ export default function Settings() {
 			minH='100vh'
 			pb={NAVBAR_HEIGHT}
 		>
-			{(isLoading || isDeleting) && <Spinner />}
+			{isLoading && <Spinner />}
 			<Container maxW={INTERFACE_WIDTH}>
 				<HeaderComponent
 					backFn={back}
-					title='Настройки'
+					title='Добавить автомобиль'
 				/>
 
-				<TableContainer
-					px='0'
-					mt='1'
-					className='scroll'
-					boxShadow='0px 1px 2px 0px #0000001F'
-					bg='#FFFFFF'
-					rounded='14px'
-					py='3'
+				{!isLoading && !data?.length && <EmptyOrder />}
+
+				<Stack
+					spacing='10px'
+					mt='2'
 				>
-					<Table size='md'>
-						<Thead>
-							<Tr>
-								<Th>Марка</Th>
-								<Th>Модель</Th>
-								<Th isNumeric>Годы выпуска</Th>
-							</Tr>
-						</Thead>
-						<Tbody>
-							{data?.map(spare => (
-								<Tr key={spare.id}>
-									<Td>{spare.brand.brand}</Td>
-									<Td>{spare.model.model}</Td>
-									<Td isNumeric>{spare.year.map(el => el.year).join(', ')}</Td>
-									<Td
-										onClick={() => remove(spare.id)}
-										cursor='pointer'
-										_active={{ opacity: '.7' }}
-									>
-										<FaTrash
-											color='#FF877D'
-											fontSize='16px'
-										/>
-									</Td>
-								</Tr>
-							))}
-						</Tbody>
-					</Table>
-				</TableContainer>
+					{data?.map(el => (
+						<CarModelCard
+							el={el}
+							key={el.id}
+						/>
+					))}
+				</Stack>
 
 				<AddBrandButton />
 			</Container>
 		</Box>
+	)
+}
+
+function EmptyOrder() {
+	return (
+		<Flex
+			flexDirection='column'
+			alignItems='center'
+			textAlign='center'
+			gap='33px'
+			h='100%'
+			justifyContent='center'
+			mt='110px'
+		>
+			<Image
+				src={EmptySvg}
+				alt='empty'
+			/>
+			<Description maxW='225px'>
+				У вас пока нет добавленных автомобилей
+			</Description>
+		</Flex>
 	)
 }

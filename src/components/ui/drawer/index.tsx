@@ -2,98 +2,59 @@ import {
 	Box,
 	Drawer,
 	DrawerBody,
-	DrawerCloseButton,
 	DrawerContent,
 	DrawerHeader,
-	DrawerOverlay,
-	Heading,
-	Progress
+	DrawerOverlay
 } from '@chakra-ui/react'
+import { PropsWithChildren } from 'react'
 
-import { INTERFACE_WIDTH } from '@/config/_variables.config'
+import Title from '../texts/Title'
 
-interface DrawerComponentProps {
+interface IModalProps extends PropsWithChildren {
 	isOpen: boolean
 	onClose: () => void
-	children: JSX.Element
 	title: string
-	isLoading?: boolean
 }
 
-function DrawerComponent({
-	isOpen,
-	onClose,
-	children,
-	title,
-	isLoading = false
-}: DrawerComponentProps) {
+function DrawerModal({ isOpen, onClose, children, title }: IModalProps) {
 	return (
 		<Drawer
 			placement={'bottom'}
 			onClose={onClose}
 			isOpen={isOpen}
+			autoFocus={false}
 		>
-			<DrawerHeader></DrawerHeader>
 			<DrawerOverlay bg='#000000B2' />
 			<DrawerContent
-				w={INTERFACE_WIDTH}
 				maxH='80vh'
 				mx='auto'
-				bg='transparent'
-				borderTopRadius='24px'
-				className='unscroll'
-				overflow='auto'
+				borderTopRadius='26px'
+				pb='30px'
 			>
-				<DrawerCloseButton
-					color='#00000080'
-					mx='10px'
-					fontSize='14px'
-					mt={2}
-				/>
-				<Box
-					borderTopRadius='24px'
-					w={'100%'}
-					h='100%'
-					pb='30px'
-					pt='14px'
-					bg='#FFFFFF'
-				>
-					<Heading
-						fontSize='18px'
-						fontWeight='600'
-						lineHeight='24.59px'
-						color='#252525'
-						mt='2'
-						fontFamily='Manrope'
+				<DrawerHeader>
+					<Title
+						mt='15px'
+						fontSize='20px'
+						lineHeight='26px'
 						textAlign='center'
 					>
 						{title}
-					</Heading>
-					<DrawerBody
-						className='unscroll'
-						px={4}
-						mt='30px'
-						overflow='auto'
-						maxH='420px'
-					>
-						<Box
-							h='4px'
-							mb='10px'
-						>
-							{isLoading && (
-								<Progress
-									size='xs'
-									bg='none'
-									isIndeterminate
-								/>
-							)}
-						</Box>
-						{children}
-					</DrawerBody>
-				</Box>
+					</Title>
+				</DrawerHeader>
+
+				<DrawerBody
+					className='unscroll'
+					px={4}
+					mt='18px'
+					overflow='auto'
+					h='100%'
+				>
+					<Box></Box>
+					{children}
+				</DrawerBody>
 			</DrawerContent>
 		</Drawer>
 	)
 }
 
-export default DrawerComponent
+export default DrawerModal

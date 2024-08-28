@@ -24,6 +24,9 @@ class SELLER_DASHBOARD {
 	SUCCESS = `${this.root}/requests/success`
 	CONFIRMED = `${this.root}/confirmed`
 	SETTINGS = `${this.root}/settings`
+	SETTINGS_DETAIL = (id: number | string) => {
+		return `${this.SETTINGS}/${id}`
+	}
 	REQUEST_DETAIL = (id: number | string) => {
 		return `${this.REQUESTS}/${id}`
 	}

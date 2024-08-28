@@ -1,13 +1,17 @@
 'use client'
 
-import { Box, Divider, useDisclosure } from '@chakra-ui/react'
+import { Box, Divider, Flex, useDisclosure } from '@chakra-ui/react'
 import { useQueryClient } from '@tanstack/react-query'
 import { ChangeEvent, FormEvent, useState } from 'react'
+import { AiOutlinePlus } from 'react-icons/ai'
 
 import Spinner from '@/components/loader/spinner'
 import DefButton from '@/components/ui/buttons/DefButton'
+import DrawerModal from '@/components/ui/drawer'
 import SelectCheckbox from '@/components/ui/inputs/SelectCheckbox'
 import SelectComponent from '@/components/ui/inputs/SelectComponent'
+
+import { INTERFACE_WIDTH } from '@/config/_variables.config'
 
 import { useSellerSpareAdd } from '@/hooks/useSettings'
 import { useVehicle, useVehicleById } from '@/hooks/useVehicle'
@@ -41,6 +45,7 @@ const AddBrandButton = () => {
 
 	const { isPending, mutate } = useSellerSpareAdd(() => {
 		setValue({ brand: '', model: '', year: [] })
+		onClose()
 	})
 
 	const onSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -53,70 +58,91 @@ const AddBrandButton = () => {
 	}
 	return (
 		<Box mt='32px'>
-			<DefButton
-				fontWeight='400'
-				isTransparent={isOpen}
-				onClick={() => (isOpen ? onClose() : onOpen())}
+			<Flex
+				position='fixed'
+				bottom='20px'
+				left='0'
+				w='100%'
+				justifyContent='center'
 			>
-				{isOpen ? 'Закрыть' : 'Добавить ещё одну марку'}
-			</DefButton>
+				<Box
+					maxW={INTERFACE_WIDTH}
+					w='100%'
+					px='4'
+				>
+					<DefButton
+						fontWeight='400'
+						isTransparent={isOpen}
+						onClick={() => (isOpen ? onClose() : onOpen())}
+					>
+						<Flex
+							alignItems='center'
+							gap='2'
+						>
+							<AiOutlinePlus fontSize='20px' /> Добавить автомобиль
+						</Flex>
+					</DefButton>
+				</Box>
+			</Flex>
 			{(isLoading || isLoading2 || isPending) && <Spinner />}
-			{isOpen && (
-				<Box mt='30px'>
+
+			<DrawerModal
+				isOpen={isOpen}
+				onClose={onClose}
+				title='Добавить марку'
+			>
+				<form onSubmit={onSubmit}>
+					<SelectComponent
+						handleChange={handleChange}
+						value={value?.brand}
+						name='brand'
+						placeholder='Марка автомобиля*'
+						required={false}
+					>
+						{data?.map(el => (
+							<option
+								value={el.id}
+								key={el.id}
+							>
+								{el.brand}
+							</option>
+						))}
+					</SelectComponent>
 					<Divider
 						h='1px'
 						bg='#1C1C1C'
-						mb='30px'
+						my='30px'
 						opacity='.3'
 					/>
-					<form onSubmit={onSubmit}>
-						<SelectComponent
-							handleChange={handleChange}
-							value={value?.brand}
-							name='brand'
-							placeholder='Марка автомобиля*'
-							required={false}
-						>
-							{data?.map(el => (
-								<option
-									value={el.id}
-									key={el.id}
-								>
-									{el.brand}
-								</option>
-							))}
-						</SelectComponent>
+					<SelectComponent
+						handleChange={handleChange}
+						value={value?.model}
+						name='model'
+						placeholder='Модель*'
+						disabled={!value?.brand}
+						required={false}
+					>
+						{vehicle?.models?.map(el => (
+							<option
+								value={el.id}
+								key={el.id}
+							>
+								{el.model}
+							</option>
+						))}
+					</SelectComponent>
 
-						<SelectComponent
-							handleChange={handleChange}
-							value={value?.model}
-							name='model'
-							placeholder='Модель*'
-							disabled={!value?.brand}
-							required={false}
-						>
-							{vehicle?.models?.map(el => (
-								<option
-									value={el.id}
-									key={el.id}
-								>
-									{el.model}
-								</option>
-							))}
-						</SelectComponent>
-
-						<SelectCheckbox
-							list={model}
-							handleChange={handleCheckbox}
-							name='year'
-							placeholder='Год выпуска*'
-							disabled={!model?.length}
-							value={value.year.map(el => el.name)}
-						/>
-						<DefButton type='submit'>Добавить</DefButton>
-					</form>
-				</Box>
-			)}
+					<SelectCheckbox
+						list={model}
+						handleChange={handleCheckbox}
+						name='year'
+						placeholder='Год выпуска*'
+						disabled={!model?.length}
+						value={value.year.map(el => el.name)}
+					/>
+					<DefButton type='submit'>Сохранить</DefButton>
+				</form>
+			</DrawerModal>
 		</Box>
 	)
 }

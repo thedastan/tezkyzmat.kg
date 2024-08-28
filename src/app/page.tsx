@@ -17,6 +17,7 @@ import { USER_PAGES } from '@/config/pages-url.config'
 import { EnumRole } from '@/config/role'
 
 import { saveUserRole } from '@/services/role.service'
+import LOGO from '@/assets/img/logoIcon.png'
 
 export default function Home() {
 	return (
@@ -36,7 +37,7 @@ export default function Home() {
 					textAlign='center'
 				>
 					<Image
-						src='/logo.svg'
+						src={LOGO}
 						alt='Logo'
 						width={83}
 						height={83}

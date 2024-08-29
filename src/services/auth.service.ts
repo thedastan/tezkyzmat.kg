@@ -1,10 +1,6 @@
 import { PUBLIC_API } from '@/api/interceptors'
 
-import {
-	EnumTokens,
-	getAccessToken,
-	saveTokenStorage
-} from './auth-token.services'
+import { getAccessToken, saveTokenStorage } from './auth-token.services'
 import {
 	IAuthForm,
 	IAuthResponse,
@@ -17,7 +13,7 @@ export const authService = {
 	// client
 	async register(data: IRegisterClient | IRegisterSeller) {
 		const response = await PUBLIC_API.post<IRegisterResponse>(
-			`account/register/`,	
+			`account/register/`,
 			data
 		)
 		return response.data.otp

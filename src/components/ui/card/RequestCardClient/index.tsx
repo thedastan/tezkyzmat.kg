@@ -11,8 +11,8 @@ import { RiEditBoxLine } from 'react-icons/ri'
 import { RiWhatsappFill } from 'react-icons/ri'
 
 import Card from '@/components/layouts/card'
-import OrderTitles from '@/components/order/OrderTitles'
-import OrderDetailData from '@/components/order/order-detail-data'
+import OrderTitles from '@/components/order-items/OrderTitles'
+import OrderDetailData from '@/components/order-items/order-detail-data'
 
 import { CLIENT_PAGES } from '@/config/pages-url.config'
 
@@ -32,7 +32,7 @@ const RequestCardClient = ({ order, is_detail }: RequestCardClientProps) => {
 	const { isOpen, onClose, onOpen } = useDisclosure()
 	const { remove, isPending } = useRequestRemove(onClose)
 	const { push } = useRouter()
-	const is_found = order.status === EnumOrderStatus.YES
+	const is_found = order.status === EnumOrderStatus.FOUND
 
 	const lastSeen = moment(order.created_at).fromNow()
 	return (

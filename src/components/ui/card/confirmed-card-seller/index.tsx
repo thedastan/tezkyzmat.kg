@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
 import Card from '@/components/layouts/card'
-import OrderTitles from '@/components/order/OrderTitles'
+import OrderTitles from '@/components/order-items/OrderTitles'
 
 import { SELLER_PAGES } from '@/config/pages-url.config'
 
@@ -41,10 +41,10 @@ const ConfirmedCardSeller = ({
 						py='1'
 						px='6px'
 						color={
-							order.status === EnumOrderStatus.IN_SEARCH ? '#1C1C1C' : '#06B217'
+							order.status === EnumOrderStatus.COMPLETED ? '#06B217' : '#1C1C1C'
 						}
 						bg={
-							order.status === EnumOrderStatus.IN_SEARCH ? '#F4F5F7' : '#EDFCEE'
+							order.status === EnumOrderStatus.COMPLETED ? '#EDFCEE' : '#F4F5F7'
 						}
 						fontSize='10px'
 						lineHeight='16px'

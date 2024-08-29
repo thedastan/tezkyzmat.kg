@@ -34,3 +34,8 @@ export interface IRegisterResponse {
 		images: string[]
 	}
 }
+
+export interface ChangePasswordPayload {
+	password: string
+	old_password: string
+}

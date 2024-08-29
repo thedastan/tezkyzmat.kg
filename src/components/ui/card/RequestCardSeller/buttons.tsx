@@ -23,7 +23,7 @@ const RequestCardSellerButtons = ({ id }: { id: number }) => {
 		>
 			{isPending && <Spinner />}
 			<Button
-				onClick={() => mutate({ id, status: EnumOrderStatus.NO })}
+				onClick={() => mutate({ id, status: EnumOrderStatus.NOT_FOUND })}
 				variant='none'
 				rounded='10px'
 				h='48px'
@@ -39,7 +39,7 @@ const RequestCardSellerButtons = ({ id }: { id: number }) => {
 				Нет
 			</Button>
 			<Button
-				onClick={() => mutate({ id, status: EnumOrderStatus.YES })}
+				onClick={() => mutate({ id, status: EnumOrderStatus.FOUND })}
 				variant='none'
 				rounded='10px'
 				h='48px'

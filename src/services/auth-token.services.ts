@@ -16,7 +16,6 @@ export const getAccessToken = () => {
 }
 
 export const saveTokenStorage = (tokens: IAuthResponse) => {
-	// const role = getUserRole()
 	const settings: Cookies.CookieAttributes = {
 		sameSite: 'strict',
 		expires: 1

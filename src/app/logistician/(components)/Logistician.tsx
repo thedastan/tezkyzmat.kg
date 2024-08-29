@@ -2,6 +2,7 @@
 
 import { Stack } from '@chakra-ui/react'
 
+import EmptyOrder from '@/components/empty-component/empty-order'
 import BlackInterface from '@/components/layouts/black-interface'
 import Spinner from '@/components/loader/spinner'
 import EmptyText from '@/components/ui/texts/EmptyText'
@@ -21,21 +22,25 @@ const Logistician = () => {
 			role={EnumRole.LOGISTICIAN}
 		>
 			{isLoading && <Spinner />}
-			<Title fontSize='20px'>Актуальные заявки</Title>
+			{!isLoading && !data?.length && <EmptyOrder />}
+			{!!data?.length && (
+				<>
+					<Title fontSize='20px'>Актуальные заявки</Title>
 
-			{!isLoading && !data?.length && <EmptyText />}
-			<Stack
-				spacing='10px'
-				mt='4'
-				mb='66px'
-			>
-				{data?.map(el => (
-					<LogistCard
-						key={el.id}
-						el={el}
-					/>
-				))}
-			</Stack>
+					<Stack
+						spacing='10px'
+						mt='4'
+						mb='66px'
+					>
+						{data?.map(el => (
+							<LogistCard
+								key={el.id}
+								el={el}
+							/>
+						))}
+					</Stack>
+				</>
+			)}
 		</BlackInterface>
 	)
 }

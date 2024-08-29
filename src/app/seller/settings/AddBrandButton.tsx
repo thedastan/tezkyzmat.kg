@@ -7,6 +7,7 @@ import { AiOutlinePlus } from 'react-icons/ai'
 
 import Spinner from '@/components/loader/spinner'
 import DefButton from '@/components/ui/buttons/DefButton'
+import FixButton from '@/components/ui/buttons/FixButton'
 import DrawerModal from '@/components/ui/drawer'
 import SelectCheckbox from '@/components/ui/inputs/SelectCheckbox'
 import SelectComponent from '@/components/ui/inputs/SelectComponent'
@@ -58,32 +59,15 @@ const AddBrandButton = () => {
 	}
 	return (
 		<Box mt='32px'>
-			<Flex
-				position='fixed'
-				bottom='20px'
-				left='0'
-				w='100%'
-				justifyContent='center'
-			>
-				<Box
-					maxW={INTERFACE_WIDTH}
-					w='100%'
-					px='4'
+			<FixButton>
+				<Flex
+					alignItems='center'
+					gap='2'
 				>
-					<DefButton
-						fontWeight='400'
-						isTransparent={isOpen}
-						onClick={() => (isOpen ? onClose() : onOpen())}
-					>
-						<Flex
-							alignItems='center'
-							gap='2'
-						>
-							<AiOutlinePlus fontSize='20px' /> Добавить автомобиль
-						</Flex>
-					</DefButton>
-				</Box>
-			</Flex>
+					<AiOutlinePlus fontSize='20px' /> Добавить автомобиль
+				</Flex>
+			</FixButton>
+
 			{(isLoading || isLoading2 || isPending) && <Spinner />}
 
 			<DrawerModal

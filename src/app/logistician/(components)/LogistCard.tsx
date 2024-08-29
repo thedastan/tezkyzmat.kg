@@ -1,12 +1,13 @@
-import { Box, Button, Divider, Flex } from '@chakra-ui/react'
+import { Box, Divider, Flex } from '@chakra-ui/react'
 import moment from 'moment'
 
-import OrderTitles from '@/components/order/OrderTitles'
+import OrderTitles from '@/components/order-items/OrderTitles'
 import CopyText from '@/components/ui/texts/CopyText'
-import Description from '@/components/ui/texts/Description'
 import Moment from '@/components/ui/texts/Moment'
 import Title from '@/components/ui/texts/Title'
 
+import SentButton from './SentButton'
+import TakeButton from './TakeButton'
 import { ILogistItem } from '@/models/logist.model'
 
 const LogistCard = ({ el }: { el: ILogistItem }) => {
@@ -96,7 +97,7 @@ const LogistCard = ({ el }: { el: ILogistItem }) => {
 				mt='4'
 				color='#477CF0'
 				fontSize='16px'
-				value={'ул. Черкесский переулок, д. 123, кв. 45'}
+				value={el.order.buyer.address ? el.order.buyer.address : ''}
 			/>
 
 			<Divider
@@ -111,37 +112,8 @@ const LogistCard = ({ el }: { el: ILogistItem }) => {
 				gap='14px'
 				mt='5'
 			>
-				<Button
-					variant='none'
-					w='100%'
-					bg='#1C1C1C'
-					h='46px'
-					rounded='10px'
-					color='#FFFFFF'
-					fontSize='16px'
-					fontWeight='600'
-					px='2'
-					lineHeight='20px'
-					_hover={{ bg: '#1C1C1C' }}
-				>
-					Забрать
-				</Button>
-				<Button
-					variant='none'
-					w='100%'
-					bg='#1C1C1C'
-					h='46px'
-					rounded='10px'
-					color='#FFFFFF'
-					fontSize='16px'
-					fontWeight='600'
-					px='2'
-					lineHeight='20px'
-					isDisabled={true}
-					_hover={{ bg: '#1C1C1C' }}
-				>
-					Отправить
-				</Button>
+				<TakeButton el={el} />
+				<SentButton el={el} />
 			</Flex>
 		</Box>
 	)

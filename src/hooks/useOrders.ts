@@ -16,12 +16,15 @@ export function useOrders() {
 		queryFn: () => orderSellerService.getOrders()
 	})
 
-	const found_orders = data?.filter(el => el.status === EnumOrderStatus.YES)
+	const found_orders = data?.filter(el => el.status === EnumOrderStatus.FOUND)
 	const pending_orders = data?.filter(
 		el => el.status === EnumOrderStatus.IN_SEARCH
 	)
+	const completed_orders = data?.filter(
+		el => el.status === EnumOrderStatus.COMPLETED
+	)
 
-	return { found_orders, pending_orders, isLoading }
+	return { found_orders, pending_orders, completed_orders, isLoading }
 }
 
 export function useOrderDetail(id: number | string) {

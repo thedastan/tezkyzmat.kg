@@ -30,4 +30,11 @@ export interface ILogistOrder {
 export interface Buyer {
 	full_name: string
 	phone: string
+	address?: string
+}
+
+export interface LogistUpdatePayload {
+	id: number
+	is_taken: boolean
+	is_sent: boolean
 }

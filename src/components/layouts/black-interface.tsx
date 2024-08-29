@@ -1,10 +1,9 @@
 'use client'
 
-import { Box, Container, Flex } from '@chakra-ui/react'
+import { Box, Container } from '@chakra-ui/react'
 import { PropsWithChildren, useEffect, useState } from 'react'
 
 import {
-	INTERFACE_WIDTH,
 	NAVBAR_HEIGHT,
 	PROFILE_HEADER_HEIGHT,
 	SELLER_PROFILE_HEADER_HEIGHT
@@ -12,7 +11,7 @@ import {
 import { EnumRole, RoleTypes } from '@/config/role'
 
 import ProfileHeader from '../profile/header'
-import DefButton from '../ui/buttons/DefButton'
+import FixButton from '../ui/buttons/FixButton'
 
 interface BlackInterfaceProps extends PropsWithChildren {
 	buttonText?: string
@@ -48,20 +47,15 @@ const BlackInterface = ({
 				minH={innerHeight - 80 + 'px'}
 				h='100%'
 			>
-				<Container>{children}</Container>
+				<Container h='100%'>{children}</Container>
 			</Box>
 			{!!buttonText && (
-				<Flex
-					position='fixed'
-					zIndex='20'
+				<FixButton
+					onClick={buttonFn}
 					bottom={(!isClientPage ? 0 : parseInt(NAVBAR_HEIGHT)) + 20 + 'px'}
-					left='0'
-					right='0'
 				>
-					<Container maxW={INTERFACE_WIDTH}>
-						<DefButton onClick={buttonFn}>{buttonText}</DefButton>
-					</Container>
-				</Flex>
+					{buttonText}
+				</FixButton>
 			)}
 		</Box>
 	)

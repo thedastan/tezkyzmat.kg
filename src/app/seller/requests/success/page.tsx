@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, Flex } from '@chakra-ui/react'
+import { Container, Flex } from '@chakra-ui/react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -42,10 +42,10 @@ export default function RequestSellerSuccessPage() {
 						src={RequestSuccessSvg}
 						alt='Image'
 					/>
-					{(status === EnumOrderStatus.NO ||
-						status === EnumOrderStatus.YES) && (
+					{(status === EnumOrderStatus.NOT_FOUND ||
+						status === EnumOrderStatus.FOUND) && (
 						<Description textAlign='center'>
-							{`Вы указали, что запчасть ${status === EnumOrderStatus.NO ? 'нету' : 'есть'} в наличии. Клиент будет уведомлен.`}
+							{`Вы указали, что запчасть ${status === EnumOrderStatus.NOT_FOUND ? 'нету' : 'есть'} в наличии. Клиент будет уведомлен.`}
 						</Description>
 					)}
 				</Flex>
@@ -58,18 +58,14 @@ export default function RequestSellerSuccessPage() {
 				w='100%'
 				justifyContent='center'
 			>
-				<Box
-					maxW={INTERFACE_WIDTH}
-					w='100%'
-					px='4'
-				>
+				<Container maxW={INTERFACE_WIDTH}>
 					<DefButton
 						isTransparent={true}
 						onClick={() => push(SELLER_PAGES.CONFIRMED)}
 					>
 						Подтверждённые заявки
 					</DefButton>
-				</Box>
+				</Container>
 			</Flex>
 		</BlackInterface>
 	)

@@ -69,13 +69,15 @@ export interface OrderSeller {
 
 export enum EnumOrderStatus {
 	IN_SEARCH = 0,
-	YES = 1,
-	NO = 2
+	FOUND = 1,
+	NOT_FOUND = 2,
+	COMPLETED = 3
 }
 
 export type OrderStatusType =
 	| EnumOrderStatus.IN_SEARCH
-	| EnumOrderStatus.NO
-	| EnumOrderStatus.YES
+	| EnumOrderStatus.NOT_FOUND
+	| EnumOrderStatus.FOUND
+	| EnumOrderStatus.COMPLETED
 
 ///

@@ -10,11 +10,13 @@ import UploadPhotos from '@/components/forms/upload-photos'
 import BlackInterface from '@/components/layouts/black-interface'
 import Spinner from '@/components/loader/spinner'
 import DefButton from '@/components/ui/buttons/DefButton'
+import FixButton from '@/components/ui/buttons/FixButton'
 import InputComponent from '@/components/ui/inputs/InputComponent'
 import SelectComponent from '@/components/ui/inputs/SelectComponent'
 import StepperComponent from '@/components/ui/stepper'
 import Description from '@/components/ui/texts/Description'
 
+import { NAVBAR_HEIGHT } from '@/config/_variables.config'
 import {
 	addLocaleStorage,
 	getLocaleStorage,
@@ -113,6 +115,7 @@ const RequestComponent = () => {
 					h='100%'
 					flexDirection='column'
 					justifyContent='space-between'
+					pb={pathname === USER_PAGES.REQUEST ? NAVBAR_HEIGHT : '0'}
 				>
 					{(isLoading || isLoading2 || isPending) && <Spinner />}
 					<StepperComponent
@@ -245,6 +248,15 @@ const RequestComponent = () => {
 						Возврат осуществляется в течение 3-х дней с момента покупки
 					</Description>
 				</Flex>
+			)}
+
+			{pathname === USER_PAGES.REQUEST && (
+				<FixButton
+					onClick={() => push(USER_PAGES.SIGN_UP)}
+					bg='#F9BD15'
+				>
+					Регистрация
+				</FixButton>
 			)}
 		</BlackInterface>
 	)

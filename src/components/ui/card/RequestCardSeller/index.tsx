@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { FaChevronRight } from 'react-icons/fa6'
 
 import Card from '@/components/layouts/card'
-import OrderTitles from '@/components/order/OrderTitles'
+import OrderTitles from '@/components/order-items/OrderTitles'
 import Moment from '@/components/ui/texts/Moment'
 
 import { SELLER_PAGES } from '@/config/pages-url.config'

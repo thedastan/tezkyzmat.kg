@@ -91,7 +91,7 @@ const ApplicationComponent = () => {
 						</TabPanel>
 						<TabPanel px='0'>
 							{data
-								?.filter(el => el.status === EnumOrderStatus.YES)
+								?.filter(el => el.status === EnumOrderStatus.FOUND)
 								.map(el => (
 									<RequestCardClient
 										key={el.id}
@@ -101,7 +101,7 @@ const ApplicationComponent = () => {
 						</TabPanel>
 						<TabPanel px='0'>
 							{data
-								?.filter(el => el.status === EnumOrderStatus.NO)
+								?.filter(el => el.status === EnumOrderStatus.NOT_FOUND)
 								.map(el => (
 									<RequestCardClient
 										key={el.id}

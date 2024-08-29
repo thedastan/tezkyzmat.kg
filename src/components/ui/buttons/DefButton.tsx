@@ -14,6 +14,7 @@ const DefButton = ({
 	isTransparent = false,
 	disabled,
 	children,
+	bg = '#1C1C1C',
 	...props
 }: DefButtonProps) => {
 	return (
@@ -22,7 +23,7 @@ const DefButton = ({
 			type={type}
 			variant='none'
 			w='100%'
-			bg={isTransparent ? 'transparent' : '#1C1C1C'}
+			bg={isTransparent ? 'transparent' : bg}
 			border={isTransparent ? `2px solid #1C1C1C` : 'none'}
 			h='56px'
 			rounded='14px'

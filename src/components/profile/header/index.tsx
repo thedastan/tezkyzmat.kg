@@ -15,13 +15,18 @@ import { IoNotificationsOutline } from 'react-icons/io5'
 import Spinner from '@/components/loader/spinner'
 import ConfirmedRequestButton from '@/components/ui/buttons/ConfirmedRequestButton'
 
+import { SITE_NAME } from '@/constants/seo.constants'
+
 import {
 	INTERFACE_WIDTH,
 	PROFILE_HEADER_HEIGHT,
 	SELLER_PROFILE_HEADER_HEIGHT
 } from '@/config/_variables.config'
-import { SELLER_PAGES, USER_PAGES } from '@/config/pages-url.config'
-import { EnumRole } from '@/config/role'
+import {
+	PUBLIC_PAGES,
+	SELLER_PAGES,
+	USER_PAGES
+} from '@/config/pages-url.config'
 
 import { useProfile } from '@/hooks/useProfile'
 
@@ -59,12 +64,12 @@ const ProfileHeader = () => {
 						h={PROFILE_HEADER_HEIGHT}
 					>
 						<Button
-							onClick={() => push(USER_PAGES.AUTH(EnumRole.CLIENT))}
+							onClick={() => push(PUBLIC_PAGES.HOME)}
 							bg='#3D3D3D'
 							color='#F4F5F7'
 							variant='none'
 						>
-							Пропустить заявку
+							{SITE_NAME}
 						</Button>
 					</Flex>
 				) : (

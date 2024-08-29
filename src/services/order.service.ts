@@ -1,10 +1,6 @@
 import { PRIVATE_API } from '@/api/interceptors'
 
-import {
-	EnumOrderStatus,
-	IRequest,
-	OrderStatusType
-} from '@/models/request.model'
+import { IRequest, OrderStatusType } from '@/models/request.model'
 
 export interface OrderStatusPayload {
 	id: number

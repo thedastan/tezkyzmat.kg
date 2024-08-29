@@ -3,6 +3,7 @@ import { toast } from 'sonner'
 
 import { ToastError } from '@/config/helpers'
 
+import { LogistUpdatePayload } from '@/models/logist.model'
 import { logisticianService } from '@/services/logistician.service'
 
 export function useLogistOrder() {
@@ -14,14 +15,15 @@ export function useLogistOrder() {
 	return { data, isLoading }
 }
 
-export function useOrderChangeStatus() {
+export function useLogistOrderUpdateStatus(onSuccess: () => void) {
 	const queryClient = useQueryClient()
 	const { mutate, isPending } = useMutation({
 		mutationKey: ['order-status'],
-		mutationFn: (data: any) => logisticianService.update(data),
+		mutationFn: (data: LogistUpdatePayload) => logisticianService.update(data),
 		onSuccess() {
 			queryClient.invalidateQueries({ queryKey: ['logistician-orders'] })
 			toast.success('Спасибо за ответ')
+			onSuccess()
 		},
 		onError(e) {
 			ToastError(e)

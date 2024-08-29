@@ -26,7 +26,7 @@ const CopyText = ({
 				color={color}
 				fontSize={fontSize}
 			>
-				{value}
+				{!!value ? value : '-'}
 			</Text>
 
 			<Box

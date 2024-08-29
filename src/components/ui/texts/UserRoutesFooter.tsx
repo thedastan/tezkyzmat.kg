@@ -22,7 +22,9 @@ const UserRoutesFooter = ({
 }: IUserRoutesProps) => {
 	const pathname = usePathname()
 	const isRejectedPage = USER_PAGES.AUTH(EnumRole.LOGISTICIAN) === pathname
-	return isRejectedPage ? null : (
+	return isRejectedPage ? (
+		<Box />
+	) : (
 		<Flex
 			// display={isRejectedPage ? 'none' : 'flex'}
 			justifyContent='center'

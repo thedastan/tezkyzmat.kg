@@ -1,6 +1,6 @@
 import { PRIVATE_API } from '@/api/interceptors'
 
-import { IOrder, IRequest } from '@/models/request.model'
+import { IOrder, PlacingOrderPayload } from '@/models/request.model'
 
 class RequestService {
 	private BASE_URL = 'account/buyer/order/'
@@ -23,6 +23,15 @@ class RequestService {
 	}
 	async removeRequest(id: number | string) {
 		const response = await PRIVATE_API.delete(this.BASE_URL + `delete/${id}/`)
+
+		return response.data
+	}
+
+	async placingOrder(payload: PlacingOrderPayload) {
+		const response = await PRIVATE_API.put(
+			this.BASE_URL + `select/${payload.order_id}/`,
+			payload.address
+		)
 
 		return response.data
 	}

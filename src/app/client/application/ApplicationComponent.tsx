@@ -16,6 +16,7 @@ import { FiSearch } from 'react-icons/fi'
 import AddRequestButton from '@/components/add-request-button'
 import Spinner from '@/components/loader/spinner'
 import HeaderComponent from '@/components/navbar/header-component'
+import PlacingAnOrder from '@/components/placing-order'
 import TabButton from '@/components/ui/buttons/TabButton'
 import RequestCardClient from '@/components/ui/card/RequestCardClient'
 import Description from '@/components/ui/texts/Description'
@@ -27,11 +28,13 @@ import { EnumOrderStatus } from '@/models/request.model'
 const ApplicationComponent = () => {
 	const [tabIndex, setTabIndex] = useState(0)
 	const { data, isLoading } = useRequest()
+
 	return (
 		<Box
 			bg='#F4F5F7'
 			minH='90vh'
 		>
+			<PlacingAnOrder />
 			{isLoading && <Spinner />}
 			<Container>
 				<HeaderComponent title='Заявки' />

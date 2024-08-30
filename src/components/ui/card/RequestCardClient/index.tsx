@@ -14,6 +14,7 @@ import Card from '@/components/layouts/card'
 import OrderTitles from '@/components/order-items/OrderTitles'
 import OrderDetailData from '@/components/order-items/order-detail-data'
 
+import { AGREED_SELLER_DATA_KEY } from '@/config/_variables.config'
 import { CLIENT_PAGES } from '@/config/pages-url.config'
 
 import { useRequestRemove } from '@/hooks/useRequest'
@@ -22,7 +23,12 @@ import DeleteModal from '../../modal/DeleteModal'
 import Moment from '../../texts/Moment'
 import Title from '../../texts/Title'
 
-import { EnumOrderStatus, IOrder } from '@/models/request.model'
+import {
+	EnumOrderStatus,
+	ILocaleOrderSeller,
+	IOrder,
+	OrderSeller
+} from '@/models/request.model'
 
 interface RequestCardClientProps {
 	order: IOrder
@@ -33,7 +39,13 @@ const RequestCardClient = ({ order, is_detail }: RequestCardClientProps) => {
 	const { remove, isPending } = useRequestRemove(onClose)
 	const { push } = useRouter()
 	const is_found = order.status === EnumOrderStatus.FOUND
-
+	const saveSellerData = (seller: OrderSeller) => {
+		const order_seller: ILocaleOrderSeller = {
+			order_id: order.id,
+			...seller
+		}
+		localStorage.setItem(AGREED_SELLER_DATA_KEY, JSON.stringify(order_seller))
+	}
 	const lastSeen = moment(order.created_at).fromNow()
 	return (
 		<Card
@@ -120,6 +132,7 @@ const RequestCardClient = ({ order, is_detail }: RequestCardClientProps) => {
 						<Title fontWeight='600'>{seller.seller}</Title>
 					</Flex>
 					<Link
+						onClick={() => saveSellerData(seller)}
 						href={`https://wa.me/${seller.seller_phone}`}
 						target='_blank'
 					>

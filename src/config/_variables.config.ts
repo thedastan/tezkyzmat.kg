@@ -12,3 +12,4 @@ export const STANDARD_BOTTOM_PADDING = '40px'
 
 // session-storage
 export const ANSWER_LOCAL_KEY = 'answer-seller'
+export const AGREED_SELLER_DATA_KEY = 'seller'

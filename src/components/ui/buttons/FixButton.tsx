@@ -15,7 +15,7 @@ const FixButton = ({
 	onClick,
 	children,
 	bg,
-	bottom = '20px',
+	bottom = '25px',
 	type
 }: FixedButtonProps) => {
 	return (

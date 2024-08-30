@@ -15,6 +15,7 @@ interface DeleteModalProps {
 	onDelete: () => void
 	children: string
 	isLoading?: boolean
+	withoutOverlay?: boolean
 }
 
 const DeleteModal = ({
@@ -22,12 +23,13 @@ const DeleteModal = ({
 	onClose,
 	onDelete,
 	children,
-	isLoading
+	isLoading,
+	withoutOverlay
 }: DeleteModalProps) => {
 	return (
 		<Modal
 			isOpen={isOpen}
-			onClose={onClose}
+			onClose={() => (!withoutOverlay ? onClose() : {})}
 			size='sm'
 			isCentered={true}
 		>

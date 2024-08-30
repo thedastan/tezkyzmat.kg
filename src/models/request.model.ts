@@ -67,6 +67,20 @@ export interface OrderSeller {
 	created_at: string
 }
 
+export interface ILocaleOrderSeller extends OrderSeller {
+	order_id: number
+}
+
+export interface PlacingOrderPayload {
+	order_id: number
+	address: {
+		region: string
+		street: string
+		district: string
+		order_sellers: string
+	}
+}
+
 export enum EnumOrderStatus {
 	IN_SEARCH = 0,
 	FOUND = 1,

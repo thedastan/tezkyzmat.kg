@@ -3,6 +3,7 @@ import { toast } from 'sonner'
 
 import { ToastError } from '@/config/helpers'
 
+import { PlacingOrderPayload } from '@/models/request.model'
 import { requestService } from '@/services/client-request.service'
 
 export function useRequest() {
@@ -57,4 +58,23 @@ export function useRequestRemove(success?: () => void) {
 	})
 
 	return { remove: mutate, isPending }
+}
+
+export function usePlacingOrder(success?: () => void) {
+	const queryClient = useQueryClient()
+	const { mutate, isPending } = useMutation({
+		mutationKey: ['remove-request'],
+		mutationFn: (data: PlacingOrderPayload) =>
+			requestService.placingOrder(data),
+		onSuccess() {
+			success && success()
+			queryClient.invalidateQueries({ queryKey: ['requests'] })
+			toast.success('Заказ оформлен')
+		},
+		onError(e) {
+			ToastError(e)
+		}
+	})
+
+	return { mutate, isPending }
 }

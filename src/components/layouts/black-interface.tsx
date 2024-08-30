@@ -44,19 +44,19 @@ const BlackInterface = ({
 				borderTopRadius='30px'
 				position='relative'
 				zIndex='1'
-				minH={innerHeight - 80 + 'px'}
+				minH={innerHeight - 30 + 'px'}
 				h='100%'
 			>
 				<Container h='100%'>{children}</Container>
+				{!!buttonText && (
+					<FixButton
+						onClick={buttonFn}
+						bottom={(!isClientPage ? 0 : parseInt(NAVBAR_HEIGHT)) + 20 + 'px'}
+					>
+						{buttonText}
+					</FixButton>
+				)}
 			</Box>
-			{!!buttonText && (
-				<FixButton
-					onClick={buttonFn}
-					bottom={(!isClientPage ? 0 : parseInt(NAVBAR_HEIGHT)) + 20 + 'px'}
-				>
-					{buttonText}
-				</FixButton>
-			)}
 		</Box>
 	)
 }

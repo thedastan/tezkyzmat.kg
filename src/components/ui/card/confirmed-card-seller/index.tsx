@@ -19,7 +19,7 @@ interface ConfirmedCardSellerProps {
 	status_label: string
 }
 const ConfirmedCardSeller = ({
-	request: { order, id },
+	request: { order, id, status },
 	status_label
 }: ConfirmedCardSellerProps) => {
 	const { push } = useRouter()
@@ -40,12 +40,8 @@ const ConfirmedCardSeller = ({
 					<Flex
 						py='1'
 						px='6px'
-						color={
-							order.status === EnumOrderStatus.COMPLETED ? '#06B217' : '#1C1C1C'
-						}
-						bg={
-							order.status === EnumOrderStatus.COMPLETED ? '#EDFCEE' : '#F4F5F7'
-						}
+						color={status === EnumOrderStatus.COMPLETED ? '#06B217' : '#1C1C1C'}
+						bg={status === EnumOrderStatus.COMPLETED ? '#EDFCEE' : '#F4F5F7'}
 						fontSize='10px'
 						lineHeight='16px'
 						letterSpacing='.5px'

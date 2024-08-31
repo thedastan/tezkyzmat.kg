@@ -110,14 +110,14 @@ const RequestComponent = () => {
 	}, [])
 	return (
 		<BlackInterface role={EnumRole.CLIENT}>
-			{!false ? (
+			{!isPending ? (
 				<Flex
 					h='100%'
 					flexDirection='column'
 					justifyContent='space-between'
 					pb={pathname === USER_PAGES.REQUEST ? NAVBAR_HEIGHT : '0'}
 				>
-					{(isLoading || isLoading2 || isPending) && <Spinner />}
+					{(isLoading || isLoading2) && <Spinner />}
 					<StepperComponent
 						activeStep={activeStep}
 						setActiveStep={setActiveStep}
@@ -231,6 +231,15 @@ const RequestComponent = () => {
 							onSubmit={onSubmit}
 						/>
 					)}
+
+	{pathname === USER_PAGES.REQUEST && (
+				<FixButton
+					onClick={() => push(USER_PAGES.SIGN_UP)}
+					bg='#F9BD15'
+				>
+					Регистрация
+				</FixButton>
+			)}
 				</Flex>
 			) : (
 				<Flex
@@ -248,15 +257,6 @@ const RequestComponent = () => {
 						Возврат осуществляется в течение 3-х дней с момента покупки
 					</Description>
 				</Flex>
-			)}
-
-			{pathname === USER_PAGES.REQUEST && (
-				<FixButton
-					onClick={() => push(USER_PAGES.SIGN_UP)}
-					bg='#F9BD15'
-				>
-					Регистрация
-				</FixButton>
 			)}
 		</BlackInterface>
 	)

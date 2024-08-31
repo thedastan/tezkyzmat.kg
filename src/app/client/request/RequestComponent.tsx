@@ -233,12 +233,13 @@ const RequestComponent = () => {
 					)}
 
 	{pathname === USER_PAGES.REQUEST && (
-				<FixButton
+				<DefButton
 					onClick={() => push(USER_PAGES.SIGN_UP)}
 					bg='#F9BD15'
+     mt='3'
 				>
 					Регистрация
-				</FixButton>
+				</DefButton>
 			)}
 				</Flex>
 			) : (

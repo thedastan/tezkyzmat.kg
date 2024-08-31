@@ -3,17 +3,17 @@ import { toast } from 'sonner'
 
 import { ToastError } from '@/config/helpers'
 
-import { IOtpSend } from '@/models/auth.model'
+import { IOtpSend, ResetPasswordPayload } from '@/models/auth.model'
 import { IRegisterClient, IRegisterSeller } from '@/models/register.model'
 import { authService } from '@/services/auth.service'
 
-export function useRegister(success: (otp: number) => void) {
+export function useRegister(success: () => void) {
 	const { mutate, isPending } = useMutation({
 		mutationKey: ['register'],
 		mutationFn: (data: IRegisterClient | IRegisterSeller) =>
 			authService.register(data),
-		onSuccess(otp) {
-			success(otp)
+		onSuccess() {
+			success()
 			toast.success('На вашу почту отпарили код. Проверьте')
 		},
 		onError(e) {
@@ -47,7 +47,23 @@ export function useOtpSent(success: () => void) {
 		mutationFn: (data: IOtpSend) => authService.sendOtpCode(data),
 		onSuccess() {
 			success()
-			toast.success('На вашу почту отпарили код. Проверьте')
+			toast.success('На ваш номер отправили смс код. Проверьте')
+		},
+		onError(e) {
+			ToastError(e)
+		}
+	})
+
+	return { mutate, isPending }
+}
+
+export function useResetPassword(success: () => void) {
+	const { mutate, isPending } = useMutation({
+		mutationKey: ['reset-password'],
+		mutationFn: (data: ResetPasswordPayload) => authService.resetPassword(data),
+		onSuccess() {
+			success()
+			toast.success('На ваш номер отпарили смс код. Проверьте')
 		},
 		onError(e) {
 			ToastError(e)

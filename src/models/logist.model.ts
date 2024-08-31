@@ -37,4 +37,8 @@ export interface LogistUpdatePayload {
 	id: number
 	is_taken: boolean
 	is_sent: boolean
+	courier_name?: string
+	courier_phone?: string
+	courier_payment?: string
+	order_seller_images?: string[]
 }

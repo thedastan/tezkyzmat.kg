@@ -28,14 +28,16 @@ const SentButton = ({ el }: SentButtonProps) => {
 
 	const [images, setImages] = useState<string[]>([])
 	const [value, setValue] = useState({
-		full_name: '',
-		phone: '',
-		price: '',
-		images: []
+		courier_name: '',
+		courier_phone: '',
+		courier_payment: ''
 	})
 
-	const { isPending, mutate } = useLogistOrderUpdateStatus(onCloseModal)
-
+	const { isPending, mutate } = useLogistOrderUpdateStatus(() => {
+		onCloseModal()
+		onClose()
+	})
+	// order_seller_images
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setValue({ ...value, [e.target.name]: e.target.value })
 	}
@@ -43,6 +45,16 @@ const SentButton = ({ el }: SentButtonProps) => {
 	const onSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		onOpenModal()
+	}
+
+	const onSent = () => {
+		mutate({
+			id: el.id,
+			is_taken: el.is_taken,
+			is_sent: true,
+			order_seller_images: images,
+			...value
+		})
 	}
 
 	return (
@@ -78,25 +90,26 @@ const SentButton = ({ el }: SentButtonProps) => {
 					<form onSubmit={onSubmit}>
 						<InputComponent
 							handleChange={handleChange}
-							value={value.full_name}
-							name='full_name'
+							value={value.courier_name}
+							name='courier_name'
 							placeholder='Имя курьера'
 							title='Имя'
 						/>
 						<PhoneInputComponent
 							placeholder='Контакты'
-							handleChange={phone => setValue({ ...value, phone })}
+							handleChange={courier_phone =>
+								setValue({ ...value, courier_phone })
+							}
 							title='Номер курьера'
-							value={value.phone}
+							value={value.courier_phone}
 						/>
 						<InputComponent
 							handleChange={handleChange}
-							value={value.price}
-							name='price'
+							value={value.courier_payment}
+							name='courier_payment'
 							placeholder='XXX'
 							title='Стоимость доставки'
 						/>
-
 						<UploadPhotos
 							images={images}
 							setImages={setImages}
@@ -111,8 +124,9 @@ const SentButton = ({ el }: SentButtonProps) => {
 			<DeleteModal
 				isOpen={isOpenModel}
 				onClose={onCloseModal}
-				onDelete={() => {}}
+				onDelete={onSent}
 				isLoading={isPending}
+				withoutOverlay={true}
 			>
 				Вы убедились, что отправили запчасть?
 			</DeleteModal>

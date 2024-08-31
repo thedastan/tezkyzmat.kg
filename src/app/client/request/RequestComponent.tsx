@@ -232,15 +232,15 @@ const RequestComponent = () => {
 						/>
 					)}
 
-	{pathname === USER_PAGES.REQUEST && (
-				<DefButton
-					onClick={() => push(USER_PAGES.SIGN_UP)}
-					bg='#F9BD15'
-     mt='3'
-				>
-					Регистрация
-				</DefButton>
-			)}
+					{pathname === USER_PAGES.REQUEST && (
+						<DefButton
+							onClick={() => push(USER_PAGES.SIGN_UP)}
+							bg='#F9BD15'
+							mt='5'
+						>
+							Регистрация
+						</DefButton>
+					)}
 				</Flex>
 			) : (
 				<Flex

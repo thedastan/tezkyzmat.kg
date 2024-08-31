@@ -8,7 +8,7 @@ import {
 	PinInputField
 } from '@chakra-ui/react'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
 import UserLayoutComponent from '@/components/layouts/user.layout'
 import Spinner from '@/components/loader/spinner'
@@ -17,20 +17,19 @@ import Description from '@/components/ui/texts/Description'
 import TitleComponent from '@/components/ui/texts/TitleComponent'
 
 import { INTERFACE_WIDTH } from '@/config/_variables.config'
-import { CLIENT_PAGES, SELLER_PAGES } from '@/config/pages-url.config'
-import { EnumRole } from '@/config/role'
 
 import { useOtpSent, useVerify } from '@/hooks/useRegister'
-import { useRoles } from '@/hooks/useRoles'
 
 import { EnumOtpCode } from '@/models/auth.enum'
 
 interface PinInputModalProps {
 	activeStep: number
-	setActiveStep: (index: number) => void
+	setActiveStep: Dispatch<SetStateAction<number>>
 	phone: string
 	isOpen: boolean
-	otp: any
+	success_path?: string
+	onSubmit?: (code: string) => void
+	loading?: boolean
 }
 
 const countdown_count = 30
@@ -40,18 +39,16 @@ const PinInputModal = ({
 	setActiveStep,
 	phone,
 	isOpen,
-	otp
+	success_path = '',
+	onSubmit,
+	loading
 }: PinInputModalProps) => {
 	const [code, setCode] = useState('')
 	const [countdown, setCountdown] = useState(countdown_count)
 	const [isAgain, setAgain] = useState(false)
 	const { replace } = useRouter()
-	const { role } = useRoles()
 	const { isPending: isLoading, mutate: verify } = useVerify(
-		() => {
-			if (role === EnumRole.CLIENT) replace(CLIENT_PAGES.MAIN)
-			else if (role === EnumRole.SELLER) replace(SELLER_PAGES.HOME)
-		},
+		() => replace(success_path),
 		() => setCode('')
 	)
 
@@ -71,6 +68,11 @@ const PinInputModal = ({
 		String(countdown).length > 1 ? countdown : '0' + countdown
 	}`
 
+	function submit() {
+		if (onSubmit) onSubmit(code)
+		else verify(code)
+	}
+
 	useEffect(() => {
 		setTimeout(() => {
 			if (isAgain) {
@@ -89,20 +91,20 @@ const PinInputModal = ({
 
 	useEffect(() => {
 		if (code.length === 5) {
-			verify(code)
+			submit()
 		}
 	}, [code])
 	return (
 		<Modal
 			isOpen={isOpen}
-			onClose={() => setActiveStep(1)}
+			onClose={() => setActiveStep(step => step - 1)}
 			size='full'
 		>
 			<ModalContent
 				justifyContent='center'
 				transition='0'
 			>
-				{(isPending || isLoading) && <Spinner />}
+				{(isPending || isLoading || loading) && <Spinner />}
 				<ModalBody
 					maxW={INTERFACE_WIDTH}
 					w='100%'
@@ -163,14 +165,6 @@ const PinInputModal = ({
 									textAlign='center'
 								>
 									Неправильный код, попробуйте еще раз
-								</Description>
-							)}
-							{!!otp && (
-								<Description
-									mt='26px'
-									textAlign='center'
-								>
-									{`Код: ${otp}`}
 								</Description>
 							)}
 						</Box>

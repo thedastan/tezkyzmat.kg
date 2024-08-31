@@ -1,7 +1,6 @@
 import Profile from '..'
 import {
 	Avatar,
-	Button,
 	Container,
 	Flex,
 	Heading,
@@ -9,6 +8,7 @@ import {
 	Text,
 	useDisclosure
 } from '@chakra-ui/react'
+import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import { IoNotificationsOutline } from 'react-icons/io5'
 
@@ -16,6 +16,8 @@ import Spinner from '@/components/loader/spinner'
 import ConfirmedRequestButton from '@/components/ui/buttons/ConfirmedRequestButton'
 
 import { SITE_NAME } from '@/constants/seo.constants'
+
+import Logo from '@/assets/img/logoIcon.png'
 
 import {
 	INTERFACE_WIDTH,
@@ -61,16 +63,25 @@ const ProfileHeader = () => {
 				{isUserPage ? (
 					<Flex
 						alignItems='center'
+						justifyContent='center'
+						gap='2'
 						h={PROFILE_HEADER_HEIGHT}
 					>
-						<Button
+						<Image
+							width={30}
+							height={30}
+							src={Logo}
+							alt='Logo'
+						/>
+						<Text
 							onClick={() => push(PUBLIC_PAGES.HOME)}
-							bg='#3D3D3D'
 							color='#F4F5F7'
+							fontWeight='600'
+							fontSize='20px'
 							variant='none'
 						>
-							{SITE_NAME}
-						</Button>
+							{SITE_NAME.toUpperCase()}
+						</Text>
 					</Flex>
 				) : (
 					<Stack

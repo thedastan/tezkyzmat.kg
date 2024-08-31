@@ -6,38 +6,58 @@ import {
 	Modal,
 	ModalBody,
 	ModalContent,
-	useDisclosure
+	useDisclosure,
+	useSteps
 } from '@chakra-ui/react'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { BiSolidLock } from 'react-icons/bi'
 
 import UserLayoutComponent from '@/components/layouts/user.layout'
+import Spinner from '@/components/loader/spinner'
 import DefButton from '@/components/ui/buttons/DefButton'
 import InputComponent from '@/components/ui/inputs/InputComponent'
+import PhoneInputComponent from '@/components/ui/inputs/PhoneInputComponent'
 import Description from '@/components/ui/texts/Description'
 import TitleComponent from '@/components/ui/texts/TitleComponent'
 
 import { INTERFACE_WIDTH } from '@/config/_variables.config'
 import { USER_PAGES } from '@/config/pages-url.config'
 
+import { useOtpSent, useResetPassword } from '@/hooks/useRegister'
 import { useRoles } from '@/hooks/useRoles'
+
+import PinInputModal from '@/app/user/sign-up/(components)/PinInputModal'
+import { EnumOtpCode } from '@/models/auth.enum'
+import { ResetPasswordPayload } from '@/models/auth.model'
 
 const ResetPassword = () => {
 	const { isOpen, onClose, onOpen } = useDisclosure()
+	const { activeStep, setActiveStep } = useSteps({
+		index: 0,
+		count: 3
+	})
 	const { replace } = useRouter()
-	const [value, setValue] = useState({
-		password1: '',
-		password2: ''
+	const [value, setValue] = useState<ResetPasswordPayload>({
+		phone: '',
+		password: '',
+		code: ''
 	})
 	const { role } = useRoles()
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setValue({ ...value, [e.target.name]: e.target.value })
 	}
+
+	const { isPending, mutate } = useOtpSent(() => setActiveStep(1))
+
+	const { mutate: reset, isPending: isPending2 } = useResetPassword(onOpen)
+
+	const onReset = (code: string) => {
+		reset({ phone: value.phone, password: value.password, code })
+	}
 	const onSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-		onOpen()
+		mutate({ phone: value.phone, type: EnumOtpCode.RESET_PASSWORD })
 	}
 	return (
 		<>
@@ -48,24 +68,30 @@ const ResetPassword = () => {
 				backPath={USER_PAGES.AUTH(role)}
 			>
 				<form onSubmit={onSubmit}>
-					<TitleComponent mb='34px'>Вход</TitleComponent>
-
-					<InputComponent
-						handleChange={handleChange}
-						placeholder='Должно быть 8 символов'
-						type='password'
-						name='password1'
-						title='Новый пароль'
-						value={value.password1}
+					<TitleComponent mb='34px'>Изменить пароль</TitleComponent>
+					{isPending && <Spinner />}
+					<PhoneInputComponent
+						handleChange={phone => setValue({ ...value, phone })}
+						placeholder='+996'
+						title='Номер*'
+						value={value.phone}
 					/>
 					<InputComponent
+						handleChange={handleChange}
+						placeholder='Должно быть больше 3х символов'
+						type='password'
+						name='password'
+						title='Новый пароль'
+						value={value.password}
+					/>
+					{/* <InputComponent
 						handleChange={handleChange}
 						placeholder='Повторите пароль'
 						type='password'
 						name='password2'
 						title='Подтвердите пароль'
 						value={value.password2}
-					/>
+					/> */}
 
 					<DefButton
 						mt='34px'
@@ -76,6 +102,14 @@ const ResetPassword = () => {
 				</form>
 			</UserLayoutComponent>
 
+			<PinInputModal
+				activeStep={activeStep}
+				phone={value.phone}
+				setActiveStep={setActiveStep}
+				isOpen={activeStep === 1}
+				onSubmit={onReset}
+				loading={isPending2}
+			/>
 			<Modal
 				isOpen={isOpen}
 				onClose={() => {}}

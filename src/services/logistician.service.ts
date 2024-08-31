@@ -14,12 +14,9 @@ class LogisticianService {
 	}
 
 	async update(data: LogistUpdatePayload) {
-		const response = await PRIVATE_API.put(
+		const response = await PRIVATE_API.patch(
 			this.BASE_URL + `order/update/${data.id}/`,
-			{
-				is_taken: data.is_taken,
-				is_sent: data.is_sent
-			}
+			data
 		)
 
 		return response.data

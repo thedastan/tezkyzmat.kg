@@ -1,11 +1,13 @@
 import { PUBLIC_API } from '@/api/interceptors'
 
 import { getAccessToken, saveTokenStorage } from './auth-token.services'
+import ResetPassword from '@/app/password/(components)/ResetPassword'
 import {
 	IAuthForm,
 	IAuthResponse,
 	IOtpSend,
-	IRegisterResponse
+	IRegisterResponse,
+	ResetPasswordPayload
 } from '@/models/auth.model'
 import { IRegisterClient, IRegisterSeller } from '@/models/register.model'
 
@@ -43,6 +45,14 @@ export const authService = {
 			}
 		)
 		if (response.data.access) saveTokenStorage(response.data)
+	},
+
+	async resetPassword(payload: ResetPasswordPayload) {
+		const response = await PUBLIC_API.post<IAuthResponse>(
+			`account/password/reset/`,
+			payload
+		)
+		// if (response.data.access) saveTokenStorage(response.data)
 	},
 
 	// update token

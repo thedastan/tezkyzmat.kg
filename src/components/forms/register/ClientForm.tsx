@@ -7,6 +7,8 @@ import InputComponent from '@/components/ui/inputs/InputComponent'
 import PhoneInputComponent from '@/components/ui/inputs/PhoneInputComponent'
 import StepperComponent from '@/components/ui/stepper'
 
+import { CLIENT_PAGES } from '@/config/pages-url.config'
+
 import { useRegister } from '@/hooks/useRegister'
 import { useRoles } from '@/hooks/useRoles'
 
@@ -16,7 +18,6 @@ import { ClientRegisterForm } from '@/models/value-interfaces/auth.values'
 
 const ClientForm = () => {
 	const [validation, setValid] = useState(false)
-	const [otp, setOtp] = useState<number>()
 	const { activeStep, setActiveStep } = useSteps({
 		index: 0,
 		count: 3
@@ -32,9 +33,8 @@ const ClientForm = () => {
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setValue({ ...value, [e.target.name]: e.target.value })
 	}
-	const onSuccess = (otp: number) => {
+	const onSuccess = () => {
 		setActiveStep(2)
-		setOtp(otp)
 	}
 	const { mutate, isPending } = useRegister(onSuccess)
 
@@ -127,7 +127,7 @@ const ClientForm = () => {
 				phone={value.phone}
 				setActiveStep={setActiveStep}
 				isOpen={activeStep === 2}
-				otp={otp}
+				success_path={CLIENT_PAGES.MAIN}
 			/>
 		</>
 	)

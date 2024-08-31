@@ -39,3 +39,9 @@ export interface ChangePasswordPayload {
 	password: string
 	old_password: string
 }
+
+export interface ResetPasswordPayload {
+	phone: string
+	code: string
+	password: string
+}

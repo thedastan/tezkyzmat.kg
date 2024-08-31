@@ -8,6 +8,7 @@ import PhoneInputComponent from '@/components/ui/inputs/PhoneInputComponent'
 import SelectComponent from '@/components/ui/inputs/SelectComponent'
 import StepperComponent from '@/components/ui/stepper'
 
+import { SELLER_PAGES } from '@/config/pages-url.config'
 import { EnumRole } from '@/config/role'
 
 import { useCity } from '@/hooks/useCity'
@@ -19,7 +20,6 @@ import UploadPhotos from '../upload-photos'
 import { SellerRegisterForm } from '@/models/value-interfaces/auth.values'
 
 const SellerForm = () => {
-	const [otp, setOtp] = useState<number>()
 	const { activeStep, setActiveStep } = useSteps({
 		index: 0,
 		count: 3
@@ -36,9 +36,8 @@ const SellerForm = () => {
 		market: ''
 	})
 
-	const onSuccess = (otp: number) => {
+	const onSuccess = () => {
 		setActiveStep(2)
-		setOtp(otp)
 	}
 
 	const { mutate, isPending } = useRegister(onSuccess)
@@ -131,13 +130,7 @@ const SellerForm = () => {
 							</option>
 						))}
 					</SelectComponent>
-					{/* <SelectCheckbox
-						list={city}
-						handleChange={handleCheckbox}
-						name='city'
-						placeholder='Город'
-						value={value.city}
-					/> */}
+
 					<SelectComponent
 						handleChange={handleChange}
 						name='market'
@@ -154,13 +147,7 @@ const SellerForm = () => {
 							</option>
 						))}
 					</SelectComponent>
-					{/* <SelectCheckbox
-						list={markets}
-						handleChange={handleCheckbox}
-						name='market'
-						placeholder='Название рынка'
-						value={value.market}
-					/> */}
+
 					<InputComponent
 						handleChange={handleChange}
 						name='address'
@@ -195,7 +182,7 @@ const SellerForm = () => {
 				phone={value.phone}
 				setActiveStep={setActiveStep}
 				isOpen={activeStep === 2}
-				otp={otp}
+				success_path={SELLER_PAGES.HOME}
 			/>
 		</>
 	)

@@ -59,7 +59,7 @@ const AddBrandButton = () => {
 	}
 	return (
 		<Box mt='32px'>
-			<FixButton>
+			<FixButton onClick={onOpen}>
 				<Flex
 					alignItems='center'
 					gap='2'

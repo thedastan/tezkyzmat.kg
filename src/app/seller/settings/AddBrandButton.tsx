@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, Divider, Flex, useDisclosure } from '@chakra-ui/react'
+import { Box, Divider, Flex, Text, useDisclosure } from '@chakra-ui/react'
 import { useQueryClient } from '@tanstack/react-query'
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
@@ -22,17 +22,24 @@ import { ISpareData } from '@/models/spares.model'
 const AddBrandButton = () => {
 	const { isOpen, onClose, onOpen } = useDisclosure()
 	const [value, setValue] = useState({
-		model: '',
 		brand: '',
+		model: [] as ISpareData[],
 		year: [] as ISpareData[]
 	})
 	const { data, isLoading } = useVehicle()
 	const { data: vehicle, isLoading2 } = useVehicleById(value.brand)
-	const model: ISpareData[] | undefined = vehicle?.models
-		.find(el => String(el.id) === value?.model)
-		?.year.map(el => {
-			return { id: el.id, name: el.year }
-		})
+	// const model: ISpareData[] | undefined = vehicle?.models
+	// 	.find(el => String(el.id) === value?.model)
+	// 	?.year.map(el => {
+	// 		return { id: el.id, name: el.year }
+	// 	})
+
+	const model_list: ISpareData[] | undefined = vehicle?.models.map(el => {
+		return {
+			id: el.id,
+			name: el.model
+		}
+	})
 
 	const handleChange = (
 		e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -45,7 +52,7 @@ const AddBrandButton = () => {
 	}
 
 	const { isPending, mutate } = useSellerSpareAdd(() => {
-		setValue({ brand: '', model: '', year: [] })
+		setValue({ brand: '', model: [], year: [] })
 		onClose()
 	})
 
@@ -53,8 +60,10 @@ const AddBrandButton = () => {
 		e.preventDefault()
 		mutate({
 			brand: +value.brand,
-			model: +value.model,
-			year: value.year.map(el => el.id)
+			// model: +value.model,
+			model: value.model.map(el => el.id),
+			year: []
+			// year: value.year.map(el => el.id)
 		})
 	}
 	return (
@@ -92,13 +101,35 @@ const AddBrandButton = () => {
 							</option>
 						))}
 					</SelectComponent>
-					<Divider
-						h='1px'
-						bg='#1C1C1C'
-						my='30px'
-						opacity='.3'
+					<Flex
+						justifyContent='space-between'
+						alignItems='center'
+						gap='3'
+						my='20px'
+					>
+						<Divider
+							h='1px'
+							bg='#1C1C1C'
+							opacity='.3'
+						/>
+						<Text>необязательно</Text>
+						<Divider
+							h='1px'
+							bg='#1C1C1C'
+							opacity='.3'
+						/>
+					</Flex>
+
+					<SelectCheckbox
+						list={model_list}
+						handleChange={handleCheckbox}
+						name='model'
+						placeholder='Модель*'
+						disabled={!value?.brand}
+						value={value.model.map(el => el.name)}
 					/>
-					<SelectComponent
+
+					{/* <SelectComponent
 						handleChange={handleChange}
 						value={value?.model}
 						name='model'
@@ -114,17 +145,22 @@ const AddBrandButton = () => {
 								{el.model}
 							</option>
 						))}
-					</SelectComponent>
+					</SelectComponent> */}
 
-					<SelectCheckbox
+					{/* <SelectCheckbox
 						list={model}
 						handleChange={handleCheckbox}
 						name='year'
 						placeholder='Год выпуска*'
 						disabled={!model?.length}
 						value={value.year.map(el => el.name)}
-					/>
-					<DefButton type='submit'>Сохранить</DefButton>
+					/> */}
+					<DefButton
+						type='submit'
+						mt='50px'
+					>
+						Сохранить
+					</DefButton>
 				</form>
 			</DrawerModal>
 		</Box>

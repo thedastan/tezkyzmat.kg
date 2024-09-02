@@ -19,7 +19,8 @@ class SettingsService {
 		return response.data
 	}
 
-	async addSpare(data: ISettingSpareValue) {
+	async addSpare(payload: ISettingSpareValue) {
+		const data = payload.model.length ? payload : { brand: payload.brand }
 		const response = await PRIVATE_API.post<ISettingSpareValue>(
 			this.BASE_URL + 'create/',
 			data

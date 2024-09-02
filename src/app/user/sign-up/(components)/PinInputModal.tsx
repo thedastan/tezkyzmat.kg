@@ -115,7 +115,7 @@ const PinInputModal = ({
 						question={isAgain ? 'Отправить код снова' : 'Я не получил код'}
 						onClick={() => !isAgain && sendOtpCode()}
 						action={isAgain ? timer : 'Запросить'}
-						backFn={() => setActiveStep(1)}
+						backFn={() => setActiveStep(step => step - 1)}
 					>
 						<Box>
 							<TitleComponent mb='26px'>Введите код</TitleComponent>
@@ -145,12 +145,13 @@ const PinInputModal = ({
 
 									// isDisabled={isDisabled}
 								>
-									{[1, 2, 3, 4, 5].map(el => (
+									{[0, 1, 2, 3, 4].map(el => (
 										<PinInputField
+											key={el}
+											value={code[el]}
 											w='63px'
 											h='72px'
 											rounded='15px'
-											key={el}
 											bg='white'
 											border='1px solid #D8DADC'
 											_focus={{ border: '1px solid #1C1C1C' }}

@@ -42,6 +42,6 @@ export interface ChangePasswordPayload {
 
 export interface ResetPasswordPayload {
 	phone: string
-	code: string
+	otp: string
 	password: string
 }

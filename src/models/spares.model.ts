@@ -9,7 +9,7 @@ export interface ISpareCountry extends ISpareData {}
 
 export interface ISettingSpareValue {
 	brand: number
-	model: number
+	model: number[]
 	year: number[]
 }
 

@@ -12,7 +12,9 @@ export function useLogistOrder() {
 		queryFn: () => logisticianService.getOrders()
 	})
 
-	return { data, isLoading }
+	const actual = data?.filter(el => !el.is_sent)
+	const completed = data?.filter(el => el.is_sent)
+	return { actual, completed, isLoading }
 }
 
 export function useLogistOrderUpdateStatus(onSuccess: () => void) {

@@ -41,7 +41,7 @@ const ResetPassword = () => {
 	const [value, setValue] = useState<ResetPasswordPayload>({
 		phone: '',
 		password: '',
-		code: ''
+		otp: ''
 	})
 	const { role } = useRoles()
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -52,8 +52,8 @@ const ResetPassword = () => {
 
 	const { mutate: reset, isPending: isPending2 } = useResetPassword(onOpen)
 
-	const onReset = (code: string) => {
-		reset({ phone: value.phone, password: value.password, code })
+	const onReset = (otp: string) => {
+		reset({ phone: value.phone, password: value.password, otp })
 	}
 	const onSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
@@ -129,7 +129,6 @@ const ResetPassword = () => {
 							question=''
 							action=''
 							backPath=''
-							backFn={onClose}
 						>
 							<Box>
 								<Flex

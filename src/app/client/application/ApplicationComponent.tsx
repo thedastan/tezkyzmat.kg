@@ -1,13 +1,15 @@
 'use client'
 
 import {
-	Box,
 	Container,
+	Flex,
 	TabList,
 	TabPanel,
 	TabPanels,
-	Tabs
+	Tabs,
+	Text
 } from '@chakra-ui/react'
+import Link from 'next/link'
 import { useState } from 'react'
 import { CgClose } from 'react-icons/cg'
 import { FaCheck } from 'react-icons/fa'
@@ -15,14 +17,17 @@ import { FiSearch } from 'react-icons/fi'
 
 import AddRequestButton from '@/components/add-request-button'
 import Spinner from '@/components/loader/spinner'
-import HeaderComponent from '@/components/navbar/header-component'
 import PlacingAnOrder from '@/components/placing-order'
 import TabButton from '@/components/ui/buttons/TabButton'
 import RequestCardClient from '@/components/ui/card/RequestCardClient'
 import Description from '@/components/ui/texts/Description'
+import TitleComponent from '@/components/ui/texts/TitleComponent'
+
+import { CLIENT_PAGES } from '@/config/pages-url.config'
 
 import { useRequest } from '@/hooks/useRequest'
 
+import { ApplicationProvider } from './ApplicationProvider'
 import { EnumOrderStatus } from '@/models/request.model'
 
 const ApplicationComponent = () => {
@@ -30,14 +35,34 @@ const ApplicationComponent = () => {
 	const { data, isLoading } = useRequest()
 
 	return (
-		<Box
-			bg='#F4F5F7'
-			minH='90vh'
-		>
+		<ApplicationProvider>
 			<PlacingAnOrder />
 			{isLoading && <Spinner />}
 			<Container>
-				<HeaderComponent title='Заявки' />
+				{/* <HeaderComponent title='Заявки' /> */}
+				<Flex
+					h='75px'
+					justifyContent='space-between'
+					alignItems='center'
+				>
+					<TitleComponent
+						fontSize='20px'
+						lineHeight='26px'
+						color='#1C1C1C'
+					>
+						Заявки
+					</TitleComponent>
+					<Link href={CLIENT_PAGES.HISTORY}>
+						<Text
+							color='#06B217'
+							letterSpacing='.4px'
+							lineHeight='26px'
+							fontWeight='500'
+						>
+							История
+						</Text>
+					</Link>
+				</Flex>
 				<Tabs
 					variant='none'
 					onChange={setTabIndex}
@@ -71,7 +96,7 @@ const ApplicationComponent = () => {
 							Не&nbsp;найдено
 						</TabButton>
 					</TabList>
-					<TabPanels pt='8px'>
+					<TabPanels pt='2'>
 						<TabPanel px='0'>
 							{data
 								?.filter(el => el.status === EnumOrderStatus.IN_SEARCH)
@@ -116,7 +141,7 @@ const ApplicationComponent = () => {
 				</Tabs>
 			</Container>
 			<AddRequestButton />
-		</Box>
+		</ApplicationProvider>
 	)
 }
 

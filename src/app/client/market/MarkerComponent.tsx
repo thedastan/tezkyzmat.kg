@@ -21,10 +21,7 @@ const MarkerComponent = () => {
 		window.scroll(0, 0)
 	}, [page])
 	return (
-		<Box
-			bg='#F4F5F7'
-			minH='90vh'
-		>
+		<Box>
 			{isLoading && <Spinner />}
 			<Container>
 				<HeaderComponent title='Магазины' />

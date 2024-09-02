@@ -6,8 +6,10 @@ class CLIENT_DASHBOARD {
 
 	MAIN = `${this.root}/request`
 	SUCCESS = `${this.root}/request/success`
-	APPLICATION = `${this.root}/application`
 	MARKET = `${this.root}/market`
+
+	APPLICATION = `${this.root}/application`
+	HISTORY = `${this.APPLICATION}/history`
 	APPLICATION_DETAIL = (slug: number | string) => {
 		return `${this.APPLICATION}/${slug}`
 	}

@@ -12,6 +12,7 @@ import InputComponent from '../ui/inputs/InputComponent'
 import SelectComponent from '../ui/inputs/SelectComponent'
 import DeleteModal from '../ui/modal/DeleteModal'
 
+import { useApplicationModal } from '@/app/client/application/ApplicationProvider'
 import { ILocaleOrderSeller } from '@/models/request.model'
 
 const regions = [
@@ -30,11 +31,7 @@ const PlacingAnOrder = () => {
 		undefined
 	)
 	const { isOpen, onClose, onOpen } = useDisclosure()
-	const {
-		isOpen: isOpenModel,
-		onClose: onCloseModal,
-		onOpen: onOpenModal
-	} = useDisclosure()
+	const { isOpenModel, onCloseModal, onOpenModal } = useApplicationModal()
 
 	const [value, setValue] = useState({
 		region: '',
@@ -79,6 +76,7 @@ const PlacingAnOrder = () => {
 				onOpenModal()
 			}
 		}
+
 		document.addEventListener('visibilitychange', handleVisibilityChange)
 
 		return () => {

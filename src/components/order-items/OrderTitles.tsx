@@ -7,7 +7,7 @@ import { IOrder } from '@/models/request.model'
 const OrderTitles = ({ order }: { order: IOrder | ILogistOrder }) => {
 	return (
 		<>
-			<Title>{`${order.brand.brand}, ${order.model?.model} ${order.year?.year}, ${!!order.volume ? order.volume + 'L' : ''}`}</Title>
+			<Title>{`${order.brand.brand}, ${order.model?.model} ${order.year?.year}, ${!!order.volume ? order.volume.name + 'L' : ''}`}</Title>
 			{!!order.description && (
 				<Description mt='12px'>{`“${order.description}”`}</Description>
 			)}

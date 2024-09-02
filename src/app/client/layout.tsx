@@ -12,6 +12,7 @@ export default function ClientLayout({
 	return (
 		<Box
 			minH='100vh'
+			bg='#F4F5F7'
 			pb={NAVBAR_HEIGHT}
 		>
 			{children}

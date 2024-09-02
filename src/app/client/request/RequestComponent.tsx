@@ -173,22 +173,24 @@ const RequestComponent = () => {
 									</option>
 								))}
 							</SelectComponent>
-							<SelectComponent
-								handleChange={handleChange}
-								value={value?.volume}
-								name='volume'
-								placeholder='Объем'
-								disabled={!model?.volume.length}
-							>
-								{model?.volume?.map(el => (
-									<option
-										value={el.id}
-										key={el.id}
-									>
-										{el.name}
-									</option>
-								))}
-							</SelectComponent>
+							{!!model?.volume.length && (
+								<SelectComponent
+									handleChange={handleChange}
+									value={value?.volume}
+									name='volume'
+									placeholder='Объем'
+									disabled={!model?.volume.length}
+								>
+									{model?.volume?.map(el => (
+										<option
+											value={el.id}
+											key={el.id}
+										>
+											{el.name}
+										</option>
+									))}
+								</SelectComponent>
+							)}
 							<DefButton type='submit'>Далее</DefButton>
 						</form>
 					)}

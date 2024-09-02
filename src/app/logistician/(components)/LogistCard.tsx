@@ -112,7 +112,7 @@ const LogistCard = ({ el }: { el: ILogistItem }) => {
 				gap='14px'
 				mt='5'
 			>
-				<TakeButton el={el} />
+				{!el.is_sent && <TakeButton el={el} />}
 				<SentButton el={el} />
 			</Flex>
 		</Box>

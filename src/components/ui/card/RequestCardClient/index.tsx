@@ -1,18 +1,32 @@
 'use client'
 
-import { Box, Flex, useDisclosure } from '@chakra-ui/react'
+import {
+	Box,
+	Flex,
+	Menu,
+	MenuButton,
+	MenuItem,
+	MenuList,
+	Spinner,
+	useDisclosure
+} from '@chakra-ui/react'
 import moment from 'moment'
 import 'moment/locale/ru'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { BsWhatsapp } from 'react-icons/bs'
 import { FaTrash } from 'react-icons/fa6'
+import { IoPencil } from 'react-icons/io5'
 import { RiEditBoxLine } from 'react-icons/ri'
 import { RiWhatsappFill } from 'react-icons/ri'
 
 import Card from '@/components/layouts/card'
 import OrderTitles from '@/components/order-items/OrderTitles'
 import OrderDetailData from '@/components/order-items/order-detail-data'
+
+import { poppins } from '@/constants/fonts'
 
 import { AGREED_SELLER_DATA_KEY } from '@/config/_variables.config'
 import { CLIENT_PAGES } from '@/config/pages-url.config'
@@ -23,6 +37,7 @@ import DeleteModal from '../../modal/DeleteModal'
 import Moment from '../../texts/Moment'
 import Title from '../../texts/Title'
 
+import { useApplicationModal } from '@/app/client/application/ApplicationProvider'
 import {
 	EnumOrderStatus,
 	ILocaleOrderSeller,
@@ -39,13 +54,7 @@ const RequestCardClient = ({ order, is_detail }: RequestCardClientProps) => {
 	const { remove, isPending } = useRequestRemove(onClose)
 	const { push } = useRouter()
 	const is_found = order.status === EnumOrderStatus.FOUND
-	const saveSellerData = (seller: OrderSeller) => {
-		const order_seller: ILocaleOrderSeller = {
-			order_id: order.id,
-			...seller
-		}
-		localStorage.setItem(AGREED_SELLER_DATA_KEY, JSON.stringify(order_seller))
-	}
+
 	const lastSeen = moment(order.created_at).fromNow()
 	return (
 		<Card
@@ -120,39 +129,126 @@ const RequestCardClient = ({ order, is_detail }: RequestCardClientProps) => {
 			</Flex>
 			{!!is_detail && <OrderDetailData order={order} />}
 			{order.order_sellers?.map(seller => (
-				<Flex
-					justifyContent='space-between'
-					alignItems='center'
-				>
+				<SellerWhatsappCard
+					seller={seller}
+					order_id={order.id}
+					key={seller.id}
+				/>
+			))}
+		</Card>
+	)
+}
+
+interface SellerWhatsappCardProps {
+	seller: OrderSeller
+	order_id: number
+}
+
+function SellerWhatsappCard({ seller, order_id }: SellerWhatsappCardProps) {
+	const { onOpenModal } = useApplicationModal()
+	const [isLoading, setLoading] = useState(false)
+	const saveSellerData = () => {
+		const order_seller: ILocaleOrderSeller = {
+			order_id,
+			...seller
+		}
+		localStorage.setItem(AGREED_SELLER_DATA_KEY, JSON.stringify(order_seller))
+	}
+
+	const saveAndOpenPlacing = () => {
+		saveSellerData()
+		setLoading(true)
+		setTimeout(() => {
+			setLoading(false)
+			onOpenModal()
+		}, 1200)
+	}
+	return (
+		<Flex
+			justifyContent='space-between'
+			alignItems='center'
+		>
+			<Flex
+				alignItems='center'
+				gap='1'
+			>
+				<Moment>Продавец:</Moment>
+				<Title fontWeight='600'>{seller.seller}</Title>
+			</Flex>
+			<Menu closeOnSelect={false}>
+				<MenuButton as={Box}>
 					<Flex
+						justifyContent='center'
 						alignItems='center'
-						gap='1'
+						bg='#06B2171A'
+						rounded='50%'
+						w='46px'
+						h='46px'
+						cursor='pointer'
 					>
-						<Moment>Продавец:</Moment>
-						<Title fontWeight='600'>{seller.seller}</Title>
+						<RiWhatsappFill
+							color='#06B217'
+							fontSize='30px'
+						/>
 					</Flex>
+				</MenuButton>
+				<MenuList
+					maxW='220px'
+					bg='rgba(49, 51, 53, 0.7)'
+					p='0'
+					border='none'
+					rounded='13px'
+					overflow='hidden'
+					className={poppins.className}
+				>
 					<Link
-						onClick={() => saveSellerData(seller)}
+						onClick={saveSellerData}
 						href={`https://wa.me/${seller.seller_phone}`}
 						target='_blank'
 					>
-						<Flex
-							justifyContent='center'
+						<MenuItem
+							h='44px'
+							fontWeight='400'
+							fontSize='17px'
+							lineHeight='22px'
+							color='rgba(255, 255, 255, 1)'
+							bg='rgba(0, 0, 0, 0.2)'
+							w='100%'
 							alignItems='center'
-							bg='#06B2171A'
-							rounded='50%'
-							w='46px'
-							h='46px'
+							justifyContent='space-between'
+							gap='2'
 						>
-							<RiWhatsappFill
-								color='#06B217'
-								fontSize='30px'
-							/>
-						</Flex>
+							whatsapp
+							<BsWhatsapp />
+						</MenuItem>
 					</Link>
-				</Flex>
-			))}
-		</Card>
+
+					<MenuItem
+						onClick={saveAndOpenPlacing}
+						h='44px'
+						fontWeight='400'
+						fontSize='17px'
+						lineHeight='22px'
+						color='rgba(255, 255, 255, 1)'
+						bg='rgba(0, 0, 0, 0.2)'
+						w='100%'
+						alignItems='center'
+						justifyContent='space-between'
+						gap='2'
+					>
+						оформить заказ
+						{isLoading ? (
+							<Spinner
+								color='#FFFFFF'
+								size='sm'
+							/>
+						) : (
+							<IoPencil />
+						)}
+					</MenuItem>
+				</MenuList>
+			</Menu>
+		</Flex>
 	)
 }
 

@@ -1,6 +1,7 @@
 'use client'
 
 import {
+	Box,
 	Container,
 	Flex,
 	TabList,
@@ -17,7 +18,7 @@ import { FiSearch } from 'react-icons/fi'
 
 import AddRequestButton from '@/components/add-request-button'
 import Spinner from '@/components/loader/spinner'
-import PlacingAnOrder from '@/components/placing-order'
+import PlacingOrderMain from '@/components/placing-order/PlacingOrderMain'
 import TabButton from '@/components/ui/buttons/TabButton'
 import RequestCardClient from '@/components/ui/card/RequestCardClient'
 import Description from '@/components/ui/texts/Description'
@@ -27,7 +28,6 @@ import { CLIENT_PAGES } from '@/config/pages-url.config'
 
 import { useRequest } from '@/hooks/useRequest'
 
-import { ApplicationProvider } from './ApplicationProvider'
 import { EnumOrderStatus } from '@/models/request.model'
 
 const ApplicationComponent = () => {
@@ -35,11 +35,10 @@ const ApplicationComponent = () => {
 	const { data, isLoading } = useRequest()
 
 	return (
-		<ApplicationProvider>
-			<PlacingAnOrder />
+		<Box>
+			<PlacingOrderMain />
 			{isLoading && <Spinner />}
-			<Container>
-				{/* <HeaderComponent title='Заявки' /> */}
+			<Container pb='50px'>
 				<Flex
 					h='75px'
 					justifyContent='space-between'
@@ -141,7 +140,7 @@ const ApplicationComponent = () => {
 				</Tabs>
 			</Container>
 			<AddRequestButton />
-		</ApplicationProvider>
+		</Box>
 	)
 }
 

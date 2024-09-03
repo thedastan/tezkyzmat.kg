@@ -4,7 +4,7 @@ import { toast } from 'sonner'
 import { ANSWER_LOCAL_KEY } from '@/config/_variables.config'
 import { ToastError } from '@/config/helpers'
 
-import { EnumOrderStatus } from '@/models/request.model'
+import { EnumSellerStatus } from '@/models/request.model'
 import {
 	OrderStatusPayload,
 	orderSellerService
@@ -16,15 +16,28 @@ export function useOrders() {
 		queryFn: () => orderSellerService.getOrders()
 	})
 
-	const found_orders = data?.filter(el => el.status === EnumOrderStatus.FOUND)
+	const waiting_orders = data?.filter(
+		el =>
+			el.seller_status === EnumSellerStatus.WAITING ||
+			el.seller_status === EnumSellerStatus.PLACED
+	)
 	const pending_orders = data?.filter(
-		el => el.status === EnumOrderStatus.IN_SEARCH
+		el => el.seller_status === EnumSellerStatus.WAITING
 	)
 	const completed_orders = data?.filter(
-		el => el.status === EnumOrderStatus.COMPLETED
+		el => el.seller_status === EnumSellerStatus.COMPLETED
+	)
+	const all_orders = data?.filter(
+		el => el.seller_status === EnumSellerStatus.ALL
 	)
 
-	return { found_orders, pending_orders, completed_orders, isLoading }
+	return {
+		waiting_orders,
+		pending_orders,
+		completed_orders,
+		all_orders,
+		isLoading
+	}
 }
 
 export function useOrderDetail(id: number | string) {

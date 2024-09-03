@@ -22,7 +22,7 @@ import { useOrders } from '@/hooks/useOrders'
 
 const ConfirmedOrders = () => {
 	const [tabIndex, setTabIndex] = useState(0)
-	const { found_orders, completed_orders, isLoading } = useOrders()
+	const { waiting_orders, completed_orders, isLoading } = useOrders()
 	return (
 		<Box
 			bg='#F4F5F7'
@@ -61,12 +61,12 @@ const ConfirmedOrders = () => {
 					</TabList>
 					<TabPanels pt='8px'>
 						<TabPanel px='0'>
-							{!found_orders?.length && <EmptyText />}
-							{found_orders?.map(el => (
+							{!waiting_orders?.length && <EmptyText />}
+							{waiting_orders?.map(el => (
 								<ConfirmedCardSeller
 									key={el.id}
 									request={el}
-									status_label='В ожидании'
+									status_label={el.seller_status_label}
 								/>
 							))}
 						</TabPanel>

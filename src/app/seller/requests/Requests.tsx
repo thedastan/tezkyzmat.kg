@@ -1,7 +1,6 @@
 'use client'
 
 import { Box, Container, Stack } from '@chakra-ui/react'
-import { useRouter } from 'next/navigation'
 
 import Spinner from '@/components/loader/spinner'
 import HeaderComponent from '@/components/navbar/header-component'
@@ -11,7 +10,7 @@ import EmptyText from '@/components/ui/texts/EmptyText'
 import { useOrders } from '@/hooks/useOrders'
 
 const Requests = () => {
-	const { pending_orders: data, isLoading } = useOrders()
+	const { all_orders: data, isLoading } = useOrders()
 	return (
 		<Box
 			bg='#F4F5F7'

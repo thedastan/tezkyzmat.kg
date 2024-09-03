@@ -10,13 +10,16 @@ import UploadPhotos from '@/components/forms/upload-photos'
 import BlackInterface from '@/components/layouts/black-interface'
 import Spinner from '@/components/loader/spinner'
 import DefButton from '@/components/ui/buttons/DefButton'
-import FixButton from '@/components/ui/buttons/FixButton'
 import InputComponent from '@/components/ui/inputs/InputComponent'
 import SelectComponent from '@/components/ui/inputs/SelectComponent'
 import StepperComponent from '@/components/ui/stepper'
 import Description from '@/components/ui/texts/Description'
 
-import { NAVBAR_HEIGHT } from '@/config/_variables.config'
+import {
+	LOCALE_REQUEST_KEY,
+	LOCALE_REQUEST_LIST_KEY,
+	NAVBAR_HEIGHT
+} from '@/config/_variables.config'
 import {
 	addLocaleStorage,
 	getLocaleStorage,
@@ -33,9 +36,6 @@ import {
 	IRequestForm
 } from '@/models/value-interfaces/request.values'
 import { IVehicleModel } from '@/models/vehicle.model'
-
-const LOCALE_REQUEST_KEY = 'request'
-const LOCALE_REQUEST_LIST_KEY = 'requests-history'
 
 const RequestComponent = () => {
 	const pathname = usePathname()
@@ -62,10 +62,13 @@ const RequestComponent = () => {
 	)
 
 	const onSuccess = () => {
-		// const localRequest: IRequestForm = getLocaleStorage(LOCALE_REQUEST_KEY)
+		const local_value: ILocaleRequest = {
+			request: value as IRequestForm,
+			order_images
+		}
 		const localRequestHistory: ILocaleRequest[] =
 			getLocaleStorage(LOCALE_REQUEST_LIST_KEY) || []
-		const history = [value, ...localRequestHistory].slice(0, 3)
+		const history = [local_value, ...localRequestHistory].slice(0, 3)
 		addLocaleStorage(LOCALE_REQUEST_LIST_KEY, history)
 		removeLocaleStorage(LOCALE_REQUEST_KEY)
 
@@ -107,6 +110,9 @@ const RequestComponent = () => {
 
 			setActiveStep(1)
 		}
+
+		/// потом удалю
+		removeLocaleStorage('requests-history')
 	}, [])
 	return (
 		<BlackInterface role={EnumRole.CLIENT}>

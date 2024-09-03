@@ -1,5 +1,5 @@
 import { useDisclosure } from '@chakra-ui/react'
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import { ChangeEvent, FormEvent, useState } from 'react'
 
 import { AGREED_SELLER_DATA_KEY } from '@/config/_variables.config'
 
@@ -12,7 +12,6 @@ import InputComponent from '../ui/inputs/InputComponent'
 import SelectComponent from '../ui/inputs/SelectComponent'
 import DeleteModal from '../ui/modal/DeleteModal'
 
-import { useApplicationModal } from '@/app/client/application/ApplicationProvider'
 import { ILocaleOrderSeller } from '@/models/request.model'
 
 const regions = [
@@ -26,12 +25,18 @@ const regions = [
 	'Талас'
 ]
 
-const PlacingAnOrder = () => {
-	const [seller, setSeller] = useState<ILocaleOrderSeller | undefined>(
-		undefined
-	)
-	const { isOpen, onClose, onOpen } = useDisclosure()
-	const { isOpenModel, onCloseModal, onOpenModal } = useApplicationModal()
+interface PlacingAnOrderProps {
+	isOpen: boolean
+	onClose: () => void
+	seller: ILocaleOrderSeller | undefined
+}
+
+const PlacingAnOrder = ({ isOpen, onClose, seller }: PlacingAnOrderProps) => {
+	const {
+		isOpen: isOpenDrawer,
+		onClose: onCloseDrawer,
+		onOpen: onOpenDrawer
+	} = useDisclosure()
 
 	const [value, setValue] = useState({
 		region: '',
@@ -51,8 +56,8 @@ const PlacingAnOrder = () => {
 
 	const onSuccess = () => {
 		removeLocalSeller()
+		onCloseDrawer()
 		onClose()
-		onCloseModal()
 	}
 
 	const { isPending, mutate } = usePlacingOrder(onSuccess)
@@ -66,40 +71,23 @@ const PlacingAnOrder = () => {
 		}
 	}
 
-	useEffect(() => {
-		const handleVisibilityChange = () => {
-			const agreed_seller = JSON.parse(
-				localStorage.getItem(AGREED_SELLER_DATA_KEY) as any
-			) as ILocaleOrderSeller | undefined
-			setSeller(agreed_seller)
-			if (!document.hidden && !!agreed_seller?.id) {
-				onOpenModal()
-			}
-		}
-
-		document.addEventListener('visibilitychange', handleVisibilityChange)
-
-		return () => {
-			document.removeEventListener('visibilitychange', handleVisibilityChange)
-		}
-	}, [])
 	return (
 		<>
 			<DeleteModal
-				isOpen={isOpenModel}
+				isOpen={isOpen}
 				onClose={() => {
-					onCloseModal()
+					onClose()
 					removeLocalSeller()
 				}}
-				onDelete={onOpen}
+				onDelete={onOpenDrawer}
 				withoutOverlay={true}
 			>
 				{`Вы договорились с продавцом (${seller?.seller})? Вам оформить заказ?`}
 			</DeleteModal>
 
 			<DrawerModal
-				isOpen={isOpen}
-				onClose={onClose}
+				isOpen={isOpenDrawer}
+				onClose={onCloseDrawer}
 				title='Оформить заказ'
 			>
 				<form onSubmit={onSubmit}>

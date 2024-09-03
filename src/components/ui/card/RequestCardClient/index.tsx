@@ -25,6 +25,7 @@ import { RiWhatsappFill } from 'react-icons/ri'
 import Card from '@/components/layouts/card'
 import OrderTitles from '@/components/order-items/OrderTitles'
 import OrderDetailData from '@/components/order-items/order-detail-data'
+import PlacingAnOrder from '@/components/placing-order'
 
 import { poppins } from '@/constants/fonts'
 
@@ -37,7 +38,6 @@ import DeleteModal from '../../modal/DeleteModal'
 import Moment from '../../texts/Moment'
 import Title from '../../texts/Title'
 
-import { useApplicationModal } from '@/app/client/application/ApplicationProvider'
 import {
 	EnumOrderStatus,
 	ILocaleOrderSeller,
@@ -145,22 +145,21 @@ interface SellerWhatsappCardProps {
 }
 
 function SellerWhatsappCard({ seller, order_id }: SellerWhatsappCardProps) {
-	const { onOpenModal } = useApplicationModal()
+	const { isOpen, onClose, onOpen } = useDisclosure()
 	const [isLoading, setLoading] = useState(false)
+	const order_seller: ILocaleOrderSeller = {
+		order_id,
+		...seller
+	}
 	const saveSellerData = () => {
-		const order_seller: ILocaleOrderSeller = {
-			order_id,
-			...seller
-		}
 		localStorage.setItem(AGREED_SELLER_DATA_KEY, JSON.stringify(order_seller))
 	}
 
-	const saveAndOpenPlacing = () => {
-		saveSellerData()
+	const openPlacing = () => {
 		setLoading(true)
 		setTimeout(() => {
 			setLoading(false)
-			onOpenModal()
+			onOpen()
 		}, 1200)
 	}
 	return (
@@ -224,7 +223,7 @@ function SellerWhatsappCard({ seller, order_id }: SellerWhatsappCardProps) {
 					</Link>
 
 					<MenuItem
-						onClick={saveAndOpenPlacing}
+						onClick={openPlacing}
 						h='44px'
 						fontWeight='400'
 						fontSize='17px'
@@ -248,6 +247,11 @@ function SellerWhatsappCard({ seller, order_id }: SellerWhatsappCardProps) {
 					</MenuItem>
 				</MenuList>
 			</Menu>
+			<PlacingAnOrder
+				isOpen={isOpen}
+				onClose={onClose}
+				seller={order_seller}
+			/>
 		</Flex>
 	)
 }

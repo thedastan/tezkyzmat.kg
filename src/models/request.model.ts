@@ -3,6 +3,9 @@ export interface IRequest {
 	order: IOrder
 	status: number
 	status_label: string
+	seller_status: SellerOrderStatusType
+	seller_status_label: string
+	created_at: string
 }
 
 export interface IOrder {
@@ -94,4 +97,16 @@ export type OrderStatusType =
 	| EnumOrderStatus.FOUND
 	| EnumOrderStatus.COMPLETED
 
-///
+/// seller status
+export enum EnumSellerStatus {
+	ALL = 0, // 'Все'
+	WAITING = 1, // 'В ожидании'
+	PLACED = 2, // 'Оформлен'
+	COMPLETED = 3 // 'Завершен'
+}
+
+export type SellerOrderStatusType =
+	| EnumSellerStatus.ALL
+	| EnumSellerStatus.WAITING
+	| EnumSellerStatus.PLACED
+	| EnumSellerStatus.COMPLETED

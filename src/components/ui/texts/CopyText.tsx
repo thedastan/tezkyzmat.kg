@@ -22,7 +22,6 @@ const CopyText = ({
 			{...props}
 		>
 			<Text
-				noOfLines={1}
 				color={color}
 				fontSize={fontSize}
 			>

@@ -25,24 +25,24 @@ import { useVehicle } from '@/hooks/useVehicle'
 import DefButton from '../ui/buttons/DefButton'
 import DrawerModal from '../ui/drawer'
 
-import { ILocaleRequest } from '@/models/value-interfaces/request.values'
+import { IRequestForm } from '@/models/value-interfaces/request.values'
 
 const AddRequestButton = () => {
 	const { isOpen, onClose, onOpen } = useDisclosure()
 	const [value, setValue] = useState('0')
 	const { push } = useRouter()
-	const [list, setList] = useState<ILocaleRequest[]>([])
+	const [list, setList] = useState<IRequestForm[]>([])
 
 	const onsubmit = () => {
 		const ID = +value
 		// getLocaleStorage()
 
 		if (!!ID) {
-			const local_value: ILocaleRequest = list[ID - 1]
+			const local_value: IRequestForm = list[ID - 1]
 
 			localStorage.setItem(
 				LOCALE_REQUEST_KEY,
-				JSON.stringify(local_value as ILocaleRequest)
+				JSON.stringify(local_value as IRequestForm)
 			)
 		}
 
@@ -50,7 +50,7 @@ const AddRequestButton = () => {
 	}
 
 	useEffect(() => {
-		const localRequestHistory: ILocaleRequest[] =
+		const localRequestHistory: IRequestForm[] =
 			getLocaleStorage(LOCALE_REQUEST_LIST_KEY) || []
 
 		setList(localRequestHistory || [])
@@ -145,12 +145,12 @@ const AddRequestButton = () => {
 interface RadioCardProps {
 	value: string
 	value_state: string
-	el: ILocaleRequest
+	el: IRequestForm
 }
 
 function RadioCard({ value, value_state, el }: RadioCardProps) {
 	const { data } = useVehicle()
-	const brand = data?.find(item => item.id === +el.request.brand)
+	const brand = data?.find(item => item.id === +el.brand)
 
 	return (
 		<Flex
@@ -175,7 +175,7 @@ function RadioCard({ value, value_state, el }: RadioCardProps) {
 					fontWeight='600'
 					color='#1C1C1C'
 				>
-					{`${brand?.brand}   “${el.request.description}”`}
+					{`${brand?.brand}   “${el.description}”`}
 				</Text>
 			</Radio>
 		</Flex>

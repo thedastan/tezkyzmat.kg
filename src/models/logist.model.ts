@@ -27,6 +27,7 @@ export interface ILogistOrder {
 	created_at: string
 	region: string
 	street: string
+	district: string
 }
 
 export interface Buyer {

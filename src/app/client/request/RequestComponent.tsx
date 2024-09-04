@@ -31,10 +31,7 @@ import { EnumRole } from '@/config/role'
 import { useRequestAdd } from '@/hooks/useRequest'
 import { useVehicle, useVehicleById } from '@/hooks/useVehicle'
 
-import {
-	ILocaleRequest,
-	IRequestForm
-} from '@/models/value-interfaces/request.values'
+import { IRequestForm } from '@/models/value-interfaces/request.values'
 import { IVehicleModel } from '@/models/vehicle.model'
 
 const RequestComponent = () => {
@@ -62,13 +59,9 @@ const RequestComponent = () => {
 	)
 
 	const onSuccess = () => {
-		const local_value: ILocaleRequest = {
-			request: value as IRequestForm,
-			order_images
-		}
-		const localRequestHistory: ILocaleRequest[] =
+		const localRequestHistory: IRequestForm[] =
 			getLocaleStorage(LOCALE_REQUEST_LIST_KEY) || []
-		const history = [local_value, ...localRequestHistory].slice(0, 3)
+		const history = [value, ...localRequestHistory].slice(0, 3)
 		addLocaleStorage(LOCALE_REQUEST_LIST_KEY, history)
 		removeLocaleStorage(LOCALE_REQUEST_KEY)
 
@@ -78,18 +71,14 @@ const RequestComponent = () => {
 
 	function addRequest() {
 		const userWithoutToken = pathname === USER_PAGES.REQUEST
-		const local_value: ILocaleRequest = {
-			request: value as IRequestForm,
-			order_images
-		}
 		if (userWithoutToken) {
 			localStorage.setItem(
 				LOCALE_REQUEST_KEY,
-				JSON.stringify(local_value as ILocaleRequest)
+				JSON.stringify(value as IRequestForm)
 			)
 			push(USER_PAGES.AUTH(EnumRole.CLIENT))
 			toast('Необходимо авторизоваться..')
-		} else mutate({ ...value, order_images })
+		} else mutate({ ...value } as IRequestForm)
 	}
 
 	const onSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -100,20 +89,29 @@ const RequestComponent = () => {
 	}
 
 	useEffect(() => {
-		const localRequest: ILocaleRequest = getLocaleStorage(LOCALE_REQUEST_KEY)
+		setValue({ ...value, order_images } as IRequestForm)
+	}, [order_images])
 
-		if (!!localRequest) {
-			setValue({ ...localRequest.request })
-			if (localRequest.order_images) {
+	useEffect(() => {
+		const localRequest: IRequestForm = getLocaleStorage(
+			LOCALE_REQUEST_KEY
+		) as IRequestForm
+		console.log('localRequest:', localRequest)
+		if (localRequest) {
+			if (localRequest?.order_images) {
 				setImages(localRequest.order_images)
 			}
 
-			setActiveStep(1)
+			setValue({ ...localRequest })
+
+			setActiveStep(0)
 		}
 
 		/// потом удалю
 		removeLocaleStorage('requests-history')
+		removeLocaleStorage('requests-history-list')
 	}, [])
+
 	return (
 		<BlackInterface role={EnumRole.CLIENT}>
 			{!isPending ? (

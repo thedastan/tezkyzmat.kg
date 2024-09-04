@@ -1,6 +1,7 @@
 import { PRIVATE_API } from '@/api/interceptors'
 
 import { IOrder, PlacingOrderPayload } from '@/models/request.model'
+import { IRequestForm } from '@/models/value-interfaces/request.values'
 
 class RequestService {
 	private BASE_URL = 'account/buyer/order/'
@@ -18,6 +19,15 @@ class RequestService {
 	}
 	async addRequest(data: any) {
 		const response = await PRIVATE_API.post(this.BASE_URL + 'create/', data)
+
+		return response.data
+	}
+
+	async updateRequest(data: IRequestForm) {
+		const response = await PRIVATE_API.put(
+			this.BASE_URL + `update/${data.id}/`,
+			data
+		)
 
 		return response.data
 	}

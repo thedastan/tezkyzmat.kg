@@ -1,4 +1,5 @@
 export interface IRequestForm {
+	id?: number
 	brand: string
 	model: string
 	year: string
@@ -8,6 +9,7 @@ export interface IRequestForm {
 	body?: string
 	VIN?: string
 	condition?: string
+	order_images: string[]
 }
 
 export interface IRequestAdditionalForm {
@@ -17,10 +19,10 @@ export interface IRequestAdditionalForm {
 	condition?: string
 }
 
-export interface ILocaleRequest {
-	request: IRequestForm
-	order_images: string[]
-}
+// export interface ILocaleRequest {
+// 	request: IRequestForm
+// 	// order_images: string[]
+// }
 
 export const condition_order = {
 	0: 'Б/У',

@@ -4,6 +4,7 @@ import { toast } from 'sonner'
 import { ToastError } from '@/config/helpers'
 
 import { PlacingOrderPayload } from '@/models/request.model'
+import { IRequestForm } from '@/models/value-interfaces/request.values'
 import { requestService } from '@/services/client-request.service'
 
 export function useRequest() {
@@ -28,7 +29,10 @@ export function useRequestAdd(success?: () => void) {
 	const queryClient = useQueryClient()
 	const { mutate, isPending } = useMutation({
 		mutationKey: ['add-request'],
-		mutationFn: (data: any) => requestService.addRequest(data),
+		mutationFn: (data: IRequestForm) =>
+			data.id
+				? requestService.updateRequest(data)
+				: requestService.addRequest(data),
 		onSuccess() {
 			success && success()
 			queryClient.invalidateQueries({ queryKey: ['requests'] })

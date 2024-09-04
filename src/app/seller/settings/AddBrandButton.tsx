@@ -1,7 +1,6 @@
 'use client'
 
 import { Box, Divider, Flex, Text, useDisclosure } from '@chakra-ui/react'
-import { useQueryClient } from '@tanstack/react-query'
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
 
@@ -11,8 +10,6 @@ import FixButton from '@/components/ui/buttons/FixButton'
 import DrawerModal from '@/components/ui/drawer'
 import SelectCheckbox from '@/components/ui/inputs/SelectCheckbox'
 import SelectComponent from '@/components/ui/inputs/SelectComponent'
-
-import { INTERFACE_WIDTH } from '@/config/_variables.config'
 
 import { useSellerSpareAdd } from '@/hooks/useSettings'
 import { useVehicle, useVehicleById } from '@/hooks/useVehicle'

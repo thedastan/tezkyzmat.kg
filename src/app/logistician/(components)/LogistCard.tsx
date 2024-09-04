@@ -97,7 +97,7 @@ const LogistCard = ({ el }: { el: ILogistItem }) => {
 				mt='4'
 				color='#477CF0'
 				fontSize='16px'
-				value={`${el.order.region}, ${el.order.street}`}
+				value={`${el.order.region}, ${el.order.district}, ${el.order.street}`}
 			/>
 
 			<Divider

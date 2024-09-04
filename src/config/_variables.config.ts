@@ -15,4 +15,4 @@ export const ANSWER_LOCAL_KEY = 'answer-seller'
 export const AGREED_SELLER_DATA_KEY = 'seller'
 
 export const LOCALE_REQUEST_KEY = 'request'
-export const LOCALE_REQUEST_LIST_KEY = 'requests-history-list'
+export const LOCALE_REQUEST_LIST_KEY = 'history-requests-list'

@@ -1,4 +1,4 @@
-import { RoleTypes } from '@/config/role'
+import { ProfileUserTypes, RoleTypes } from '@/config/role'
 
 export type UserTypes = 'client' | 'seller'
 
@@ -6,18 +6,22 @@ export interface IProfile {
 	phone: string
 	role: RoleTypes
 	role_label: string
-	profile: ISellerProfile | IClientProfile
+	profile?: IProfileItems
 }
 
-export interface ISellerProfile {
+export interface IProfileItems {
 	full_name: string
-	address: string
-	shop: string
-	city: number
-	market: number
-	images: any[]
+	address?: string
+	shop?: string
+	city?: number
+	market?: number
+	images?: any[]
 }
 
-export interface IClientProfile {
-	full_name: string
+export interface ProfileUpdatePayload {
+	type: ProfileUserTypes
+	payload: {
+		phone: string
+		profile: IProfileItems
+	}
 }

@@ -13,8 +13,20 @@ export enum EnumRole {
 	LOGISTICIAN = 3 //'Логист'
 }
 
+export type ProfileUserTypes = 'seller' | 'buyer'
+
+export function getRoleByIndex(
+	role: EnumRole.CLIENT | EnumRole.SELLER
+): ProfileUserTypes {
+	if (role === EnumRole.CLIENT) {
+		return 'buyer'
+	} else {
+		return 'seller'
+	}
+}
+
 export type RoleTypes =
-	| typeof EnumRole.SUPERADMIN
-	| typeof EnumRole.CLIENT
-	| typeof EnumRole.SELLER
-	| typeof EnumRole.LOGISTICIAN
+	| EnumRole.SUPERADMIN
+	| EnumRole.CLIENT
+	| EnumRole.SELLER
+	| EnumRole.LOGISTICIAN

@@ -18,7 +18,7 @@ const ClientHistory = () => {
 		<Box>
 			{isLoading && <Spinner />}
 			<Container>
-				<HeaderComponent title='Заявки' />
+				<HeaderComponent title='История' />
 
 				{!history?.length && <EmptyText />}
 				<Stack>

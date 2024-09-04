@@ -13,13 +13,13 @@ const AvatarUpload = () => {
 				w='80px'
 				h='80px'
 				bg='#F4F5F7'
-				mb='36px'
+				mb='26px'
 			/>
 
 			<Box
 				position='absolute'
 				right='-1px'
-				bottom='24px'
+				bottom='14px'
 				zIndex='3'
 			>
 				<Stack

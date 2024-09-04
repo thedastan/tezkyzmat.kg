@@ -25,6 +25,8 @@ export interface ILogistOrder {
 	volume?: IVolume
 	description: string
 	created_at: string
+	region: string
+	street: string
 }
 
 export interface Buyer {

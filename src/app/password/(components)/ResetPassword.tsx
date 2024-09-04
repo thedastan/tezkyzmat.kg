@@ -35,7 +35,7 @@ const ResetPassword = () => {
 	const { isOpen, onClose, onOpen } = useDisclosure()
 	const { activeStep, setActiveStep } = useSteps({
 		index: 0,
-		count: 3
+		count: 2
 	})
 	const { replace } = useRouter()
 	const [value, setValue] = useState<ResetPasswordPayload>({
@@ -84,14 +84,6 @@ const ResetPassword = () => {
 						title='Новый пароль'
 						value={value.password}
 					/>
-					{/* <InputComponent
-						handleChange={handleChange}
-						placeholder='Повторите пароль'
-						type='password'
-						name='password2'
-						title='Подтвердите пароль'
-						value={value.password2}
-					/> */}
 
 					<DefButton
 						mt='34px'

@@ -18,7 +18,7 @@ const SignUp = () => {
 	return (
 		<UserLayoutComponent
 			question='У вас уже есть аккаунт? '
-			path={USER_PAGES.AUTH(role)}
+			path={USER_PAGES.AUTH}
 			action='Войти'
 			backPath={PUBLIC_PAGES.HOME}
 		>

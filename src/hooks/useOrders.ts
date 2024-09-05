@@ -21,21 +21,17 @@ export function useOrders() {
 			el.seller_status === EnumSellerStatus.WAITING ||
 			el.seller_status === EnumSellerStatus.PLACED
 	)
-	const pending_orders = data?.filter(
-		el => el.seller_status === EnumSellerStatus.WAITING
+	const actual_orders = data?.filter(
+		el => el.seller_status === EnumSellerStatus.ALL
 	)
 	const completed_orders = data?.filter(
 		el => el.seller_status === EnumSellerStatus.COMPLETED
 	)
-	const all_orders = data?.filter(
-		el => el.seller_status === EnumSellerStatus.ALL
-	)
 
 	return {
 		waiting_orders,
-		pending_orders,
+		actual_orders,
 		completed_orders,
-		all_orders,
 		isLoading
 	}
 }

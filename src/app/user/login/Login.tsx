@@ -3,8 +3,8 @@
 import { Flex } from '@chakra-ui/react'
 import { useMutation } from '@tanstack/react-query'
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { ChangeEvent, FormEvent, useState } from 'react'
 import { toast } from 'sonner'
 
 import UserLayoutComponent from '@/components/layouts/user.layout'
@@ -32,7 +32,6 @@ import { saveUserRole } from '@/services/role.service'
 
 const Login = () => {
 	const { replace } = useRouter()
-	const pathname = usePathname()
 	const [value, setValue] = useState<IAuthForm>({
 		phone: '',
 		password: ''
@@ -46,11 +45,13 @@ const Login = () => {
 	const { mutate, isPending } = useMutation({
 		mutationKey: ['auth'],
 		mutationFn: (data: IAuthForm) => authService.login(data),
-		onSuccess() {
+		onSuccess({ role: respRole }) {
+			saveUserRole(respRole)
 			toast.success('Вы успешно авторизовались. Подождите...')
-			if (role === EnumRole.CLIENT) replace(CLIENT_PAGES.MAIN)
-			else if (role === EnumRole.SELLER) replace(SELLER_PAGES.HOME)
-			else if (role === EnumRole.LOGISTICIAN) replace(LOGISTICIAN_PAGES.MAIN)
+			if (respRole === EnumRole.CLIENT) replace(CLIENT_PAGES.MAIN)
+			else if (respRole === EnumRole.SELLER) replace(SELLER_PAGES.HOME)
+			else if (respRole === EnumRole.LOGISTICIAN)
+				replace(LOGISTICIAN_PAGES.MAIN)
 		},
 		onError(e) {
 			ToastError(e)
@@ -62,15 +63,6 @@ const Login = () => {
 		mutate({ ...value, role })
 	}
 
-	useEffect(() => {
-		if (pathname.includes(USER_PAGES.AUTH(EnumRole.CLIENT))) {
-			saveUserRole(EnumRole.CLIENT)
-		} else if (pathname.includes(USER_PAGES.AUTH(EnumRole.SELLER))) {
-			saveUserRole(EnumRole.SELLER)
-		} else if (pathname.includes(USER_PAGES.AUTH(EnumRole.LOGISTICIAN))) {
-			saveUserRole(EnumRole.LOGISTICIAN)
-		}
-	}, [pathname])
 	return (
 		<UserLayoutComponent
 			question='У вас нет учетной записи? '

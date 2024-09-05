@@ -45,7 +45,9 @@ const StepperComponent = ({
 				</Flex>
 			)}
 			<Box
-				w={steps.length === 3 ? '155px' : '207px'}
+				w={
+					steps.length === 2 ? '100px' : steps.length === 3 ? '155px' : '207px'
+				}
 				mx='auto'
 				mb='23px'
 			>
@@ -58,7 +60,7 @@ const StepperComponent = ({
 						<Step
 							key={index}
 							onClick={() => {
-								if(activeStep > index) setActiveStep(index) 
+								if (activeStep > index) setActiveStep(index)
 							}}
 						>
 							<StepIndicator>

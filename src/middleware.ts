@@ -32,15 +32,15 @@ export async function middleware(request: NextRequest) {
 
 	if (isClientPage && !refreshTokenClient) {
 		return NextResponse.redirect(
-			new URL(USER_PAGES.AUTH(EnumRole.CLIENT), request.url)
+			new URL(USER_PAGES.AUTH, request.url)
 		)
 	} else if (isSellerPage && !refreshTokenSeller) {
 		return NextResponse.redirect(
-			new URL(USER_PAGES.AUTH(EnumRole.SELLER), request.url)
+			new URL(USER_PAGES.AUTH, request.url)
 		)
 	} else if (isLogisticianPage && !refreshTokenLogist) {
 		return NextResponse.redirect(
-			new URL(USER_PAGES.AUTH(EnumRole.LOGISTICIAN), request.url)
+			new URL(USER_PAGES.AUTH, request.url)
 		)
 	}
 	return NextResponse.next()

@@ -54,7 +54,7 @@ const LogistCard = ({ el }: { el: ILogistItem }) => {
 				mt='4'
 				color='#477CF0'
 				fontSize='16px'
-				value={el.seller.address}
+				value={`${el.seller.market}, ${el.seller.shop}, ${el.seller.address}`}
 			/>
 
 			<Divider

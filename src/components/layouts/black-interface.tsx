@@ -16,7 +16,7 @@ import FixButton from '../ui/buttons/FixButton'
 interface BlackInterfaceProps extends PropsWithChildren {
 	buttonText?: string
 	buttonFn?: () => void
-	role: RoleTypes
+	role?: RoleTypes
 }
 
 const BlackInterface = ({
@@ -28,6 +28,7 @@ const BlackInterface = ({
 	const [innerHeight, setHeight] = useState(0)
 	const isSellerPage = role === EnumRole.SELLER
 	const isClientPage = role === EnumRole.CLIENT
+	const isSuccessPage = !role
 	useEffect(() => {
 		setHeight(document.documentElement.clientHeight - 150)
 	}, [])
@@ -40,7 +41,7 @@ const BlackInterface = ({
 				w='100%'
 				pt='30px'
 				pb='20px'
-				bg={isClientPage ? '#FFFFFF' : '#F4F5F7'}
+				bg={isClientPage || isSuccessPage ? '#FFFFFF' : '#F4F5F7'}
 				borderTopRadius='30px'
 				position='relative'
 				zIndex='1'

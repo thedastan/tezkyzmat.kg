@@ -44,9 +44,11 @@ class USER {
 	RESET_PASSWORD = this.root + '/reset-password'
 
 	REQUEST = this.root + '/request'
-	AUTH = (role: RoleTypes) => {
-		return this.root + `/login/role-${role}`
-	}
+	// AUTH = (role: RoleTypes) => {
+	// 	return this.root + `/login/role-${role}`
+	// }
+
+	AUTH = this.root + `/login`
 }
 
 export const USER_PAGES = new USER()

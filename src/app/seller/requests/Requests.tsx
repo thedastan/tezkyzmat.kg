@@ -10,7 +10,7 @@ import EmptyText from '@/components/ui/texts/EmptyText'
 import { useOrders } from '@/hooks/useOrders'
 
 const Requests = () => {
-	const { all_orders: data, isLoading } = useOrders()
+	const { actual_orders: data, isLoading } = useOrders()
 	return (
 		<Box
 			bg='#F4F5F7'

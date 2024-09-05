@@ -4,6 +4,7 @@ import { Box, Heading, Stack } from '@chakra-ui/react'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
+import EmptyOrder from '@/components/empty-component/empty-order'
 import BlackInterface from '@/components/layouts/black-interface'
 import RequestCardSeller from '@/components/ui/card/RequestCardSeller'
 
@@ -14,11 +15,10 @@ import { EnumRole } from '@/config/role'
 import { useOrders } from '@/hooks/useOrders'
 
 import { saveUserRole } from '@/services/role.service'
-import EmptyOrder from '@/components/empty-component/empty-order'
 
 const Seller = () => {
 	const { push } = useRouter()
-	const { pending_orders: data, isLoading } = useOrders()
+	const { actual_orders: data, isLoading } = useOrders()
 	useEffect(() => {
 		saveUserRole(EnumRole.SELLER)
 	}, [])

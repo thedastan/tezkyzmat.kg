@@ -25,7 +25,6 @@ import { INTERFACE_WIDTH } from '@/config/_variables.config'
 import { USER_PAGES } from '@/config/pages-url.config'
 
 import { useOtpSent, useResetPassword } from '@/hooks/useRegister'
-import { useRoles } from '@/hooks/useRoles'
 
 import PinInputModal from '@/app/user/sign-up/(components)/PinInputModal'
 import { EnumOtpCode } from '@/models/auth.enum'
@@ -43,7 +42,6 @@ const ResetPassword = () => {
 		password: '',
 		otp: ''
 	})
-	const { role } = useRoles()
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setValue({ ...value, [e.target.name]: e.target.value })
 	}
@@ -65,7 +63,7 @@ const ResetPassword = () => {
 				question='У вас нет учетной записи? '
 				path={USER_PAGES.SIGN_UP}
 				action='Создать аккаунт'
-				backPath={USER_PAGES.AUTH(role)}
+				backPath={USER_PAGES.AUTH}
 			>
 				<form onSubmit={onSubmit}>
 					<TitleComponent mb='34px'>Изменить пароль</TitleComponent>
@@ -147,7 +145,7 @@ const ResetPassword = () => {
 								</Description>
 								<DefButton
 									mt='52px'
-									onClick={() => replace(USER_PAGES.AUTH(role))}
+									onClick={() => replace(USER_PAGES.AUTH)}
 								>
 									Вернуться
 								</DefButton>

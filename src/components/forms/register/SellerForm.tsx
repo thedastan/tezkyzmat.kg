@@ -27,7 +27,7 @@ const SellerForm = () => {
 	const [images, setImages] = useState<string[]>([])
 
 	const [value, setValue] = useState<SellerRegisterForm>({
-		full_name: '',
+		// full_name: '',
 		phone: '',
 		password: '',
 		address: '',
@@ -66,7 +66,7 @@ const SellerForm = () => {
 				},
 				address: value.address,
 				city: Number(value.city),
-				full_name: value.full_name,
+				// full_name: value.full_name,
 				market: Number(value.market),
 				shop: value.shop,
 				images
@@ -83,13 +83,13 @@ const SellerForm = () => {
 			/>
 			{activeStep === 0 && (
 				<form onSubmit={onSubmit}>
-					<InputComponent
+					{/* <InputComponent
 						handleChange={handleChange}
 						name='full_name'
 						placeholder='Ваше полное имя'
 						title='Имя и Фамилия*'
 						value={value.full_name}
-					/>
+					/> */}
 					<PhoneInputComponent
 						handleChange={phone => setValue({ ...value, phone })}
 						placeholder='+996'

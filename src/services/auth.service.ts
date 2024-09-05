@@ -27,6 +27,8 @@ export const authService = {
 			data
 		)
 		if (response.data.access) saveTokenStorage(response.data)
+
+		return response.data
 	},
 
 	async sendOtpCode(data: IOtpSend) {

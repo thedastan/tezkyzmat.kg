@@ -13,7 +13,6 @@ import RequestSuccessSvg from '@/assets/img/request-success.svg'
 
 import { ANSWER_LOCAL_KEY, INTERFACE_WIDTH } from '@/config/_variables.config'
 import { SELLER_PAGES } from '@/config/pages-url.config'
-import { EnumRole } from '@/config/role'
 
 import { EnumOrderStatus } from '@/models/request.model'
 
@@ -26,16 +25,12 @@ export default function RequestSellerSuccessPage() {
 	}, [])
 
 	return (
-		<BlackInterface
-			buttonText='На главную'
-			buttonFn={() => push(SELLER_PAGES.HOME)}
-			role={EnumRole.CLIENT}
-		>
+		<BlackInterface>
 			{!!status && (
 				<Flex
 					flexDirection='column'
 					alignItems='center'
-					pt='80px'
+					pt='60px'
 					gap='27px'
 				>
 					<Image
@@ -59,7 +54,11 @@ export default function RequestSellerSuccessPage() {
 				justifyContent='center'
 			>
 				<Container maxW={INTERFACE_WIDTH}>
+					<DefButton onClick={() => push(SELLER_PAGES.HOME)}>
+						На главную
+					</DefButton>
 					<DefButton
+						mt='10px'
 						isTransparent={true}
 						onClick={() => push(SELLER_PAGES.CONFIRMED)}
 					>

@@ -106,7 +106,7 @@ const HomePage = () => {
 								lineHeight='17.5px'
 								color='#000000'
 							>
-								<Link href={USER_PAGES.AUTH(EnumRole.SELLER)}>Войти</Link>
+								<Link href={USER_PAGES.AUTH}>Войти</Link>
 							</Box>
 						</Flex>
 					</Box>

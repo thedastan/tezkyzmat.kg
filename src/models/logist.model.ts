@@ -14,6 +14,8 @@ export interface Seller {
 	full_name: string
 	phone: string
 	address: string
+	market: string
+	shop: string
 }
 
 export interface ILogistOrder {

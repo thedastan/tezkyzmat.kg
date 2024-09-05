@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 import { USER_PAGES } from '@/config/pages-url.config'
-import { EnumRole } from '@/config/role'
 
 import Description from './Description'
 
@@ -21,7 +20,7 @@ const UserRoutesFooter = ({
 	onClick
 }: IUserRoutesProps) => {
 	const pathname = usePathname()
-	const isRejectedPage = USER_PAGES.AUTH(EnumRole.LOGISTICIAN) === pathname
+	const isRejectedPage = USER_PAGES.AUTH === pathname
 	return isRejectedPage ? (
 		<Box />
 	) : (

@@ -76,7 +76,7 @@ const RequestComponent = () => {
 				LOCALE_REQUEST_KEY,
 				JSON.stringify(value as IRequestForm)
 			)
-			push(USER_PAGES.AUTH(EnumRole.CLIENT))
+			push(USER_PAGES.AUTH)
 			toast('Необходимо авторизоваться..')
 		} else mutate({ ...value } as IRequestForm)
 	}

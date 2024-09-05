@@ -66,7 +66,7 @@ const Profile = ({ isOpen, onClose }: ProfileProps) => {
 	const permittedPages = role === EnumRole.CLIENT || role === EnumRole.SELLER
 	const logout = () => {
 		removeFromStorage()
-		push(USER_PAGES.AUTH(role))
+		push(USER_PAGES.AUTH)
 	}
 
 	const { isPending: isPending2, mutate: sentOtp } = useOtpSent(() =>

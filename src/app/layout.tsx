@@ -1,6 +1,6 @@
 import { Box, ChakraProvider } from '@chakra-ui/react'
 import 'moment/locale/ru'
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Toaster } from 'sonner'
 
 import PullToRefresh from '@/components/loader/PullToRefresh'
@@ -23,6 +23,10 @@ export const metadata: Metadata = {
 		template: `%s | ${SITE_NAME}`
 	},
 	description: 'Тез Кызмат | Запчасти | Доставка по КР'
+}
+
+export const viewport: Viewport = {
+	themeColor: '#F9BD15'
 }
 
 export default function RootLayout({

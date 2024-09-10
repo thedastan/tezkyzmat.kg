@@ -1,5 +1,6 @@
-import { IVolume } from './request.model'
-import { IBrand, IModel, IYear } from './spares.model'
+import { IVolume } from './request.model';
+import { IBrand, IModel, IYear } from './spares.model';
+
 
 export interface ILogistItem {
 	id: number
@@ -46,4 +47,14 @@ export interface LogistUpdatePayload {
 	courier_phone?: string
 	courier_payment?: string
 	order_seller_images?: string[]
+}
+
+
+export interface IOrderInLogist {
+	id: number
+	courier_name: string
+	courier_phone: string
+	courier_payment: string
+	is_taken: boolean
+	is_sent: boolean
 }

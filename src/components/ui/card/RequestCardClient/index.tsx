@@ -128,19 +128,6 @@ const RequestCardClient = ({ order, is_detail }: RequestCardClientProps) => {
 							/>
 						</Box>
 					)}
-					{order.status === EnumOrderStatus.COMPLETED && (
-						<Box
-							bg='#EDFCEE'
-							px='6px'
-							py='1'
-							fontSize='10px'
-							color='#06B217'
-							rounded='6px'
-							fontWeight='400'
-						>
-							{order.status_label}
-						</Box>
-					)}
 
 					<Box
 						bg='#F4F5F7'

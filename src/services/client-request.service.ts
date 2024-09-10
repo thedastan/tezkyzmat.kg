@@ -1,6 +1,10 @@
 import { PRIVATE_API } from '@/api/interceptors'
 
-import { IOrder, PlacingOrderPayload } from '@/models/request.model'
+import {
+	ICompletedOrder,
+	IOrder,
+	PlacingOrderPayload
+} from '@/models/request.model'
 import { IRequestForm } from '@/models/value-interfaces/request.values'
 
 class RequestService {
@@ -17,6 +21,22 @@ class RequestService {
 
 		return response.data
 	}
+	async getCompletedRequests() {
+		const response = await PRIVATE_API.get<ICompletedOrder[]>(
+			this.BASE_URL + 'complete/'
+		)
+
+		return response.data
+	}
+
+	async getCompletedRequestDetail(id: string) {
+		const response = await PRIVATE_API.get<ICompletedOrder>(
+			this.BASE_URL + `complete/${id}/`
+		)
+
+		return response.data
+	}
+
 	async addRequest(data: any) {
 		const response = await PRIVATE_API.post(this.BASE_URL + 'create/', data)
 

@@ -3,10 +3,10 @@ import { Flex, Stack } from '@chakra-ui/react'
 import Moment from '../ui/texts/Moment'
 import Title from '../ui/texts/Title'
 
-import { IOrder } from '@/models/request.model'
+import { ICompletedOrder, IOrder } from '@/models/request.model'
 import { condition_order } from '@/models/value-interfaces/request.values'
 
-const OrderDetailData = ({ order }: { order: IOrder }) => {
+const OrderDetailData = ({ order }: { order: IOrder | ICompletedOrder }) => {
 	return (
 		<Stack spacing='14px'>
 			<Flex
@@ -14,7 +14,9 @@ const OrderDetailData = ({ order }: { order: IOrder }) => {
 				gap='1'
 			>
 				<Moment>Производство: </Moment>
-				<Title fontWeight='600'>Япония</Title>
+				<Title fontWeight='600'>
+					{order.country ? order.country.name : '-'}
+				</Title>
 			</Flex>
 			<Flex
 				alignItems='center'

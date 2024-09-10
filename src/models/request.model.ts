@@ -1,3 +1,5 @@
+import { IOrderInLogist } from './logist.model'
+
 export interface IRequest {
 	id: number
 	order: IOrder
@@ -24,6 +26,13 @@ export interface IOrder {
 	order_sellers: OrderSeller[]
 	status: number
 	status_label: string
+}
+
+export interface ICompletedOrder extends Omit<IOrder, 'order_sellers'> {
+	order_sellers: IOrderInLogist[]
+	region: string
+	district: string
+	street: string
 }
 
 export interface IBrand {

@@ -25,6 +25,24 @@ export function useRequestDetail(id: number | string) {
 	return { data, isLoading }
 }
 
+export function useCompletedRequest() {
+	const { data, isLoading } = useQuery({
+		queryKey: ['completed-requests'],
+		queryFn: () => requestService.getCompletedRequests()
+	})
+
+	return { data, isLoading }
+}
+
+export function useCompletedRequestDetail(id: string) {
+	const { data, isLoading } = useQuery({
+		queryKey: ['completed-request-detail'],
+		queryFn: () => requestService.getCompletedRequestDetail(id)
+	})
+
+	return { data, isLoading }
+}
+
 export function useRequestAdd(success?: () => void) {
 	const queryClient = useQueryClient()
 	const { mutate, isPending } = useMutation({

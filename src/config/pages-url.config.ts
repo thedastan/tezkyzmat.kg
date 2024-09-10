@@ -1,5 +1,3 @@
-import { RoleTypes } from './role'
-
 // client
 class CLIENT_DASHBOARD {
 	private root = '/client'
@@ -9,9 +7,13 @@ class CLIENT_DASHBOARD {
 	MARKET = `${this.root}/market`
 
 	APPLICATION = `${this.root}/application`
-	HISTORY = `${this.APPLICATION}/history`
 	APPLICATION_DETAIL = (slug: number | string) => {
 		return `${this.APPLICATION}/${slug}`
+	}
+
+	HISTORY = `${this.APPLICATION}/history`
+	HISTORY_DETAIL = (slug: number | string) => {
+		return `${this.HISTORY}/${slug}`
 	}
 }
 
@@ -44,9 +46,6 @@ class USER {
 	RESET_PASSWORD = this.root + '/reset-password'
 
 	REQUEST = this.root + '/request'
-	// AUTH = (role: RoleTypes) => {
-	// 	return this.root + `/login/role-${role}`
-	// }
 
 	AUTH = this.root + `/login`
 }

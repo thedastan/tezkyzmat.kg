@@ -1,7 +1,9 @@
 import { useDisclosure } from '@chakra-ui/react'
+import { useRouter } from 'next/navigation'
 import { ChangeEvent, FormEvent, useState } from 'react'
 
 import { AGREED_SELLER_DATA_KEY } from '@/config/_variables.config'
+import { CLIENT_PAGES } from '@/config/pages-url.config'
 
 import { usePlacingOrder } from '@/hooks/useRequest'
 
@@ -38,6 +40,7 @@ const PlacingAnOrder = ({ isOpen, onClose, seller }: PlacingAnOrderProps) => {
 		onOpen: onOpenDrawer
 	} = useDisclosure()
 
+	const { push } = useRouter()
 	const [value, setValue] = useState({
 		region: '',
 		district: '',
@@ -55,6 +58,7 @@ const PlacingAnOrder = ({ isOpen, onClose, seller }: PlacingAnOrderProps) => {
 	}
 
 	const onSuccess = () => {
+		if (seller) push(CLIENT_PAGES.HISTORY_DETAIL(seller.order_id))
 		removeLocalSeller()
 		onCloseDrawer()
 		onClose()

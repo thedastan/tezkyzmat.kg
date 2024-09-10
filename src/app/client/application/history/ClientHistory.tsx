@@ -3,27 +3,24 @@
 import { Box, Container, Spinner, Stack } from '@chakra-ui/react'
 
 import HeaderComponent from '@/components/navbar/header-component'
-import RequestCardClient from '@/components/ui/card/RequestCardClient'
+import CompletedCardClient from '@/components/ui/card/completed-card-client'
 import EmptyText from '@/components/ui/texts/EmptyText'
 
-import { useRequest } from '@/hooks/useRequest'
-
-import { EnumOrderStatus } from '@/models/request.model'
+import { useCompletedRequest } from '@/hooks/useRequest'
 
 const ClientHistory = () => {
-	const { data, isLoading } = useRequest()
+	const { data, isLoading } = useCompletedRequest()
 
-	const history = data?.filter(el => el.status === EnumOrderStatus.COMPLETED)
 	return (
 		<Box>
 			{isLoading && <Spinner />}
 			<Container>
 				<HeaderComponent title='История' />
 
-				{!history?.length && <EmptyText />}
+				{!data?.length && <EmptyText />}
 				<Stack>
-					{history?.map(el => (
-						<RequestCardClient
+					{data?.map(el => (
+						<CompletedCardClient
 							key={el.id}
 							order={el}
 						/>

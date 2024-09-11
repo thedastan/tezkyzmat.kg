@@ -39,7 +39,10 @@ const SelectCheckbox = ({
 			position='relative'
 			spacing='6px'
 		>
-			<Menu closeOnSelect={false}>
+			<Menu
+				closeOnSelect={false}
+				placement='auto-start'
+			>
 				<MenuButton
 					as={Box}
 					h='56px'
@@ -84,8 +87,9 @@ const SelectCheckbox = ({
 					boxShadow='0px 0px 1px 0px #00000029'
 					rounded='12px'
 					className='unscroll'
-					maxH='360px'
+					maxH='250px'
 					overflowY='auto'
+					zIndex='100'
 				>
 					<MenuOptionGroup
 						type='checkbox'

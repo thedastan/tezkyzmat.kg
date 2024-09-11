@@ -81,70 +81,71 @@ const AddBrandButton = () => {
 				onClose={onClose}
 				title='Добавить марку'
 			>
-				<form onSubmit={onSubmit}>
-					<SelectComponent
-						handleChange={handleChange}
-						value={value?.brand}
-						name='brand'
-						placeholder='Марка автомобиля*'
-						required={false}
-					>
-						{data?.map(el => (
-							<option
-								value={el.id}
-								key={el.id}
-							>
-								{el.brand}
-							</option>
-						))}
-					</SelectComponent>
-					<Flex
-						justifyContent='space-between'
-						alignItems='center'
-						gap='3'
-						my='20px'
-					>
-						<Divider
-							h='1px'
-							bg='#1C1C1C'
-							opacity='.3'
+				<Box>
+					<form onSubmit={onSubmit}>
+						<SelectComponent
+							handleChange={handleChange}
+							value={value?.brand}
+							name='brand'
+							placeholder='Марка автомобиля*'
+							required={false}
+						>
+							{data?.map(el => (
+								<option
+									value={el.id}
+									key={el.id}
+								>
+									{el.brand}
+								</option>
+							))}
+						</SelectComponent>
+						<Flex
+							justifyContent='space-between'
+							alignItems='center'
+							gap='3'
+							my='20px'
+						>
+							<Divider
+								h='1px'
+								bg='#1C1C1C'
+								opacity='.3'
+							/>
+							<Text>необязательно</Text>
+							<Divider
+								h='1px'
+								bg='#1C1C1C'
+								opacity='.3'
+							/>
+						</Flex>
+
+						<SelectCheckbox
+							list={model_list}
+							handleChange={handleCheckbox}
+							name='model'
+							placeholder='Модель*'
+							disabled={!value?.brand}
+							value={value.model.map(el => el.name)}
 						/>
-						<Text>необязательно</Text>
-						<Divider
-							h='1px'
-							bg='#1C1C1C'
-							opacity='.3'
-						/>
-					</Flex>
 
-					<SelectCheckbox
-						list={model_list}
-						handleChange={handleCheckbox}
-						name='model'
-						placeholder='Модель*'
-						disabled={!value?.brand}
-						value={value.model.map(el => el.name)}
-					/>
+						<SelectComponent
+							handleChange={handleChange}
+							// value={value?.model}
+							name='model'
+							placeholder='другие'
+							disabled={true}
+							required={false}
+						>
+							{vehicle?.models?.map(el => (
+								<option
+									value={el.id}
+									key={el.id}
+								>
+									{el.model}
+								</option>
+							))}
+						</SelectComponent>
 
-					{/* <SelectComponent
-						handleChange={handleChange}
-						value={value?.model}
-						name='model'
-						placeholder='Модель*'
-						disabled={!value?.brand}
-						required={false}
-					>
-						{vehicle?.models?.map(el => (
-							<option
-								value={el.id}
-								key={el.id}
-							>
-								{el.model}
-							</option>
-						))}
-					</SelectComponent> */}
-
-					{/* <SelectCheckbox
+						{/* <SelectCheckbox
 						list={model}
 						handleChange={handleCheckbox}
 						name='year'
@@ -152,13 +153,14 @@ const AddBrandButton = () => {
 						disabled={!model?.length}
 						value={value.year.map(el => el.name)}
 					/> */}
-					<DefButton
-						type='submit'
-						mt='50px'
-					>
-						Сохранить
-					</DefButton>
-				</form>
+						<DefButton
+							type='submit'
+							mt='100px'
+						>
+							Сохранить
+						</DefButton>
+					</form>
+				</Box>
 			</DrawerModal>
 		</Box>
 	)

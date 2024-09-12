@@ -76,7 +76,7 @@ const RequestComponent = () => {
 				LOCALE_REQUEST_KEY,
 				JSON.stringify(value as IRequestForm)
 			)
-			push(USER_PAGES.AUTH)
+			push(USER_PAGES.SIGN_UP)
 			toast('Необходимо авторизоваться..')
 		} else mutate({ ...value } as IRequestForm)
 	}
@@ -205,13 +205,13 @@ const RequestComponent = () => {
 								value={value?.description}
 								as='textArea'
 								name='description'
-								placeholder='Дополнительная информация'
+								placeholder='Пример: Мне нужна передняя левая фара от рестайлинга'
 								title='Описание*'
 							/>
 							<UploadPhotos
 								images={order_images}
 								setImages={setImages}
-								text='Фото образца'
+								text='Фото образца / Тех.паспорта'
 							/>
 							<Flex justifyContent='center'>
 								<Button

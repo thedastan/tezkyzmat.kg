@@ -59,6 +59,7 @@ const StepperComponent = ({
 					{steps.map((step, index) => (
 						<Step
 							key={index}
+							cursor='pointer'
 							onClick={() => {
 								if (activeStep > index) setActiveStep(index)
 							}}
@@ -71,7 +72,7 @@ const StepperComponent = ({
 								/>
 							</StepIndicator>
 
-							<StepSeparator />
+							<StepSeparator/>
 						</Step>
 					))}
 				</Stepper>

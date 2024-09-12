@@ -52,7 +52,7 @@ const HomePage = () => {
 					>
 						Tez Kyzmat
 					</Heading>
-					<TitleComponent mt='62px'>Все запчасти здесь</TitleComponent>
+					<TitleComponent mt='62px'>Быстрый поиск запчастей</TitleComponent>
 					<Box maxW='70%'>
 						<Description mt='14px'>
 							Найдите нужные запчасти для вашего автомобиля

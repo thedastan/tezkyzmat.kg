@@ -15,9 +15,9 @@ import { IoNotificationsOutline } from 'react-icons/io5'
 import Spinner from '@/components/loader/spinner'
 import ConfirmedRequestButton from '@/components/ui/buttons/ConfirmedRequestButton'
 
-import { SITE_NAME } from '@/constants/seo.constants'
+import { SITE_TITLE } from '@/constants/seo.constants'
 
-import Logo from '@/assets/img/logoIcon.png'
+import Logo from '@/assets/img/light.png'
 
 import {
 	INTERFACE_WIDTH,
@@ -62,27 +62,36 @@ const ProfileHeader = () => {
 
 				{isUserPage ? (
 					<Flex
-						alignItems='center'
-						justifyContent='center'
-						gap='2'
-						h={PROFILE_HEADER_HEIGHT}
-					>
+					alignItems='center'
+					justifyContent='center'
+					gap='2'
+					cursor='pointer'
+					h={PROFILE_HEADER_HEIGHT}
+					 // Изменяем направление на колонку
+				>
+				 {/* Вложенный Flex для первой строки */}
 						<Image
-							width={30}
-							height={30}
+							width={45}
+							height={45}
 							src={Logo}
 							alt='Logo'
 						/>
+							<Flex flexDirection='column' alignItems='start'>
 						<Text
 							onClick={() => push(PUBLIC_PAGES.HOME)}
 							color='#F4F5F7'
 							fontWeight='600'
 							fontSize='20px'
 							variant='none'
+							textTransform='uppercase'
+							letterSpacing='5'
 						>
-							{SITE_NAME.toUpperCase()}
+							Tez Kyzmat 
 						</Text>
 					</Flex>
+				</Flex>
+				
+					
 				) : (
 					<Stack
 						spacing='26px'

@@ -1,2 +1,3 @@
 export const NO_INDEX_PAGE = { robots: { index: false, follow: false } }
-export const SITE_NAME = 'Tez Kyzmat'
+export const SITE_NAME = 'Тез Кызмат — ваш быстрый поиск запчастей'
+export const SITE_TITLE = 'Tez Kyzmat'

@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 		default: SITE_NAME,
 		template: `%s | ${SITE_NAME}`
 	},
-	description: 'Тез Кызмат | Запчасти | Доставка по КР'
+	description: 'Тез Кызмат — ваш быстрый поиск запчастей'
 }
 
 export const viewport: Viewport = {

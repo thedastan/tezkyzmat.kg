@@ -82,8 +82,8 @@ const AdditionalRequestForm = ({
 
 			<InputComponent
 				name='VIN'
-				placeholder='XXX'
-				title='Vin-код'
+				placeholder='Пример: XW8AN2NE3JH035743'
+				title='VIN-код'
 				handleChange={handleChange}
 				value={value?.VIN}
 				required={false}

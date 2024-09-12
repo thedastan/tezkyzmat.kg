@@ -77,7 +77,7 @@ const RequestComponent = () => {
 				JSON.stringify(value as IRequestForm)
 			)
 			push(USER_PAGES.SIGN_UP)
-			toast('Необходимо авторизоваться..')
+			toast('Необходимо авторизоваться...')
 		} else mutate({ ...value } as IRequestForm)
 	}
 

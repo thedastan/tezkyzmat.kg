@@ -15,8 +15,6 @@ import { IoNotificationsOutline } from 'react-icons/io5'
 import Spinner from '@/components/loader/spinner'
 import ConfirmedRequestButton from '@/components/ui/buttons/ConfirmedRequestButton'
 
-import { SITE_TITLE } from '@/constants/seo.constants'
-
 import Logo from '@/assets/img/light.png'
 
 import {

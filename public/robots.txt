@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /client/application/*
+Disallow: /client/application/history/*
+Disallow: /seller/requests/*
+Disallow: /seller/settings/*
+Disallow: /user/dashboard
+Disallow: /user/login
+Disallow: /user/request
+Disallow: /user/sign-up
+
+Sitemap: https://tezkyzmat.kg/sitemap.xml

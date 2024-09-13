@@ -68,21 +68,13 @@ const HomePage = () => {
 					</Link>
 
 					<Box mt='6'>
-						<Description
-							fontSize='14px'
-							lineHeight='17.5px'
-							textAlign='center'
-						>
-							Вы продавец?
-						</Description>
-
 						<Flex
 							justifyContent='center'
 							gap='1'
 							mt='1'
 						>
 							<Box
-								onClick={() => saveUserRole(EnumRole.SELLER)}
+								onClick={() => saveUserRole(EnumRole.CLIENT)}
 								cursor='pointer'
 								fontWeight='600'
 								fontSize='14px'

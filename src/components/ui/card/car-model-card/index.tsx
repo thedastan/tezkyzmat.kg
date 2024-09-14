@@ -38,15 +38,20 @@ const CarModelCard = ({ el }: { el: ISettingSpare }) => {
 					</Heading>
 				</Box>
 				<Flex
+					justifyContent='space-between'
 					alignItems='center'
 					gap='4'
 				>
-					<Description
-						fontSize='12px'
-						opacity='.5'
+					<Heading
+						as='h1'
+						fontWeight='600'
+						fontSize='16px'
+						lineHeight='21px'
+						letterSpacing='0.5px'
+						mt='2'
 					>
-						Модель / Год
-					</Description>
+						{el.model.model}
+					</Heading>
 					<MdOutlineKeyboardArrowRight
 						color='#000000'
 						fontSize='20px'

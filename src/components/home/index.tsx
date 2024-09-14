@@ -91,7 +91,7 @@ const HomePage = () => {
 								или
 							</Description>
 							<Box
-								onClick={() => saveUserRole(EnumRole.SELLER)}
+								onClick={() => saveUserRole(EnumRole.CLIENT)}
 								cursor='pointer'
 								fontWeight='600'
 								fontSize='14px'

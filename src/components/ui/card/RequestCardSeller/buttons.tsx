@@ -9,7 +9,7 @@ import { SELLER_PAGES } from '@/config/pages-url.config'
 
 import { useOrderChangeStatus } from '@/hooks/useOrders'
 
-import { EnumOrderStatus } from '@/models/request.model'
+import { EnumSellerStatus } from '@/models/request.model'
 
 const RequestCardSellerButtons = ({ id }: { id: number }) => {
 	const { push } = useRouter()
@@ -23,7 +23,7 @@ const RequestCardSellerButtons = ({ id }: { id: number }) => {
 		>
 			{isPending && <Spinner />}
 			<Button
-				onClick={() => mutate({ id, status: EnumOrderStatus.NOT_FOUND })}
+				onClick={() => mutate({ id, status: EnumSellerStatus.NOT_FOUND })}
 				variant='none'
 				rounded='10px'
 				h='48px'
@@ -39,7 +39,7 @@ const RequestCardSellerButtons = ({ id }: { id: number }) => {
 				Нет
 			</Button>
 			<Button
-				onClick={() => mutate({ id, status: EnumOrderStatus.FOUND })}
+				onClick={() => mutate({ id, status: EnumSellerStatus.WAITING })}
 				variant='none'
 				rounded='10px'
 				h='48px'

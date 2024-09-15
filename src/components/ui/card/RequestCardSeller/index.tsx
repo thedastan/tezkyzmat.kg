@@ -11,6 +11,8 @@ import Moment from '@/components/ui/texts/Moment'
 
 import { SELLER_PAGES } from '@/config/pages-url.config'
 
+import IdNumber from '../../texts/IdNumber'
+
 import RequestCardSellerButtons from './buttons'
 import { IRequest } from '@/models/request.model'
 
@@ -19,7 +21,7 @@ interface RequestCardSellerProps {
 }
 
 const RequestCardSeller = ({
-	order: { order, id, status, status_label }
+	order: { order, id, seller_status, seller_status_label }
 }: RequestCardSellerProps) => {
 	const lastSeen = moment(order.created_at).fromNow()
 	return (
@@ -30,10 +32,16 @@ const RequestCardSeller = ({
 					alignItems='center'
 				>
 					<Moment>{lastSeen}</Moment>
-					<FaChevronRight
-						color='#000000'
-						fontSize='14px'
-					/>
+					<Flex
+						alignItems='center'
+						gap='4'
+					>
+						<IdNumber id={order.id} />
+						<FaChevronRight
+							color='#000000'
+							fontSize='14px'
+						/>
+					</Flex>
 				</Flex>
 				<Box mt='4'>
 					<OrderTitles order={order} />

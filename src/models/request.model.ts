@@ -3,8 +3,6 @@ import { IOrderInLogist } from './logist.model'
 export interface IRequest {
 	id: number
 	order: IOrder
-	status: number
-	status_label: string
 	seller_status: SellerOrderStatusType
 	seller_status_label: string
 	created_at: string
@@ -111,7 +109,8 @@ export enum EnumSellerStatus {
 	ALL = 0, // 'Все'
 	WAITING = 1, // 'В ожидании'
 	PLACED = 2, // 'Оформлен'
-	COMPLETED = 3 // 'Завершен'
+	COMPLETED = 3, // 'Завершен'
+	NOT_FOUND = 4 // 'Завершен'
 }
 
 export type SellerOrderStatusType =
@@ -119,3 +118,4 @@ export type SellerOrderStatusType =
 	| EnumSellerStatus.WAITING
 	| EnumSellerStatus.PLACED
 	| EnumSellerStatus.COMPLETED
+	| EnumSellerStatus.NOT_FOUND

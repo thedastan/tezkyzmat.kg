@@ -15,7 +15,7 @@ import Title from '@/components/ui/texts/Title'
 import { useOrderDetail } from '@/hooks/useOrders'
 
 import SliderDetail from './DetailSlider'
-import { EnumOrderStatus } from '@/models/request.model'
+import { EnumOrderStatus, EnumSellerStatus } from '@/models/request.model'
 
 const RequestsDetail = ({ id }: { id: string }) => {
 	const { back } = useRouter()
@@ -34,7 +34,7 @@ const RequestsDetail = ({ id }: { id: string }) => {
 					title='Заявка'
 					backFn={back}
 				/>
-				{data.status === EnumOrderStatus.IN_SEARCH && (
+				{data.seller_status === EnumSellerStatus.ALL && (
 					<Card py='5'>
 						<Title
 							textAlign='center'

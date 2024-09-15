@@ -39,6 +39,7 @@ import { CLIENT_PAGES } from '@/config/pages-url.config'
 import { useRequestRemove } from '@/hooks/useRequest'
 
 import DeleteModal from '../../modal/DeleteModal'
+import IdNumber from '../../texts/IdNumber'
 import Moment from '../../texts/Moment'
 import Title from '../../texts/Title'
 
@@ -129,15 +130,7 @@ const RequestCardClient = ({ order, is_detail }: RequestCardClientProps) => {
 						</Box>
 					)}
 
-					<Box
-						bg='#F4F5F7'
-						padding='1'
-						fontSize='10px'
-						color='#1C1C1C'
-						rounded='6px'
-					>
-						№ {order.id}
-					</Box>
+					<IdNumber id={order.id} />
 				</Flex>
 			</Flex>
 			<Box

@@ -10,16 +10,21 @@ import OrderTitles from '@/components/order-items/OrderTitles'
 
 import { SELLER_PAGES } from '@/config/pages-url.config'
 
+import IdNumber from '../../texts/IdNumber'
 import Moment from '../../texts/Moment'
 
-import { EnumOrderStatus, IRequest } from '@/models/request.model'
+import {
+	EnumOrderStatus,
+	EnumSellerStatus,
+	IRequest
+} from '@/models/request.model'
 
 interface ConfirmedCardSellerProps {
 	request: IRequest
 	status_label: string
 }
 const ConfirmedCardSeller = ({
-	request: { order, id, status },
+	request: { order, id, seller_status },
 	status_label
 }: ConfirmedCardSellerProps) => {
 	const { push } = useRouter()
@@ -36,18 +41,31 @@ const ConfirmedCardSeller = ({
 					justifyContent='space-between'
 				>
 					<Moment>{lastSeen}</Moment>
-
 					<Flex
-						py='1'
-						px='6px'
-						color={status === EnumOrderStatus.COMPLETED ? '#06B217' : '#1C1C1C'}
-						bg={status === EnumOrderStatus.COMPLETED ? '#EDFCEE' : '#F4F5F7'}
-						fontSize='10px'
-						lineHeight='16px'
-						letterSpacing='.5px'
-						rounded='6px'
+						gap='4'
+						alignItems='center'
 					>
-						{status_label}
+						<Flex
+							py='1'
+							px='6px'
+							color={
+								seller_status === EnumSellerStatus.COMPLETED
+									? '#06B217'
+									: '#1C1C1C'
+							}
+							bg={
+								seller_status === EnumSellerStatus.COMPLETED
+									? '#EDFCEE'
+									: '#F4F5F7'
+							}
+							fontSize='10px'
+							lineHeight='16px'
+							letterSpacing='.5px'
+							rounded='6px'
+						>
+							{status_label}
+						</Flex>
+						<IdNumber id={order.id} />
 					</Flex>
 				</Flex>
 				<Box

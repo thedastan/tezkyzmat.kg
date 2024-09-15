@@ -1,10 +1,10 @@
 import { PRIVATE_API } from '@/api/interceptors'
 
-import { IRequest, OrderStatusType } from '@/models/request.model'
+import { IRequest, SellerOrderStatusType } from '@/models/request.model'
 
 export interface OrderStatusPayload {
 	id: number
-	status: OrderStatusType
+	status: SellerOrderStatusType
 }
 
 class OrderSellerService {
@@ -25,7 +25,7 @@ class OrderSellerService {
 		const response = await PRIVATE_API.put(
 			this.BASE_URL + `update/${data.id}/`,
 			{
-				status: data.status
+				seller_status: data.status
 			}
 		)
 

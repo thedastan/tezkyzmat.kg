@@ -76,7 +76,7 @@ const RequestComponent = () => {
 				LOCALE_REQUEST_KEY,
 				JSON.stringify(value as IRequestForm)
 			)
-			push(USER_PAGES.SIGN_UP)
+			push(USER_PAGES.SIGN_UP_CLIENT)
 			toast('Необходимо авторизоваться...')
 		} else mutate({ ...value } as IRequestForm)
 	}
@@ -240,7 +240,7 @@ const RequestComponent = () => {
 
 					{pathname === USER_PAGES.REQUEST && (
 						<DefButton
-							onClick={() => push(USER_PAGES.SIGN_UP)}
+							onClick={() => push(USER_PAGES.SIGN_UP_CLIENT)}
 							bg='#F9BD15'
 							mt='5'
 						>

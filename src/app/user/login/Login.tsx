@@ -66,7 +66,11 @@ const Login = () => {
 	return (
 		<UserLayoutComponent
 			question='У вас нет учетной записи? '
-			path={USER_PAGES.SIGN_UP}
+			path={
+				role === EnumRole.SELLER
+					? USER_PAGES.SIGN_UP_SELLER
+					: USER_PAGES.SIGN_UP_CLIENT
+			}
 			action='Создать аккаунт'
 			backPath={PUBLIC_PAGES.HOME}
 		>

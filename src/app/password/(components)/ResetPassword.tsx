@@ -23,14 +23,17 @@ import TitleComponent from '@/components/ui/texts/TitleComponent'
 
 import { INTERFACE_WIDTH } from '@/config/_variables.config'
 import { USER_PAGES } from '@/config/pages-url.config'
+import { EnumRole } from '@/config/role'
 
 import { useOtpSent, useResetPassword } from '@/hooks/useRegister'
+import { useRoles } from '@/hooks/useRoles'
 
 import PinInputModal from '@/app/user/sign-up/(components)/PinInputModal'
 import { EnumOtpCode } from '@/models/auth.enum'
 import { ResetPasswordPayload } from '@/models/auth.model'
 
 const ResetPassword = () => {
+	const { role } = useRoles()
 	const { isOpen, onClose, onOpen } = useDisclosure()
 	const { activeStep, setActiveStep } = useSteps({
 		index: 0,
@@ -61,7 +64,13 @@ const ResetPassword = () => {
 		<>
 			<UserLayoutComponent
 				question='У вас нет учетной записи? '
-				path={USER_PAGES.SIGN_UP}
+				path={
+					role === EnumRole.CLIENT
+						? USER_PAGES.SIGN_UP_CLIENT
+						: role === EnumRole.SELLER
+							? USER_PAGES.SIGN_UP_SELLER
+							: ''
+				}
 				action='Создать аккаунт'
 				backPath={USER_PAGES.AUTH}
 			>

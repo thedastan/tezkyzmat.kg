@@ -8,13 +8,9 @@ import UserLayoutComponent from '@/components/layouts/user.layout'
 import TitleComponent from '@/components/ui/texts/TitleComponent'
 
 import { PUBLIC_PAGES, USER_PAGES } from '@/config/pages-url.config'
-import { EnumRole } from '@/config/role'
+import { EnumRole, RoleTypes } from '@/config/role'
 
-import { useRoles } from '@/hooks/useRoles'
-
-const SignUp = () => {
-	const { role } = useRoles()
-
+const SignUp = ({ role }: { role: RoleTypes }) => {
 	return (
 		<UserLayoutComponent
 			question='У вас уже есть аккаунт? '

@@ -42,7 +42,8 @@ export const SELLER_PAGES = new SELLER_DASHBOARD()
 class USER {
 	private root = '/user'
 
-	SIGN_UP = this.root + '/sign-up'
+	SIGN_UP_CLIENT = this.root + '/sign-up'
+	SIGN_UP_SELLER = this.root + '/sign-up/seller'
 	RESET_PASSWORD = this.root + '/reset-password'
 
 	REQUEST = this.root + '/request'

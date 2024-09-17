@@ -74,14 +74,13 @@ const HomePage = () => {
 							mt='1'
 						>
 							<Box
-								onClick={() => saveUserRole(EnumRole.CLIENT)}
 								cursor='pointer'
 								fontWeight='600'
 								fontSize='14px'
 								lineHeight='17.5px'
 								color='#000000'
 							>
-								<Link href={USER_PAGES.SIGN_UP}>Создать аккаунт</Link>
+								<Link href={USER_PAGES.SIGN_UP_CLIENT}>Создать аккаунт</Link>
 							</Box>
 
 							<Description

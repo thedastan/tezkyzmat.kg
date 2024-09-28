@@ -1,5 +1,12 @@
 import { IOrderInLogist } from './logist.model'
 
+export interface RootRequest {
+	count: number
+	previous: string
+	next: string
+	results: IRequest[]
+}
+
 export interface IRequest {
 	id: number
 	order: IOrder

@@ -6,19 +6,20 @@ import { useEffect } from 'react'
 
 import EmptyOrder from '@/components/empty-component/empty-order'
 import BlackInterface from '@/components/layouts/black-interface'
+import Spinner from '@/components/loader/spinner'
 import RequestCardSeller from '@/components/ui/card/RequestCardSeller'
 
 import { NAVBAR_HEIGHT } from '@/config/_variables.config'
 import { SELLER_PAGES } from '@/config/pages-url.config'
 import { EnumRole } from '@/config/role'
 
-import { useOrders } from '@/hooks/useOrders'
+import { useAllOrders } from '@/hooks/useOrders'
 
 import { saveUserRole } from '@/services/role.service'
 
 const Seller = () => {
 	const { push } = useRouter()
-	const { actual_orders: data, isLoading } = useOrders()
+	const { data, isLoading } = useAllOrders()
 	useEffect(() => {
 		saveUserRole(EnumRole.SELLER)
 	}, [])
@@ -28,6 +29,7 @@ const Seller = () => {
 			buttonText='Посмотреть все заявки'
 			role={EnumRole.SELLER}
 		>
+			{isLoading && <Spinner />}
 			{!isLoading && !data?.length && <EmptyOrder />}
 			{!!data?.length && (
 				<Box pb={NAVBAR_HEIGHT}>

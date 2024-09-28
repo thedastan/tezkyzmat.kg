@@ -14,21 +14,21 @@ import { LuClock4 } from 'react-icons/lu'
 
 import Spinner from '@/components/loader/spinner'
 import HeaderComponent from '@/components/navbar/header-component'
+import PaginationOrders from '@/components/ui/buttons/Pagination'
 import TabButton from '@/components/ui/buttons/TabButton'
 import ConfirmedCardSeller from '@/components/ui/card/confirmed-card-seller'
 import EmptyText from '@/components/ui/texts/EmptyText'
 
-import { useOrders } from '@/hooks/useOrders'
+import { usePlacedOrders, useWaitingOrders } from '@/hooks/useOrders'
 
 const ConfirmedOrders = () => {
 	const [tabIndex, setTabIndex] = useState(0)
-	const { waiting_orders, completed_orders, isLoading } = useOrders()
+
 	return (
 		<Box
 			bg='#F4F5F7'
 			minH='100vh'
 		>
-			{isLoading && <Spinner />}
 			<Container>
 				<HeaderComponent title='Подтверждённые заявки' />
 				<Tabs
@@ -61,28 +61,63 @@ const ConfirmedOrders = () => {
 					</TabList>
 					<TabPanels pt='8px'>
 						<TabPanel px='0'>
-							{!waiting_orders?.length && <EmptyText />}
-							{waiting_orders?.map(el => (
-								<ConfirmedCardSeller
-									key={el.id}
-									request={el}
-									status_label={el.seller_status_label}
-								/>
-							))}
+							<WaitingOrders />
 						</TabPanel>
 						<TabPanel px='0'>
-							{!completed_orders?.length && <EmptyText />}
-							{completed_orders?.map(el => (
-								<ConfirmedCardSeller
-									key={el.id}
-									status_label='Завершен'
-									request={el}
-								/>
-							))}
+							<CompletedOrders />
 						</TabPanel>
 					</TabPanels>
 				</Tabs>
 			</Container>
+		</Box>
+	)
+}
+
+function WaitingOrders() {
+	const { data, isLoading, count_pages, page, setPage } = useWaitingOrders()
+	return (
+		<Box>
+			{isLoading && <Spinner />}
+			{!isLoading && !data?.length && <EmptyText />}
+			{data?.map(el => (
+				<ConfirmedCardSeller
+					key={el.id}
+					request={el}
+					status_label={el.seller_status_label}
+				/>
+			))}
+
+			{!isLoading && !!data?.length && (
+				<PaginationOrders
+					count_pages={count_pages}
+					page={page}
+					setPage={setPage}
+				/>
+			)}
+		</Box>
+	)
+}
+
+function CompletedOrders() {
+	const { data, isLoading, count_pages, page, setPage } = usePlacedOrders()
+	return (
+		<Box>
+			{isLoading && <Spinner />}
+			{!isLoading && !data?.length && <EmptyText />}
+			{data?.map(el => (
+				<ConfirmedCardSeller
+					key={el.id}
+					status_label='Завершен'
+					request={el}
+				/>
+			))}
+			{!isLoading && !!data?.length && (
+				<PaginationOrders
+					count_pages={count_pages}
+					page={page}
+					setPage={setPage}
+				/>
+			)}
 		</Box>
 	)
 }

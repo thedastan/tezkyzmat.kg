@@ -1,14 +1,53 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useState } from 'react'
 import { toast } from 'sonner'
 
 import { ANSWER_LOCAL_KEY } from '@/config/_variables.config'
 import { ToastError } from '@/config/helpers'
 
-import { EnumSellerStatus } from '@/models/request.model'
+import { EnumSellerStatus, RootRequest } from '@/models/request.model'
 import {
 	OrderStatusPayload,
 	orderSellerService
-} from '@/services/order.service'
+} from '@/services/seller-order.service'
+
+export function useWaitingOrders() {
+	const [page, setPage] = useState(1)
+	const { data, isLoading } = useQuery({
+		queryKey: ['waiting-orders', page],
+		queryFn: () => orderSellerService.getWaitingOrders(page)
+	})
+	const count_pages = getCountPages(data)
+	return {
+		data: data?.results,
+		isLoading,
+		count_pages,
+		setPage,
+		page
+	}
+}
+
+export function useAllOrders() {
+	const [page, setPage] = useState(1)
+	const { data, isLoading } = useQuery({
+		queryKey: ['all-orders', page],
+		queryFn: () => orderSellerService.getAllOrders(page)
+	})
+
+	const count_pages = getCountPages(data)
+
+	return { data: data?.results, isLoading, setPage, count_pages, page }
+}
+
+export function usePlacedOrders() {
+	const [page, setPage] = useState(1)
+	const { data, isLoading } = useQuery({
+		queryKey: ['placed-orders', page],
+		queryFn: () => orderSellerService.getPlacedOrders(page)
+	})
+	const count_pages = getCountPages(data)
+	return { data: data?.results, isLoading, count_pages, setPage, page }
+}
 
 export function useOrders() {
 	const { data, isLoading } = useQuery({
@@ -64,4 +103,8 @@ export function useOrderChangeStatus(onSuccess: () => void) {
 	})
 
 	return { mutate, isPending }
+}
+
+function getCountPages(data: RootRequest | undefined): number {
+	return data?.count ? Math.ceil(data.count / 15) : 1
 }

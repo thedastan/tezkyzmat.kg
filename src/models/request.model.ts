@@ -24,6 +24,7 @@ export interface IOrder {
 	description?: string
 	order_images: IImage[]
 	country?: ICountry
+	buyer_phone: string
 	body?: IBody
 	VIN?: string
 	condition?: 0 | 1

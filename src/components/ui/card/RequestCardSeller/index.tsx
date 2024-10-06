@@ -44,7 +44,10 @@ const RequestCardSeller = ({
 					</Flex>
 				</Flex>
 				<Box mt='4'>
-					<OrderTitles order={order} />
+					<OrderTitles
+						order={order}
+						phone={order.buyer_phone}
+					/>
 				</Box>
 			</Link>
 			{!!order.order_images?.length && (

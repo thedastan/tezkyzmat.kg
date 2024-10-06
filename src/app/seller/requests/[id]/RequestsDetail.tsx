@@ -49,7 +49,10 @@ const RequestsDetail = ({ id }: { id: string }) => {
 				<Card mt='10px'>
 					<Moment>{lastSeen}</Moment>
 					<Box mt='6'>
-						<OrderTitles order={data.order} />
+						<OrderTitles
+							order={data.order}
+							phone={data.order.buyer_phone}
+						/>
 					</Box>
 
 					<SliderDetail images={data.order.order_images} />

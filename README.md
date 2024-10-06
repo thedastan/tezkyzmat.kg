@@ -1,7 +1,6 @@
 
 WWW.TEZKYZMAT.KG - ваш быстрый поиз запчастей 
 
-First, run the development server:
 
 ```bash
 npm run dev

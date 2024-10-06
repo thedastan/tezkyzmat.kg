@@ -24,7 +24,7 @@ const OrderTitles = ({
 				<Flex
 					justifyContent='start'
 					mt='3'
-					fontSize='14px'
+					fontSize='16px'
 					color='#355BE6'
 					textDecoration='underline'
 				>

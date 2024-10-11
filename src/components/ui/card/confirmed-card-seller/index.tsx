@@ -72,7 +72,10 @@ const ConfirmedCardSeller = ({
 					onClick={() => push(SELLER_PAGES.REQUEST_DETAIL(id))}
 					cursor='pointer'
 				>
-					<OrderTitles order={order} />
+					<OrderTitles
+						order={order}
+						phone={order.buyer_phone}
+					/>
 				</Box>
 				<Flex
 					gap='10px'
